@@ -1,4 +1,7 @@
 # 03_data_structure
+from pprint import pprint
+from collections import OrderedDict
+from sys import getsizeof
 from array import array
 from collections import deque
 import random
@@ -286,7 +289,7 @@ if not queue:
     print("empty queue")
 
 
-### tuple ###
+# tuple ### tuple()
 # contain a sequence of objects
 # read-only list - use to prevent accidental modification
 # it is immutable
@@ -352,7 +355,7 @@ a, b, c = 1, 2, 3       # tuple () is omitted
 print(c)                # output:3
 
 
-# Array ##
+# Array ### array()  (note: more often, we use numpy array - contain a single data type)
 # store only single data type
 # use less memory than list
 # process data faster
@@ -419,7 +422,7 @@ print(num_list)
 #
 #
 
-### Set ###
+# Set ### set()
 # collection with no duplicate - unique values in set
 # cannot access set by index, it stores data un-orderly.
 numbers = [1, 1, 2, 3, 4, 2, 4]
@@ -450,3 +453,254 @@ if 1 in first:
 # data in set is not stored in sequence
 # output:TypeError: 'set' object is not subscriptable
 # print(first[0])
+#
+#
+
+### Dictionary ###
+# dict()
+# collection of key and value pair
+# eg. phone book: name --> contact_number
+# key must be immutable. ie. string or int
+#
+# both are the same
+points = {'x': 1, 'y': 2}
+points = dict(x=1, y=2)
+# access thru key, cannot use index
+print(points['x'])          # ouput:1
+# update value
+points['x'] = 10
+# add new value
+points['z'] = 30
+print(points)               # output:{'x': 10, 'y': 2, 'z': 30}
+#
+# Error - access invalid key
+# output: KeyError: 'a'
+# print(point['a'])
+# check before access
+if 'a' in points:
+    print(points['a'])
+
+# avoid error when invalid key
+print(points.get('a'))          # output:None
+# pass in default value. eg. 0
+print(points.get('a', 0))       # output:0
+# remove item
+del points['y']
+print(points)                   # output:{'x': 10, 'z': 30}
+
+# loop
+# loop thru the key and get the value
+for key in points:
+    print(key, points[key], ',', end=" ")   # output:x 10 , z 30 ,
+print("")
+# get tuple and unpack (key, value)
+for key, value in points.items():
+    print(key, value, ',', end=" ")         # output:x 10 , z 30 ,
+print("")
+
+### Dictionary comprehension ###
+# for list
+values = []
+for x in range(5):
+    values.append(x * 2)
+print(values)                               # output:[0, 2, 4, 6, 8]
+# comprehension syntax: [expression for item in items]
+values = [x * 2 for x in range(5)]
+print(values)                               # output:[0, 2, 4, 6, 8]
+#
+# for set
+values = {x * 2 for x in range(5)}
+print(values)                               # output:{0, 2, 4, 6, 8}
+#
+# for dictionary
+values = {x: x * 2 for x in range(5)}
+# output:{0: 0, 1: 2, 2: 4, 3: 6, 4: 8}
+print(values)
+# same as below
+values = {}
+for x in range(5):
+    values[x] = (x * 2)
+# output: {0: 0, 1: 2, 2: 4, 3: 6, 4: 8}
+print(values)
+#
+# for tuple
+values = (x * 2 for x in range(5))
+# output:<generator object <genexpr> at 0x00000258AE9EF0B0>
+print(values)
+#
+#
+### Generator Expression ###
+values = [x * 2 for x in range(10)]
+for x in values:
+    print(x, end=" ")           # output:0 2 4 6 8 10 12 14 16 18
+print("")
+# for very large dataset, we shouldn't store all data in memory at once
+# generator - generate value in each iteration, replace [] by ()
+# same output as above
+values = (x * 2 for x in range(10))
+for x in values:
+    print(x, end=" ")           # output:0 2 4 6 8 10 12 14 16 18
+print("")
+print(type(values))             # output:<class 'generator'>
+#
+#
+#from sys import getsizeof
+# list
+values = [x * 2 for x in range(10000000)]
+print("list size:", getsizeof(values))          # output:list size: 81528048
+# generator
+values = (x * 2 for x in range(10000))
+print("generator size:", getsizeof(values))     # output:generator size: 112
+values = (x * 2 for x in range(10000000))
+print("generator size:", getsizeof(values))     # output:generator size: 112
+# Error
+# output:TypeError: object of type 'generator' has no len()
+# print(len(values))
+#
+#
+### unpacking operator ###
+numbers = [1, 2, 3]
+print(numbers)                                  # output:[1, 2, 3]
+# print individual int
+print(1, 2, 3)                                  # output:1, 2, 3
+# how to print the individual value in list
+# unpack operator - *  [just like spread operator (3 dots) ... in JavaScript]
+# can unpack any iterable
+print(*numbers)                                 # output:1, 2, 3
+#
+# normal way to create list
+values = list(range(5))
+print(values)                                   # output:[0, 1, 2, 3, 4]
+# use unpack operator, can also unpack string
+values = [*range(5), *"Panco"]
+# output:[0, 1, 2, 3, 4, 'P', 'a', 'n', 'c', 'o']
+print(values)
+#
+# combine the list
+first = [1, 2]
+second = [3]
+values = [*first, "a", *second, *"Pan"]
+# output:[1, 2, 'a', 3, 'P', 'a', 'n']
+print(values)
+#
+# unpack dictionary - **
+first = {'x': 1}
+second = {'x': 10, 'z': 2}
+# output:{'x': 10, 'z': 2, 'y': 5}
+combined = {**first, **second, "y": 5}
+print(combined)
+#
+#
+### Exercise ###
+# find the most repeatable character
+sentence = "This is a common interview question"
+chars = {x: sentence.count(x) for x in [*sentence]}
+# output:{'T': 1, 'h': 1, 'i': 5, 's': 3, ' ': 5, 'a': 1, 'c': 1, 'o': 3, 'm': 2, 'n': 3, 't': 2, 'e': 3, 'r': 1, 'v': 1, 'w': 1, 'q': 1, 'u': 1}
+print(chars)
+
+# get key with max value
+max_key = max(chars, key=chars.get)
+print(max_key)                          # output: i
+# print the max
+all_values = chars.values()
+max_value = max(all_values)
+print(max_value)                        # output: 5
+#
+# sort dictionary
+# output: [('i', 5), (' ', 5), ('s', 3), ('o', 3), ('n', 3), ('e', 3), ('t', 2), ('m', 2), ('w', 1), ('v', 1), ('u', 1), ('r', 1), ('q', 1), ('h', 1), ('c', 1), ('a', 1), ('T', 1)]
+print(sorted(chars.items(), key=lambda kv: (kv[1], kv[0]), reverse=True))
+#
+# Creates a sorted dictionary (sorted by key)
+#from collections import OrderedDict
+# output:OrderedDict([(' ', 5), ('T', 1), ('a', 1), ('c', 1), ('e', 3), ('h', 1), ('i', 5), ('m', 2), ('n', 3), ('o', 3), ('q', 1), ('r', 1), ('s', 3), ('t', 2), ('u', 1), ('v', 1), ('w', 1)])
+print(OrderedDict(sorted(chars.items())))
+#
+#
+### solution from training video###
+#from pprint import pprint
+sentence = "This is a common interview question"
+
+char_frequency = {}
+for char in sentence:
+    if char in char_frequency:
+        char_frequency[char] += 1
+    else:
+        char_frequency[char] = 1
+# pprint - print the dictionary content in one column
+# output:
+# {' ': 5,
+#  'T': 1,
+#  'a': 1,
+#  'c': 1,
+#  'e': 3,
+#  'h': 1,
+#  'i': 5,
+#  'm': 2,
+#  'n': 3,
+#  'o': 3,
+#  'q': 1,
+#  'r': 1,
+#  's': 3,
+#  't': 2,
+#  'u': 1,
+#  'v': 1,
+#  'w': 1}
+pprint(char_frequency, width=1)
+# chars.items() - convert the key-value pair into tuple (key, value)
+# sort by value, then key
+char_frequency_sorted = sorted(
+    chars.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
+print(char_frequency_sorted[0])                     # output: ('i', 5)
+#
+#
+### Exceptions ###
+numbers = [1, 2]
+# output:IndexError: list index out of range
+# print(numbers[3])
+#
+# input:abc
+# output:ValueError: invalid literal for int() with base 10: 'abc'
+# age = int(input("Age: "))
+#
+#
+# input:Age: aa
+# output:
+# Please enter integer for age!
+# invalid literal for int() with base 10: 'aa'
+# <class 'ValueError'>
+# Execution continues
+#
+# input:Age: 11
+# output:
+# No exceptions were thrown
+# Execution continues
+try:
+    age = int(input("Age: "))
+except ValueError as ex:
+    print("Please enter integer for age!")
+    print(ex)
+    print(type(ex))
+else:
+    print("No exceptions were thrown")
+print("Execution continues")
+#
+#
+### Handling different exception ###
+# input:0
+# output:ZeroDivisionError: division by zero
+#
+# note: only the first 'except' statement will be executed
+# ie. 2nd ZeroDivisionError is not executed
+# input:0
+# output:You didn't enter a valid age.
+try:
+    age = int(input("Age: "))
+    xfactor = 10 / age
+except (ValueError, ZeroDivisionError):
+    print("You didn't enter a valid age.")
+except ZeroDivisionError:
+    print("Age cannot be zero")
+else:
+    print("No exceptions were thrown")
+#
+#
