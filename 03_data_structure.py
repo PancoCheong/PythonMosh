@@ -1,4 +1,5 @@
 # 03_data_structure
+from timeit import timeit
 from pprint import pprint
 from collections import OrderedDict
 from sys import getsizeof
@@ -703,4 +704,113 @@ except ZeroDivisionError:
 else:
     print("No exceptions were thrown")
 #
+### clean up - finally: ###
+# output:FileNotFoundError: [Errno 2] No such file or directory: 'non_exist_file.txt'
+# NameError: name 'my_file' is not defined
 #
+# 'r' - readonly, 'rw+' - read write
+file = open("app.py", 'r')
+try:
+    # way 1: read whole file into single string, include \n
+    text = file.read()
+    print(type(text))       # output:<class 'str'>
+    print(text)
+    # way 2: read line by line, slower, but use less memory
+    while True:
+        text_line = file.readline()
+        if text_line:
+            print(type(text_line), text_line)
+        else:
+            break
+    # way 3: read whole file, use list to store each line
+    text_lines = file.readlines()
+    print(type(text_lines), text_lines)
+    for line in text_lines:
+        print(type(line), line)
+except (FileNotFoundError):
+    print("file is not found.1")
+else:
+    print("No exceptions were thrown")
+finally:
+    file.close()
+
+### with statement - auto-close file when exist the code block###
+# finally: is not required
+try:
+    with open("app.py", 'r') as file:
+        # open two files
+        # with open("app.py", 'r') as file, open("another.txt") as target:
+        print("%s file is opened." % file.name)
+        text = file.read()
+        print(text)
+## magic method __myMethod__ ##
+# any object has enter and exit magic methods
+# it supports context management protocol,
+        # file.__enter__
+        # file.__exit__
+# we can use with statement,
+# Python will auto call exit method to release external resource
+
+except (FileNotFoundError):
+    print("file is not found.1")
+else:
+    print("No exceptions were thrown")
+#
+#
+# Google search: python 3 built in exceptions
+# https://docs.python.org/3/library/exceptions.html
+# scroll to bottom: Exception hierarchy
+
+
+def calculate_xfactor(age):
+    if age <= 0:
+        raise ValueError("Age cannot be 0 or less")
+    return 10 / age
+
+
+# output:Age cannot be 0 or less
+try:
+    calculate_xfactor(-1)
+except ValueError as error:
+    print(error)
+
+
+### cost of raising exception ###
+# time the execution duration
+#from timeit import timeit
+
+# change print statement by pass statement
+# to avoid print message 10000 times
+code1 = """
+def calculate_xfactor(age):
+    if age <= 0:
+        raise ValueError("Age cannot be 0 or less")
+    return 10 / age
+
+
+try:
+    calculate_xfactor(-1)
+except ValueError as error:
+    pass
+"""
+#
+code2 = """
+def calculate_xfactor(age):
+    if age <= 0:
+        return None
+    return 10 / age
+
+
+xfactor = calculate_xfactor(-1)
+if xfactor == None:
+    pass
+"""
+#
+# don't raise exception if you can handle it in other way
+# as it degrades the performance
+#
+# output:
+# first code  = 0.007155099999999859
+# second code = 0.0036609000000003
+print("first code  =", timeit(code1, number=10000))
+print("second code =", timeit(code2, number=10000))
