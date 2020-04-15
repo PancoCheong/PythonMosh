@@ -155,34 +155,40 @@ print(point3 + point2)          # output:Point (4, 6)
 class TagCloud:
     def __init__(self):
         # super().__init__()
-        self.tags = {}          # dict
+        # self.tags = {}          # dict
+        # __ - private member
+        self.__tags = {}          # dict
+
+    # override __str__()
+    def __str__(self):
+        return str(self.__tags)
 
     # override __getitem__(self, key)
     def __getitem__(self, tag):
-        return self.tags.get(tag.lower(), 0)
+        return self.__tags.get(tag.lower(), 0)
 
     # override __setitem__(self, key, value)
     def __setitem__(self, tag, count):
-        self.tags[tag.lower()] = count
+        self.__tags[tag.lower()] = count
 
     # override __len__(self)
     def __len__(self):
-        return len(self.tags)
+        return len(self.__tags)
 
     # override __iter__()
     def __iter__(self):
-        return iter(self.tags)
+        return iter(self.__tags)
 
     # make the dict be case insensitive
     def add(self, tag):
-        self.tags[tag.lower()] = self.tags.get(tag.lower(), 0) + 1
+        self.__tags[tag.lower()] = self.__tags.get(tag.lower(), 0) + 1
 
 
 cloud = TagCloud()
 cloud.add("Python")
 cloud.add("python")
 cloud.add("python")
-print(cloud.tags)               # output: {'python': 3}
+# print(cloud.tags)               # output:{'python': 3}
 #
 # override __getitem__()
 # implement cloud["python"]
@@ -205,4 +211,96 @@ for tag in cloud:
     print(tag, end=" ")         # output: python javascript
 print("")
 #
+### private member ###
+#
+### error - if access underlying class ###
+# output: KeyError: 'PYTHON'
+# because every key is in lower case
+# print(cloud.tags["PYTHON"])
+#
+# how to hide tags from outside - private members
+# output: AttributeError: 'TagCloud' object has no attribute '__tags'
+# it just show error to warning user when access it
+# print(cloud.__tags["PYTHON"])
+#
+# output:{'_TagCloud__tags': {'python': 3, 'javascript': 10}}
+# print(cloud)
+#
+### workaround to access it ###
+# get the prefix
+# __dict__ - holds all the attributes in class
+# output: {'_TagCloud__tags': {'python': 3, 'javascript': 10}}
+# Python interpreter automatically reuses this attribute
+# and prefixes it with the name of it's class
+print(cloud.__dict__)
+#
+# workaround: still can access private member
+print(cloud._TagCloud__tags)
+#
 
+# no longer works
+# print(cloud.tags)               # output:{'python': 3}
+#
+# fix it
+# override __str__()
+print(cloud)                      # output:{'python': 3, 'javascript': 10}
+#
+#
+### Property ###
+#
+
+
+class Product:
+    def __init__(self, price):
+        # self.price = price                    # replace by setter
+        # self.set_price(price)                 # replace by @property
+        self.price = price
+
+    # def get_price(self):
+    @property
+    def price(self):                            # rename getter for @property
+        return self.__price
+
+    # def set_price(self, value):
+    @price.setter
+    def price(self, value):                     # rename setter for @price.setter
+        if value < 0:
+            raise ValueError("Price cannot be negative.")
+        self.__price = value
+
+    # Pythonic way
+    # price = property(get_price, set_price)    # replace by @property
+
+
+# how to prevent input negative number, price should not be negative
+# product = Product(-50)
+#
+# make it private member __price
+# define getter and setter
+# output: ValueError: Price cannot be negative.
+# product = Product(-50)
+#
+# this is not a Pythonic - means not using Python's best practice
+#
+## use property ##
+# an object in front of an attribute, allow us to get or set the value
+# property(function_get, function_set, function_del, documentation)
+#####             price = property(get_price, set_price)
+#
+product = Product(10)
+# output:ValueError: Price cannot be negative.
+# product.price = -1
+#
+# how to hide the get_price and set_price methods from outside world
+# product.set_price(10)
+# product.get_price()
+#
+# use @property decloration and rename getter and setter the function
+# use price property directly
+# @<property_name>.setter - for setter function
+product.price = 99
+print(product.price)            # output: 99
+#
+# comment out the setter function -> readonly property
+# output: AttributeError: can't set attribute
+# product.price = 100
