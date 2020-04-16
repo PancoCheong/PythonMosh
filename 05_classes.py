@@ -285,7 +285,7 @@ class Product:
 ## use property ##
 # an object in front of an attribute, allow us to get or set the value
 # property(function_get, function_set, function_del, documentation)
-#####             price = property(get_price, set_price)
+# price = property(get_price, set_price)
 #
 product = Product(10)
 # output:ValueError: Price cannot be negative.
@@ -304,3 +304,176 @@ print(product.price)            # output: 99
 # comment out the setter function -> readonly property
 # output: AttributeError: can't set attribute
 # product.price = 100
+#
+### inheritance ###
+
+
+class Animal:
+    def __init__(self):
+        print("Animal Constructor")
+        self.age = 1
+
+    def eat(self):
+        print("eat")
+
+# class Mammal:
+
+# Animal: Parent, Base class
+# Mammal: Child, Sub
+
+
+class Mammal(Animal):
+    def __init__(self):
+        super().__init__()  # call parent's __init__
+        print("Mammal Constructor")
+        self.weight = 2
+    # def eat(self):
+    #     print("eat")
+
+    def walk(self):
+        print("walk")
+
+# apply the same to Fish class
+
+
+class Fish(Animal):
+    # eat method is in common for both Mammal and Fish
+    # def eat(self):
+    #     print("eat")
+
+    def swim(self):
+        print("swim")
+
+
+#
+# Concept: DRY - Don't repeat yourself
+# either thru Inheritance or composition to avoid repeated code
+#
+# Inheritance - define the common behavior or common functions in a class
+# then inherit them in other classes
+#
+# define class Animal
+#
+m = Mammal()
+m.eat()                         # output:eat
+m.walk()                        # output:walk
+# add age attribute in Animal
+print(m.age)                    # output:1
+#
+# check object type
+print(isinstance(m, Mammal))    # output:True
+# parent of Mammal - Animal class
+# also True
+print(isinstance(m, Mammal))    # output:True
+#
+# Animal (or any class) inherits from object class (base of all class)
+# even we don't define it, just like
+# class Animal(object):
+#
+print(isinstance(m, object))    # output:True
+#
+# all classes have all o.* methods like __init__, __str__
+# it inherits from object class
+o = object()
+#
+# check sub-class
+print(issubclass(Mammal, Animal))  # output:True
+print(issubclass(Mammal, object))  # output:True
+#
+### method overriding ###
+# copy __init__ constructor from Animal to Mammal
+#
+# no more: m.age
+# output:AttributeError: 'Mammal' object has no attribute 'age'
+# print(m.age)
+# because Animal.__init__ is no longer executed
+# it is replaced by Mammal.__init__
+print(m.weight)                     # output:2
+#
+# call super().__init__() to execute Animal.__init__
+# in this way, it extends the original method and adds weight attribute
+print(m.age)                        # output:1
+#
+#
+#
+### Multi-level inheritance ###
+# Employee -> Person -> LivingCreature -> Thing
+# don't try to simulate the whole world
+# only define what your software needs, either class or method
+# eg. LivingCreature -> Thing may be not necessary
+#
+# ## Tips: limit the inheritance to ONE or TWO levels
+#
+# class Animal:
+#     def __init__(self):
+#         print("Animal Constructor")
+#         self.age = 1
+
+#     def eat(self):
+#         print("eat")
+
+
+class Bird(Animal):
+    def fly(self):
+        print("fly")
+
+# but... Chicken cannot fly, it should not have fly()
+
+
+class Chicken(Bird):
+    pass
+#
+#
+### Multiple Inheritance ###
+# good for inheritance if parent classes has no common methods
+#
+# it could lead to unexpected problem
+# eg. which method to call if both have method under the same name
+# if we change the order of inheritance, the result is different
+# from      class Manager(Employee, Person):
+# to        class Manager(Employee, Person):
+
+
+class Employee:
+    def greet(self):
+        print("Employee Greet")
+
+
+class Person:
+    def greet(self):
+        print("Person Greet")
+
+# change order of inheritance
+# class Manager(Employee, Person):
+
+
+class Manager(Person, Employee):
+    pass
+
+
+mgr = Manager()
+# because Employee is at 1st position
+# look up sequence: Manager --> Employee --> Person
+mgr.greet()             # output:Employee Greet
+#
+# change the order of inheritance
+mgr.greet()             # output:Person Greet
+#
+#
+### good example for multiple inheritance ###
+
+
+class Flyer:
+    def fly(self):
+        pass
+
+
+class Swimmer:
+    def swin(self):
+        pass
+
+
+class FlyingFish(Flyer, Swimmer):
+    pass
+#
+#
