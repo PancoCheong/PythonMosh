@@ -1,4 +1,6 @@
 ### Class ###
+from collections import namedtuple
+from abc import ABC, abstractmethod
 numbers = [1, 2]
 numbers.append(3)
 print(type(numbers))            # output:<class 'list'>
@@ -425,6 +427,7 @@ class Chicken(Bird):
 #
 #
 ### Multiple Inheritance ###
+# (not recommended to use)
 # good for inheritance if parent classes has no common methods
 #
 # it could lead to unexpected problem
@@ -454,9 +457,11 @@ class Manager(Person, Employee):
 mgr = Manager()
 # because Employee is at 1st position
 # look up sequence: Manager --> Employee --> Person
+# ---> class Manager(Employee, Person):
 mgr.greet()             # output:Employee Greet
 #
 # change the order of inheritance
+# ---> class Manager(Person, Employee):
 mgr.greet()             # output:Person Greet
 #
 #
@@ -477,3 +482,247 @@ class FlyingFish(Flyer, Swimmer):
     pass
 #
 #
+### Good example of inheritance ###
+# one or two levels of inheritance
+# don't have multiple inheritance
+#
+# eg. read a stream of data
+#  1. from file
+#  2. from network
+#  3. from memory
+# all these streams have a few things in common,
+# like open them, close them, can read data from them
+# but,
+# how to read data is dependent upon the type of the stream
+# reading data from file is different from reading data from network
+#
+#
+### create customized exception type #
+
+
+class InvalidOperationError(Exception):
+    pass
+
+
+class Stream(ABC):
+    def __init__(self):
+        self.opened = False
+
+    def open(self):
+        if self.opened:
+            raise InvalidOperationError("Stream is already opened")
+        self.opened = True
+
+    def close(self):
+        if self.opened:
+            raise InvalidOperationError("Stream is already closed")
+        self.opened = False
+
+    # define common abstract method
+    @abstractmethod
+    def read(self):
+        pass
+
+
+class FileStream(Stream):
+    def read(self):
+        print("Reading data from file")
+
+
+class NetworkStream(Stream):
+    def read(self):
+        print("Reading data from network")
+
+
+#
+#
+### Abstract Base Class ###
+# issue 1: Stream class is a abstract concept, no read()
+# we should use either FileStream or NetworkStream as it konws how to read data
+# stream = Stream()
+# stream.open()
+#
+# issue 2: no common interface
+# FileStream and NetworkStream have read()
+# however, if we implement MemoryStream, we can use dump() to read data
+# which make it incompatibile to FileStream and NetworkStream
+class MemoryStream(Stream):
+    def dump(self):
+        print("Reading data from memory")
+
+
+#
+# use abstract base class to solve
+# it is a half-baked class
+# 1. from abc import ABC, abstractmethod
+# 2. class Stream(ABC):
+# 3. define common interface method ie. read() and write() etc
+#    and @abstractmethod declorator to label them
+#
+# linter error:Abstract class 'Stream' with abstract methods instantiated
+# stream = Stream()
+#
+# linter error:Abstract class 'MemoryStream' with abstract methods instantiated
+# read() is not yet implemented, it is considered as abstract class that cannot be instantiated
+# stream = MemoryStream()
+#
+#
+### Polymorphism ###
+# from abc import ABC, abstractmethod
+class UIControl(ABC):
+    @abstractmethod
+    def draw(self):
+        pass
+
+
+class TextBox(UIControl):
+    def draw(self):
+        print("TextBox")
+
+
+class DropDownList(UIControl):
+    def draw(self):
+        print("DropDownList")
+
+
+# draw method
+def draw(control):
+    control.draw()
+
+
+# drawAll method
+def drawAll(controls):
+    for control in controls:
+        control.draw()
+
+
+ddl = DropDownList()
+txt = TextBox()
+print(isinstance(ddl, UIControl))   # output:True
+print(isinstance(txt, UIControl))   # output:True
+
+draw(ddl)                           # output:DropDownList
+draw(txt)                           # output:TextBox
+# output:
+# DropDownList
+# TextBox
+drawAll([ddl, txt])
+#
+# draw or drawAll methods do not know what kind of component it is working with.
+# it simples call the draw() method of the passed-in object, regardless it is TextBox or DropDownList
+# as all objects inherit from the abstract base class which defined
+# @abstractmethod draw(), all its child object should have draw()
+# This behavior is called Polymorphism
+# Poly  - mean Many
+# morph - mean Forms
+# the draw() method is taking many different forms and this is determined at run time.
+# we can be calling the draw() on TextBox, DropDownList or RadioButton...etc
+#
+### duck typing ###
+# in Python
+#
+# in below example:
+# Polymorphism is still working without parent abstract class
+# because controls - doesn't have specify object type
+# as long as the object has the draw() method, it works
+#
+# Python terminology:
+# if object walks like a duck, and quacks like a duck, it is a duck
+# Python is dynamic type language, it doesn't check the type of objects.
+# it only looks for the existence of certain methods in the objects.
+#
+# it is still a good practice to have abstract base class
+# as it enforces a common interface or a common contract across all its derivatives.
+# ie. they will have all methods defined by @abstractmethod
+#
+# class TextBox:
+#     def draw(self):
+#         print("TextBox")
+
+
+# class DropDownList:
+#     def draw(self):
+#         print("DropDownList")
+
+# # drawAll method - controls doesn't have specify object type
+# def drawAll(controls):
+#     for control in controls:
+#         control.draw()
+#
+#
+# Extending Built-in Types
+# extending string class
+class Text(str):
+    def duplicate(self):
+        return self + self
+
+
+#
+text = Text("Python")
+# extend new method
+print(text.duplicate())         # output:PythonPython
+# use origin str method
+print(text.lower())             # output:python
+#
+#
+
+
+class TrackableList(list):
+    def append(self, object):
+        print("Append called")
+        super().append(object)
+
+
+list = TrackableList()
+list.append("a")                # output:Append called
+#
+#
+### data class ###
+# class that only have data
+#
+# normal class as below
+
+
+class Position:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
+
+p1 = Position(1, 2)
+p2 = Position(1, 2)
+# compare objects - without __eq__
+print(p1 == p2)                 # output:False
+# print memory address
+print(id(p1))                   # output:2612139892016
+print(id(p2))                   # output:2612139892112
+#
+# override __eq__()
+print(p1 == p2)                 # output:True
+#
+#
+### use namedtuple to store data class ###
+#
+# no need to write __eq__ method
+# cannot update value after the value is set,
+# create new object to replace existing object for updating value
+#
+#from collections import namedtuple
+# namedtuple(New Type Name, [Attribute_Name1, Attribute_Name2])
+
+MyPosition = namedtuple("MyPosition", ["x", "y"])
+p1 = MyPosition(x=1, y=2)
+p2 = MyPosition(x=1, y=2)
+# no need to override __eq__ to compare by values
+print(p1 == p2)                 # output:True
+print(p1, p2)                   # output:MyPosition(x=1, y=2) MyPosition(x=1, y=2)
+#
+# the object is immutable, cannot change value
+# output:AttributeError: can't set attribute
+# p1.x = 10
+#
+p1 = MyPosition(x=10, y=20)
+print(p1)                       # output:MyPosition(x=10, y=20)
