@@ -3,6 +3,8 @@
 # --------------------------------------- 07_standard_library.py  ---------------------------------------
 # topics: files, SQLite, Date Time, Random Values, Emails
 #
+import subprocess
+import sys
 from email.mime.image import MIMEImage
 from string import Template
 import smtplib
@@ -494,7 +496,7 @@ print(numbers)                                  # output:[2, 4, 1, 5, 3]
 ### opening the browser ###
 # import webbrowser
 print("Deployment completed")
-webbrowser.open("http://taobao.com")
+# webbrowser.open("http://taobao.com")
 #
 #
 ### send emails ###
@@ -542,7 +544,7 @@ with smtplib.SMTP(host="smtp.gmail.com", port=587) as smtp:
     smtp.ehlo()         # initialize the connection
     smtp.starttls()     # puts smtp connection in TLS mode
     smtp.login("panco.cheong@gmail.com", "yvnnxqkezmtidobe")
-    smtp.send_message(message)
+#    smtp.send_message(message)
     print("Sent...")
 #
 #
@@ -661,3 +663,76 @@ with smtplib.SMTP(host="smtp.gmail.com", port=587) as smtp:
 
 # if __name__ == '__main__':
 #     main()
+
+#
+#
+#
+### command line arguments ###
+#
+# in termial:
+# python 07_standard_library.py -a -b -c
+#
+#import sys
+# output:['.\\07_standard_library.py', '-a', '-b', '-c']
+print(sys.argv)
+#
+# output:Usage: python app.py <password>
+if len(sys.argv) == 1:
+    print("Usage: python app.py <password>")
+else:
+    # output:Password -a
+    password = sys.argv[1]
+    print("Password", password)
+#
+#
+### run external program ###
+# run "ls" in Linux / MacOS X
+# run "dir /ON" in Windows
+#
+#import sys
+#import subprocess
+# preferred approach, it create an instance of the Poopen class
+# capture_output=True ==> output to stdout
+# text=True ==> use string instead of bytes
+# check=True ==> raise exception if return is non-zero
+#
+# completed = subprocess.run(["dir","/ON"], capture_output=True, text=True, check=True)
+completed = subprocess.run(r"notepad.exe C:\repos\Python\Programmer\init.txt")
+# output:<class 'subprocess.CompletedProcess'>
+print(type(completed))
+# output:args: notepad.exe C:\repos\Python\Programmer\init.txt
+print("args:", completed.args)
+print("returnCode:", completed.returncode)  # returnCode: 0
+print("stderr:", completed.stderr)          # stderr: None
+# , capture_output=True - output save to stdout
+print("stdout:", completed.stdout)          # stdout: None
+#
+#
+# run other Python script
+print("Run external Python Script")
+try:
+    completed = subprocess.run(
+        ["python", "app.py"], capture_output=True, text=True, check=True)
+    # false is only for MacOS X
+    # completed = subprocess.run(
+    #     ["false"], capture_output=True, text=True)
+    # output:args: notepad.exe C:\repos\Python\Programmer\init.txt
+    print("args:", completed.args)
+    print("returnCode:", completed.returncode)  # returnCode: 0
+    print("stderr:", completed.stderr)          # stderr: None
+    print("stdout:", completed.stdout)          # stdout: None
+    if completed.returncode != 0:
+        print(completed.stderr)
+except subprocess.CalledProcessError as ex:
+    print(ex)
+
+# Process Open
+# https://stackabuse.com/pythons-os-and-subprocess-popen-commands/
+# subprocess.Popen
+#theproc = subprocess.Popen([sys.executable, "myscript.py"])
+# theproc.communicate()
+
+# legacy process - not recommended to use below
+# subprocess.call
+# subprocess.check_call
+# subprocess.check_output
