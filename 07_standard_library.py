@@ -496,7 +496,7 @@ print(numbers)                                  # output:[2, 4, 1, 5, 3]
 ### opening the browser ###
 # import webbrowser
 print("Deployment completed")
-# webbrowser.open("http://taobao.com")
+webbrowser.open("http://taobao.com")
 #
 #
 ### send emails ###
@@ -544,7 +544,7 @@ with smtplib.SMTP(host="smtp.gmail.com", port=587) as smtp:
     smtp.ehlo()         # initialize the connection
     smtp.starttls()     # puts smtp connection in TLS mode
     smtp.login("panco.cheong@gmail.com", "yvnnxqkezmtidobe")
-#    smtp.send_message(message)
+    smtp.send_message(message)
     print("Sent...")
 #
 #
@@ -686,8 +686,12 @@ else:
 #
 #
 ### run external program ###
+# http://queirozf.com/entries/python-3-subprocess-examples
+#
 # run "ls" in Linux / MacOS X
 # run "dir /ON" in Windows
+#
+# python 3.5+, should use subprocess.run()
 #
 #import sys
 #import subprocess
@@ -696,8 +700,13 @@ else:
 # text=True ==> use string instead of bytes
 # check=True ==> raise exception if return is non-zero
 #
-# completed = subprocess.run(["dir","/ON"], capture_output=True, text=True, check=True)
-completed = subprocess.run(r"notepad.exe C:\repos\Python\Programmer\init.txt")
+# As dir is simply a command understood by cmd.exe (or powershell.exe) then you could:
+
+
+completed = subprocess.run(
+    ["cmd", "/c", "dir", "/ON", r"c:\Users"], capture_output=True, text=True, check=True)
+# ,universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+# completed = subprocess.run(r"notepad.exe C:\repos\Python\Programmer\init.txt")
 # output:<class 'subprocess.CompletedProcess'>
 print(type(completed))
 # output:args: notepad.exe C:\repos\Python\Programmer\init.txt
