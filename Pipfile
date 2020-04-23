@@ -9,6 +9,7 @@ autopep8 = "*"
 
 [packages]
 requests = "==2.*"
+pancopackage = "*"
 
 [requires]
 python_version = "3.8"

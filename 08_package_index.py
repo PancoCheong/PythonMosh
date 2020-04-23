@@ -52,6 +52,7 @@
 # use it as module
 #
 #import requests
+from pancopackage import mymodule, myanothermodule
 import requests
 
 response = requests.get("http://google.com")
@@ -145,29 +146,13 @@ print(response)                 # output:<Response [200]>
 #
 # https://code.visualstudio.com/docs/python/environments
 #
-# just select the environment from the bottom left of status bar in VS Code
-# need to re-install autopep8 and pylint
-
-# in the .vscode
-# edit the settings.json
-#    "python.pythonPath": "C:\\Users\\panco\\.virtualenvs\\Programmer-b2xvsVMM\\Scripts\\python.exe"
-
-#
-# if you are using code-runner, Ctrl + , --> search edit in settings under code-runner
-# "code-runner.executorMap" section
-# replace the value of "python" key with
-# C:\Users\panco\.virtualenvs\Programmer-b2xvsVMM\Scripts\python.exe
-#
-# "python.pythonPath"
-# pipenv --venv
-#
 # get the path and add \Scripts\python.exe
 # C:\Users\panco.cheong\.virtualenvs\PythonMosh-OI8O7wJw\Scripts\python.exe
 #
-# for code-runner extension
+# if you are using code-runner extension
 # Preferences --> Settings (Ctrl+,)
 # search Edit in Settings.json
-# in section, replace python
+# in below section, replace the value of "python" key with
 # "code-runner.executorMap":
 # "python": "C:\Users\panco.cheong\.virtualenvs\PythonMosh-OI8O7wJw\Scripts\python.exe"
 #
@@ -320,3 +305,19 @@ print(response)                 # output:<Response [200]>
 ### install 3 packages ###
 # pip install setuptools wheel twine
 #
+#from pancopackage import mymodule, myanothermodule
+
+myanothermodule.displaymessage()
+# display = mymodule.displaymessage()
+# mymodule.displaymessage()
+#
+### view the documentation of math module ###
+# pydoc math
+# pydoc pancopackage
+#
+### convert document to HTML ###
+# pydoc -w pancopackage.mymodule
+#
+# host the document in web server
+# -p - port number
+# pydoc -p 8080
