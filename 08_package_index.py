@@ -127,4 +127,30 @@ print(response)                 # output:<Response [200]>
 #
 #
 ### Virtual Environment in VS Code ###
+# run the code in VS code
+# output:ModuleNotFoundError: No module named 'requests'
+# how to tell VS code the use virtual env
+#
+# in terminal
+# pipenv --venv
+# output:C:\Users\panco\.virtualenvs\Programmer-b2xvsVMM
+#
+# review the folder structure
+# explorer C:\Users\panco\.virtualenvs\Programmer-b2xvsVMM
+#
+# https://code.visualstudio.com/docs/python/environments
+#
+# just select the environment from the bottom left of status bar in VS Code
+# need to re-install autopep8 and pylint
 
+# in the .vscode
+# edit the settings.json
+#    "python.pythonPath": "C:\\Users\\panco\\.virtualenvs\\Programmer-b2xvsVMM\\Scripts\\python.exe"
+
+#
+# if you are using code-runner, Ctrl + , --> search edit in settings under code-runner
+# "code-runner.executorMap" section
+# replace the value of "python" key with
+# C:\Users\panco\.virtualenvs\Programmer-b2xvsVMM\Scripts\python.exe
+#
+# "python.pythonPath"
