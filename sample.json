@@ -1,0 +1,710 @@
+{
+    "businesses": [
+        {
+            "id": "KzRmCW_Fe7aW0qF3VjIOxg",
+            "alias": "next-level-barber-shop-new-york",
+            "name": "Next Level Barber Shop",
+            "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/3or7-J9_FYrV-CInL30HEg/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/next-level-barber-shop-new-york?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+            "review_count": 108,
+            "categories": [
+                {
+                    "alias": "barbers",
+                    "title": "Barbers"
+                }
+            ],
+            "rating": 5.0,
+            "coordinates": {
+                "latitude": 40.7207767983438,
+                "longitude": -73.9971691018524
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "396 Broome St",
+                "address2": null,
+                "address3": "",
+                "city": "New York",
+                "zip_code": "10013",
+                "country": "US",
+                "state": "NY",
+                "display_address": [
+                    "396 Broome St",
+                    "New York, NY 10013"
+                ]
+            },
+            "phone": "+12129666069",
+            "display_phone": "(212) 966-6069",
+            "distance": 1721.9766612788178
+        },
+        {
+            "id": "UywFXTRiPkuJZTuoJDg4yw",
+            "alias": "ace-of-cuts-barber-shop-new-york",
+            "name": "Ace of Cuts Barber Shop",
+            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/JvP3alqrvkiH-1iQqVkdjQ/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/ace-of-cuts-barber-shop-new-york?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+            "review_count": 420,
+            "categories": [
+                {
+                    "alias": "barbers",
+                    "title": "Barbers"
+                },
+                {
+                    "alias": "menshair",
+                    "title": "Men's Hair Salons"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.725089619932,
+                "longitude": -73.983141054002
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "518 E 6th St",
+                "address2": null,
+                "address3": "",
+                "city": "New York",
+                "zip_code": "10009",
+                "country": "US",
+                "state": "NY",
+                "display_address": [
+                    "518 E 6th St",
+                    "New York, NY 10009"
+                ]
+            },
+            "phone": "+16467073507",
+            "display_phone": "(646) 707-3507",
+            "distance": 2378.029945802448
+        },
+        {
+            "id": "Qio3-M43uqQlVobT8W_YZQ",
+            "alias": "rays-barber-shop-new-york-3",
+            "name": "Ray's Barber Shop",
+            "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/Whxcozy9uUxeVChVaeY2UQ/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/rays-barber-shop-new-york-3?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+            "review_count": 183,
+            "categories": [
+                {
+                    "alias": "barbers",
+                    "title": "Barbers"
+                }
+            ],
+            "rating": 4.5,
+            "coordinates": {
+                "latitude": 40.7133621734301,
+                "longitude": -74.0097856521606
+            },
+            "transactions": [],
+            "price": "$",
+            "location": {
+                "address1": "46 Park Pl",
+                "address2": "",
+                "address3": "",
+                "city": "New York",
+                "zip_code": "10007",
+                "country": "US",
+                "state": "NY",
+                "display_address": [
+                    "46 Park Pl",
+                    "New York, NY 10007"
+                ]
+            },
+            "phone": "+12122339233",
+            "display_phone": "(212) 233-9233",
+            "distance": 1574.881487423615
+        },
+        {
+            "id": "07ZguZroJRcaCbD9jNKWiQ",
+            "alias": "gentlemens-barbershop-brooklyn-3",
+            "name": "Gentlemen's Barbershop",
+            "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/-obf_Jk9jbOqiafA3f-uZg/o.jpg",
+            "is_closed": false,
+            "url": "https://www.yelp.com/biz/gentlemens-barbershop-brooklyn-3?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+            "review_count": 47,
+            "categories": [
+                {
+                    "alias": "barbers",
+                    "title": "Barbers"
+                }
+            ],
+            "rating": 5.0,
+            "coordinates": {
+                "latitude": 40.706861,
+                "longitude": -73.941686
+            },
+            "transactions": [],
+            "price": "$$",
+            "location": {
+                "address1": "205 Johnson Ave",
+                "address2": null,
+                "address3": null,
+                "city": "Brooklyn",
+                "zip_code": "11206",
+                "country": "US",
+                "state": "NY",
+                "display_address": ["205 
+Johnson Ave", "Brooklyn, NY 11206"]}, "phone": "+19174153266", "display_phone": "(917) 415-3266", "distance": 4437.20475711142}, {"id": "kV_FzSlq7xZUqLBwx5yiZQ", "alias": "the-barber-shop-forest-hills", "name": "The Barber Shop", "image_url": "https: //s3-media2.fl.yelpcdn.com/bphoto/jCt5-Q7JhDNqCTjdIdYosg/o.jpg", "is_closed": false, "url": "https://www.yelp.com/biz/the-barber-shop-forest-hills?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ", "review_count": 192, "categories": [{"alias": "barbers", "title": "Barbers"}], "rating": 5.0, "coordinates": {"latitude": 40.7206844, "longitude": -73.8461665}, "transactions": [], "price": "$", "location": {"address1": "70-23 Austin St", "address2": "Fl 2", "address3": "", "city": "Forest Hills", "zip_code": "11375", "country": "US", "state": "NY", "display_address": ["70-23 Austin St", "Fl 2", "Forest Hills, NY 11375"]}, "phone": "+13479608534", "display_phone": "(347) 960-8534", "distance": 12599.19622162163}, {"id": "ovFiMmPEpFGNSxVeVSO79A", "alias": "clinton-street-barber-shop-brooklyn", "name": "Clinton Street Barber Shop", "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/aseM3lkUR3jlafE4s5GiOg/o.jpg", "is_closed": false, "url": "https://www.yelp.com/biz/clinton-street-barber-shop-brooklyn?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ", "review_count": 129, "categories": [{"alias": "barbers", "title": "Barbers"}], "rating": 4.0, "coordinates": {"latitude": 40.6933908362841, "longitude": -73.9929823420606}, "transactions": [], "price": "$", "location": {"address1": "104 Clinton St", "address2": "", "address3": "", "city": "Brooklyn", "zip_code": "11201", "country": "US", "state": "NY", "display_address": ["104 Clinton St", "Brooklyn, NY 11201"]}, "phone": "+17187971247", "display_phone":  "(718) 797-1247", "distance": 1344.8931376732971
+                },
+                {
+                    "id": "X2ZN4g0eUNB9v3WdskNWvw",
+                    "alias": "the-kinsman-barber-shop-new-york",
+                    "name": "The Kinsman Barber Shop",
+                    "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/CubCgSJKY-AoI3w_wTt0sw/o.jpg",
+                    "is_closed": false,
+                    "url": "https://www.yelp.com/biz/the-kinsman-barber-shop-new-york?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+                    "review_count": 77,
+                    "categories": [
+                        {
+                            "alias": "barbers",
+                            "title": "Barbers"
+                        }
+                    ],
+                    "rating": 5.0,
+                    "coordinates": {
+                        "latitude": 40.7348751981047,
+                        "longitude": -73.9989576533729
+                    },
+                    "transactions": [],
+                    "price": "$$",
+                    "location": {
+                        "address1": "103 W 10th St",
+                        "address2": "",
+                        "address3": "",
+                        "city": "New York",
+                        "zip_code": "10011",
+                        "country": "US",
+                        "state": "NY",
+                        "display_address": [
+                            "103 W 10th St",
+                            "New York, NY 10011"
+                        ]
+                    },
+                    "phone": "+12122422226",
+                    "display_phone": "(212) 242-2226",
+                    "distance": 3296.0251582240935
+                },
+                {
+                    "id": "iOmP16yACxVQ_jicVQkfNQ",
+                    "alias": "premium-barber-shop-new-york-5",
+                    "name": "Premium Barber Shop",
+                    "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/gjzV_3VYV8QVthmV6HJBPg/o.jpg",
+                    "is_closed": false,
+                    "url": "https://www.yelp.com/biz/premium-barber-shop-new-york-5?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+                    "review_count": 357,
+                    "categories": [
+                        {
+                            "alias": "barbers",
+                            "title": "Barbers"
+                        },
+                        {
+                            "alias": "menshair",
+                            "title": "Men's Hair Salons"
+                        }
+                    ],
+                    "rating": 4.5,
+                    "coordinates": {
+                        "latitude": 40.7498601598133,
+                        "longitude": -73.975661277771
+                    },
+                    "transactions": [],
+                    "price": "$",
+                    "location": {
+                        "address1": "622 3rd Ave",
+                        "address2": "",
+                        "address3": "",
+                        "city": "New York",
+                        "zip_code": "10017",
+                        "country": "US",
+                        "state": "NY",
+                        "display_address": [
+                            "622 3rd Ave",
+                            "New York, NY 10017"
+                        ]
+                    },
+                    "phone": "+16466492235",
+                    "display_phone": "(646) 649-2235",
+                    "distance": 5182.301518603539
+                },
+                {
+                    "id": "LHQDC_9APBEWDjPW-upOwA",
+                    "alias": "barber-on-pearl-brooklyn",
+                    "name": "Barber on Pearl",
+                    "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/6i4d25UJmKKQlYKlhJVO6A/o.jpg",
+                    "is_closed": false,
+                    "url": "https://www.yelp.com/biz/barber-on-pearl-brooklyn?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+                    "review_count": 154,
+                    "categories": [
+                        {
+                            "alias": "barbers",
+                            "title": "Barbers"
+                        }
+                    ],
+                    "rating": 4.5,
+                    "coordinates": {
+                        "latitude": 40.7030122,
+                        "longitude": -73.9872762
+                    },
+                    "transactions": [],
+                    "price": "$",
+                    "location": {
+                        "address1": "57 Pearl St",
+                        "address2": "",
+                        "address3": "",
+                        "city": "Brooklyn",
+                        "zip_code": "11201",
+                        "country": "US",
+                        "state": "NY",
+                        "display_address": [
+                            "57 Pearl St",
+                            "Brooklyn, NY 11201"
+                        ]
+                    },
+                    "phone": "+17188553090",
+                    "display_phone": "(718) 855-3090",
+                    "distance": 650.4177837168791
+                },
+                {
+                    "id": "VpbZ9sKC1wbliSCcL5kbqQ",
+                    "alias": "mikes-barber-shop-manhattan",
+                    "name": "Mike's Barber Shop",
+                    "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/qswaajI6B9gPZgrkjFCXDw/o.jpg",
+                    "is_closed": false,
+                    "url": "https://www.yelp.com/biz/mikes-barber-shop-manhattan?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+                    "review_count": 72,
+                    "categories": [
+                        {
+                            "alias": "barbers",
+                            "title": "Barbers"
+                        }
+                    ],
+                    "rating": 4.5,
+                    "coordinates": {
+                        "latitude": 40.70972,
+                        "longitude": -74.00854
+                    },
+                    "transactions": [],
+                    "price": "$",
+                    "location": {
+                        "address1": "29 John St",
+                        "address2": "",
+                        "address3": "",
+                        "city": "Manhattan",
+                        "zip_code": "10038",
+                        "country": "US",
+                        "state": "NY",
+                        "display_address": [
+                            "29 John St",
+                            "Manhattan, NY 10038"
+                        ]
+                    },
+                    "phone": "+19174422100",
+                    "display_phone": "(917) 442-2100",
+                    "distance": 1288.7054901067584
+                },
+                {
+                    "id": "pa420Jt52zuHY7IkY_il1g",
+                    "alias": "11-broadway-barbershop-new-york",
+                    "name": "11 Broadway Barbershop",
+                    "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/GOzWUqrWvUkMg-Ob4RVk_A/o.jpg",
+                    "is_closed": false,
+                    "url": "https://www.yelp.com/biz/11-broadway-barbershop-new-york?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+                    "review_count": 122,
+                    "categories": [
+                        {
+                            "alias": "barbers",
+                            "title": "Barbers"
+                        },
+                        {
+                            "alias": "jewelryrepair",
+                            "title": "Jewelry Repair"
+                        },
+                        {
+                            "alias": "watch_repair",
+                            "title": "Watch Repair"
+                        }
+                    ],
+                    "rating": 4.5,
+                    "coordinates": {
+                        "latitude": 40.7052841186523,
+                        "longitude": -74.0142669677734
+                    },
+                    "transactions": [],
+                    "price": "$",
+                    "location": {
+                        "address1": "11 Broadway",
+                        "address2": "",
+                        "address3": "",
+                        "city": "New York",
+                        "zip_code": "10004",
+                        "country": "US",
+                        "state": "NY",
+                        "display_address": [
+                            "11 Broadway",
+                            "New York, NY 10004"
+                        ]
+                    },
+                    "phone": "+12122692599",
+                    "display_phone": "(212) 269-2599",
+                    "distance": 1658.5321372378096
+                },
+                {
+                    "id": "u2Lvm8mCo7-F9SZOlfjULQ",
+                    "alias": "lorimers-barber-shop-brooklyn",
+                    "name": "Lorimer's Barber Shop",
+                    "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/EictKJRQds41jLu-GwqKUA/o.jpg",
+                    "is_closed": false,
+                    "url": "https://www.yelp.com/biz/lorimers-barber-shop-brooklyn?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+                    "review_count": 148,
+                    "categories": [
+                        {
+                            "alias": "barbers",
+                            "title": "Barbers"
+                        }
+                    ],
+                    "rating": 4.5,
+                    "coordinates": {
+                        "latitude": 40.7173686,
+                        "longitude": -73.9497082
+                    },
+                    "transactions": [],
+                    "price": "$",
+                    "location": {
+                        "address1": "684 Lorimer St",
+                        "address2": null,
+                        "address3": "",
+                        "city": "Brooklyn",
+                        "zip_code": "11211",
+                        "country": "US",
+                        "state": "NY",
+                        "display_address": [
+                            "684 Lorimer St",
+                            "Brooklyn, NY 11211"
+                        ]
+                    },
+                    "phone": "+13477991978",
+                    "display_phone": "(347) 799-1978",
+                    "distance": 3984.934967924015
+                },
+                {
+                    "id": "l7J9qdzPJfaZJ9vsjk69-g",
+                    "alias": "the-stepping-razor-brooklyn-2",
+                    "name": "The Stepping Razor",
+                    "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/xosWxqtsklFTypkH76EwUA/o.jpg",
+                    "is_closed": false,
+                    "url": "https://www.yelp.com/biz/the-stepping-razor-brooklyn-2?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+                    "review_count": 91,
+                    "categories": [
+                        {
+                            "alias": "barbers",
+                            "title": "Barbers"
+                        }
+                    ],
+                    "rating": 4.5,
+                    "coordinates": {
+                        "latitude": 40.703081,
+                        "longitude": -73.932608
+                    },
+                    "transactions": [],
+                    "price": "$$",
+                    "location": {
+                        "address1": "952 Flushing Ave",
+                        "address2": "",
+                        "address3": "",
+                        "city": "Brooklyn",
+                        "zip_code": "11206",
+                        "country": "US",
+                        "state": "NY",
+                        "display_address": [
+                            "952 Flushing Ave",
+                            "Brooklyn, NY 11206"
+                        ]
+                    },
+                    "phone": "+19175867710",
+                    "display_phone": "(917) 586-7710",
+                    "distance": 5205.977767912291
+                },
+                {
+                    "id": "ln2FsIJJ7EK_EfA8e780wg",
+                    "alias": "on-the-mark-barbershop-new-york",
+                    "name": "On the Mark Barbershop",
+                    "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/hUSwZxCulmnHHwtsB_c_Aw/o.jpg",
+                    "is_closed": false,
+                    "url": "https://www.yelp.com/biz/on-the-mark-barbershop-new-york?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+                    "review_count": 445,
+                    "categories": [
+                        {
+                            "alias": "barbers",
+                            "title": "Barbers"
+                        }
+                    ],
+                    "rating": 4.5,
+                    "coordinates": {
+                        "latitude": 40.73069,
+                        "longitude": -73.98374
+                    },
+                    "transactions": [],
+                    "price": "$",
+                    "location": {
+                        "address1": "350 E 13th St",
+                        "address2": null,
+                        "address3": "",
+                        "city": "New York",
+                        "zip_code": "10003",
+                        "country": "US",
+                        "state": "NY",
+                        "display_address": [
+                            "350 E 13th St",
+                            "New York, NY 10003"
+                        ]
+                    },
+                    "phone": "+12123004740",
+                    "display_phone": "(212) 300-4740",
+                    "distance": 2948.6633101684165
+                },
+                {
+                    "id": "_zfmlfS1CMd7G-RhuJY02A",
+                    "alias": "premium-barber-shop-new-york-9",
+                    "name": "Premium Barber Shop",
+                    "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/1JJ-gjdWr3wyzqp1DnNw7w/o.jpg",
+                    "is_closed": false,
+                    "url": "https://www.yelp.com/biz/premium-barber-shop-new-york-9?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+                    "review_count": 251,
+                    "categories": [
+                        {
+                            "alias": "barbers",
+                            "title": "Barbers"
+                        },
+                        {
+                            "alias": "menshair",
+                            "title": "Men's Hair Salons"
+                        }
+                    ],
+                    "rating": 4.5,
+                    "coordinates": {
+                        "latitude": 40.7561022788286,
+                        "longitude": -73.9674228429794
+                    },
+                    "transactions": [],
+                    "price": "$",
+                    "location": {
+                        "address1": "299 E 52nd St",
+                        "address2": null,
+                        "address3": "",
+                        "city": "New York",
+                        "zip_code": "10022",
+                        "country": "US",
+                        "state": "NY",
+                        "display_address": [
+                            "299 E 52nd St",
+                            "New York, NY 10022"
+                        ]
+                    },
+                    "phone": "+12129353066",
+                    "display_phone": "(212) 935-3066",
+                    "distance": 6070.851322024537
+                },
+                {
+                    "id": "ajQZcZeRZjWTJ_u1UeXsOg",
+                    "alias": "72nd-street-barber-shop-manhattan",
+                    "name": "72nd Street Barber Shop",
+                    "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/hPwQ6Q_1ycz9ZGf9N4S5Tw/o.jpg",
+                    "is_closed": false,
+                    "url": "https://www.yelp.com/biz/72nd-street-barber-shop-manhattan?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+                    "review_count": 100,
+                    "categories": [
+                        {
+                            "alias": "barbers",
+                            "title": "Barbers"
+                        }
+                    ],
+                    "rating": 4.5,
+                    "coordinates": {
+                        "latitude": 40.77749,
+                        "longitude": -73.97822
+                    },
+                    "transactions": [],
+                    "price": "$",
+                    "location": {
+                        "address1": "49 W 72nd St",
+                        "address2": null,
+                        "address3": "",
+                        "city": "Manhattan",
+                        "zip_code": "10023",
+                        "country": "US",
+                        "state": "NY",
+                        "display_address": [
+                            "49 W 72nd St",
+                            "Manhattan, NY 10023"
+                        ]
+                    },
+                    "phone": "+16463987900",
+                    "display_phone": "(646) 398-7900",
+                    "distance": 8118.6828073490005
+                },
+                {
+                    "id": "vnqOqaXi_3v1IV-ltBS6ow",
+                    "alias": "xtreme-cuts-barber-shop-new-york",
+                    "name": "Xtreme Cuts Barber Shop",
+                    "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/BtKJjOPk_DjsUnQJIsozng/o.jpg",
+                    "is_closed": false,
+                    "url": "https://www.yelp.com/biz/xtreme-cuts-barber-shop-new-york?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+                    "review_count": 137,
+                    "categories": [
+                        {
+                            "alias": "barbers",
+                            "title": "Barbers"
+                        }
+                    ],
+                    "rating": 4.5,
+                    "coordinates": {
+                        "latitude": 40.72463,
+                        "longitude": -74.003585
+                    },
+                    "transactions": [],
+                    "price": "$",
+                    "location": {
+                        "address1": "79 Sullivan St",
+                        "address2": null,
+                        "address3": "",
+                        "city": "New York",
+                        "zip_code": "10012",
+                        "country": "US",
+                        "state": "NY",
+                        "display_address": [
+                            "79 Sullivan St",
+                            "New York, NY 10012"
+                        ]
+                    },
+                    "phone": "+16466492568",
+                    "display_phone": "(646) 649-2568",
+                    "distance": 2272.4880415139805
+                },
+                {
+                    "id": "G5NhkLfF1Fh0soBvGNWmMA",
+                    "alias": "fire-cutz-brooklyn-2",
+                    "name": "Firecutz",
+                    "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/52iuqTnI64zamDIOq_yDYg/o.jpg",
+                    "is_closed": false,
+                    "url": "https://www.yelp.com/biz/fire-cutz-brooklyn-2?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+                    "review_count": 50,
+                    "categories": [
+                        {
+                            "alias": "barbers",
+                            "title": "Barbers"
+                        }
+                    ],
+                    "rating": 4.5,
+                    "coordinates": {
+                        "latitude": 40.63036,
+                        "longitude": -74.02259
+                    },
+                    "transactions": [],
+                    "price": "$",
+                    "location": {
+                        "address1": "476 74th St",
+                        "address2": "",
+                        "address3": "",
+                        "city": "Brooklyn",
+                        "zip_code": "11209",
+                        "country": "US",
+                        "state": "NY",
+                        "display_address": [
+                            "476 74th St",
+                            "Brooklyn, NY 11209"
+                        ]
+                    },
+                    "phone": "+17189217280",
+                    "display_phone": "(718) 921-7280",
+                    "distance": 8684.931316489197
+                },
+                {
+                    "id": "Ic1z8ot6t7rJtaJD2VzgRw",
+                    "alias": "rafaels-barbershop-vintage-new-york",
+                    "name": "Rafaels Barbershop Vintage",
+                    "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/8VyenLDcmq6u3emymuSlnQ/o.jpg",
+                    "is_closed": false,
+                    "url": "https://www.yelp.com/biz/rafaels-barbershop-vintage-new-york?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+                    "review_count": 358,
+                    "categories": [
+                        {
+                            "alias": "barbers",
+                            "title": "Barbers"
+                        }
+                    ],
+                    "rating": 4.5,
+                    "coordinates": {
+                        "latitude": 40.7282763,
+                        "longitude": -73.9853674
+                    },
+                    "transactions": [],
+                    "price": "$",
+                    "location": {
+                        "address1": "350 E 9th St",
+                        "address2": "",
+                        "address3": "",
+                        "city": "New York",
+                        "zip_code": "10003",
+                        "country": "US",
+                        "state": "NY",
+                        "display_address": [
+                            "350 E 9th St",
+                            "New York, NY 10003"
+                        ]
+                    },
+                    "phone": "+12122538856",
+                    "display_phone": "(212) 253-8856",
+                    "distance": 2647.844763008872
+                },
+                {
+                    "id": "7PIwxaGoHpTQWUn67guMNg",
+                    "alias": "otis-and-finn-barbershop-long-island-city",
+                    "name": "Otis & Finn Barbershop",
+                    "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/mx0kXlDog1V5AkieeDfGWQ/o.jpg",
+                    "is_closed": false,
+                    "url": "https://www.yelp.com/biz/otis-and-finn-barbershop-long-island-city?adjust_creative=nQ9X_ceimFxg4wNafc3mHQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=nQ9X_ceimFxg4wNafc3mHQ",
+                    "review_count": 83,
+                    "categories": [
+                        {
+                            "alias": "barbers",
+                            "title": "Barbers"
+                        }
+                    ],
+                    "rating": 5.0,
+                    "coordinates": {
+                        "latitude": 40.7453804,
+                        "longitude": -73.9447098
+                    },
+                    "transactions": [],
+                    "price": "$$",
+                    "location": {
+                        "address1": "45-22 Pearson St",
+                        "address2": "",
+                        "address3": "Court Square",
+                        "city": "Long Island City",
+                        "zip_code": "11101",
+                        "country": "US",
+                        "state": "NY",
+                        "display_address": [
+                            "45-22 Pearson St",
+                            "Court Square",
+                            "Long Island City, NY 11101"
+                        ]
+                    },
+                    "phone": "+17183922327",
+                    "display_phone": "(718) 392-2327",
+                    "distance": 6106.710036274012
+                }
+            ],
+            "total": 2800,
+            "region": {
+                "center": {
+                    "longitude": -73.99429321289062,
+                    "latitude": 40.70544486444615
+                }
+            }
+        }

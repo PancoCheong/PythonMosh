@@ -298,7 +298,7 @@ print(response)                 # output:<Response [200]>
 #
 ### register account in pypi.org ###
 # hotmail
-# R@llie65
+# R@lli<car>
 ##
 
 ### publish package to pypi.org ###

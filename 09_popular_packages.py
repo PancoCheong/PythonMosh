@@ -1,0 +1,342 @@
+# 09_popular_packages.py
+#
+# Application Programming Interface API - endpoint of application for exchange data
+# REST - a bunch of conventionns of rules and conventions that we have to follow to build or consume API for exchange data.
+#
+# gmail
+#
+# Request URL: https://www.yelp.com/developers/documentation/v3/business_search
+# Request Method: GET
+# Status Code: 200
+# Remote Address: 104.16.57.23:443
+# Referrer Policy: no-referrer-when-downgrade
+#
+## Response Headers ##
+# cache-control: max-age=0, must-revalidate, no-cache, no-store, private
+# cache-control: no-transform
+# cf-cache-status: DYNAMIC
+# cf-ray: 588bd55efa4aaff0-MFM
+# cf-request-id: 024b43af5d0000aff0f3af3200000001
+# content-encoding: gzip
+#
+#
+### Google search: Yelp API ###
+### Yelp Fusion --> Documentation ###
+# https://www.yelp.com/developers/documentation/v3/business_search
+#
+# 1. Create App (Menu item under General on the left)
+#     (VPN to US or HK to create and get the key)
+#
+# Business Endpoints --> Business Search
+# https://www.yelp.com/developers/documentation/v3/business_search
+# GET https://api.yelp.com/v3/businesses/search
+
+import PyPDF2
+from selenium import webdriver
+from bs4 import BeautifulSoup
+from twilio.rest import Client
+import config
+import requests
+url = "https://api.yelp.com/v3/businesses/search"
+# move to config.py
+# #api_key = "dsfasdddddasfsf-afdsfafasffa"
+headers = {
+    "Authorization": "Bearer " + config.api_key
+}
+params = {
+    "term": "Barber",
+    "location": "NYC"
+}
+response = requests.get(url, headers=headers, params=params)
+print(response)         # http response code
+# print(response.text)    # http response payload body
+#
+# output:<Response [400]>           #Bad Request
+# output:<Response [401]>           #Bad Request
+# output: {"businesses": [{"id": "KzRmCW_Fe7aW0qF3VjIOxg", "alias": "next-level-barber-shop-new-york", "name": "Next Level Barber Shop", "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/3or7-J9_FYrV-CInL30HEg/o.jpg", "is_closed": false, "url": "https://www.yelp.com/
+
+
+# Introduction --> Authenticate --> authentication guide
+# https://www.yelp.com/developers/documentation/v3/authentication
+#
+# Create an app to obtain your private API Key.
+# Authenticate API calls with the API Key.
+# -    set the "Authorization" HTTP header value as Bearer API_KEY.
+# VPN US IP: 199.187.211.100
+#
+businesses = response.json()["businesses"]    # convert JSON to dictionary
+# print(businesses)
+#
+# output: [{'id': 'KzRmCW_Fe7aW0qF3VjIOxg', 'alias': 'next-level-barber-shop-new-york', 'name': 'Next Level Barber Shop', 'image_url': 'https://s3-media3.fl.yelpcdn.com/bphoto/3or7-J9_FYrV-CInL30HEg/o.jpg', 'is_closed': False, 'url': 'https://www.yelp.com/
+#
+#
+for business in businesses:
+    print(business["rating"], " - ", business["name"])
+#
+# use list comprehension
+# [item for item in list if condition]
+# business with rating > 4.5
+names = [business["name"]
+         for business in businesses if business["rating"] > 4.5]
+print(names)
+#
+#
+### hiding API keys ###
+## don't store API key in source code ##
+# put the key in separate file and exclude it from the git #
+# ie. move api_key to config.py
+#
+#import config
+# reference the variable
+# config.api_key
+# put the name "config.py" in .gitignore file
+#
+#
+### use twilio to send SMS Text messaging ###
+# support Voice, SMS, Video call and WhatsApp messaging #
+# 1. use http requests to call API
+# 2. use library in pip or pipenve, a wrapper around the API
+# and it encapsulate all that http communcation,
+# so you don't need to handle when to use GET, POST, PUT, DELETE etc
+#
+# sign up account: https://www.twilio.com/try-twilio
+# hotmail
+# nism@sky1ine<CAR>
+#
+# Phone Numbers --> Get Started --> Get your first Twilio phone number
+# +1 224 442 9684
+#
+# in terminal
+# pipenv install twilio
+#
+#from twilio.rest import Client
+#
+# move to config.py
+# account_sid = "adsfdfsafsa"
+# auth_token = "aafdsfadsf"
+client = Client(config.account_sid, config.auth_token)
+# client.calls
+# client.voice
+# client.fax
+# client.chat
+#
+# from_ has underscore
+#
+# call = client.messages.create(
+#     to="+85366801224",
+#     from_="+12244429684",
+#     body="This message is sent from Python application from my Laptop by using Twilio"
+# )
+
+# print("created:", call.date_created, " sent:",
+#       call.date_sent, " update:", call.date_updated)
+#
+#
+### web scraping ###
+# extract the data from HTML webpage #
+#
+# extract questions from stackoverflow
+# https://stackoverflow.com/questions
+#
+# package to extract info from HTML or XML
+# pipenv install beautifulsoup4
+#
+# HTTP requests
+# pipenv install requests
+#
+# import requests
+#from bs4 import BeautifulSoup
+response = requests.get("https://stackoverflow.com/questions")
+soup = BeautifulSoup(response.text, "html.parser")
+#
+# google chrome, inspect the question
+#
+#  <div id="questions" ...
+#      <div class="question-summary" ...
+#          <div class="summary" ...
+#               <h3>
+#                   <a href="...." class="question-hyperlink"> QUESTION </a>
+#
+# select the CSS element:   . class    # id
+questions = soup.select(".question-summary")
+print(type(questions[0]))               # output:<class 'bs4.element.Tag'>
+# output:{'class': ['question-summary'], 'id': 'question-summary-61403882'}
+print(questions[0].attrs)               # <class 'dict'>
+#
+# not recommended, throw exception if the attribute is not found
+# print(questions[0]["id"])               # output:question-summary-61403938
+# safer way to use get() and supply the default value if not found
+print(questions[0].get("id", 0))        # output:question-summary-61403938
+#
+# output:[<a class="question-hyperlink" href="/questions/61404033/python-property-in-self-defined-object-can-not-update-using-self-setattr">Python property in self defined object can not update, using self.__setattr__</a>]
+print(questions[0].select(".question-hyperlink"))
+#
+# select one only
+# output:<a class="question-hyperlink" href="/questions/61404033/python-property-in-self-defined-object-can-not-update-using-self-setattr">Python property in self defined object can not update, using self.__setattr__</a>
+print(questions[0].select_one(".question-hyperlink"))
+#
+# get the text inside <tag>text</tag>
+# output:Python property in self defined object can not update, using self.__setattr__
+print(questions[0].select_one(".question-hyperlink").getText())
+#
+print("----- questions -----")
+for question in questions:
+    print(question.select_one(".question-hyperlink").getText())
+    print(question.select_one(".vote-count-post").getText())
+#
+#
+### Browser Automation ###
+## selenium ##
+# pipenv install selenium
+#
+# download the driver for each browser (manually download)
+# https://pypi.org/project/selenium/
+#
+# scroll down to Drivers
+# Chrome:	https://sites.google.com/a/chromium.org/chromedriver/downloads
+# Edge:	https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
+# Firefox:	https://github.com/mozilla/geckodriver/releases
+# Safari:	https://webkit.org/blog/6900/webdriver-support-in-safari-10/
+#
+# extract the chromedriver.exe to local folder in the PATH
+# Windows: C:\Windows\system32
+# MacOSX: /usr/local/bin
+# from selenium import webdriver
+
+# test the github login process
+browser = webdriver.Chrome()
+browser.get("https://github.com")
+# find the HTML element by class, id, name and
+#
+# <a href="/login" class="HeaderMenu-link no-underline mr-3"
+# data-hydro-click="{&quot;event_type&quot;:&quot;authentication.click&quot;,&quot;payload&quot;
+# :{&quot;location_in_page&quot;:&quot;site header menu&quot;,&quot;repository_id&quot;
+# :null,&quot;auth_type&quot;:&quot;SIGN_UP&quot;,&quot;originating_url&quot;
+# :&quot;https://github.com/&quot;,&quot;user_id&quot;:null}}"
+# data-hydro-click-hmac="cd4f672ed9a2fa51ea92c28de162e81edb2d11a2aad6884ec89a6d60b21b1cfb"
+# data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in">
+#          Sign&nbsp;in
+# </a>
+#
+### class is not unique ###
+### no id ###
+### no name ###
+### can only use text ###
+#
+signin_link = browser.find_element_by_link_text("Sign in")    # case sensitive
+signin_link.click()
+
+#
+# <input type="text" name="login" id="login_field"
+# class="form-control input-block" tabindex="1" autocapitalize="off"
+# autocorrect="off" autocomplete="username" autofocus="autofocus">
+#
+### id is unique - login_field ###
+#
+# <input type="password" name="password" id="password"
+# class="form-control form-control input-block" tabindex="2"
+# autocomplete="current-password">
+#
+### id is unique - password ###
+#
+username_box = browser.find_element_by_id("login_field")
+username_box.send_keys("pancocheong")
+password_box = browser.find_element_by_id("password")
+password_box.send_keys("skyl1neR")
+password_box.submit()
+#
+# validate if the page is correct
+# do assertion
+#
+# throw exception if the content is not found
+# the word PancoCheong is in the HTML source page
+# assert "PancoCheongXXX" in browser.page_source
+# output:assert "PancoCheongXXX" in browser.page_source
+#        AssertionError
+assert "PancoCheong" in browser.page_source
+print("Use generic way to assert the function")
+#
+#
+# Inspect the drop down menu
+#
+# <a role="menuitem" class="no-underline user-profile-link px-3 pt-2 pb-2 mb-n2 mt-n1 d-block"
+# href="/PancoCheong" data-ga-click="Header, go to profile, text:Signed in as">
+# Signed in as
+# <strong class="css-truncate-target">PancoCheong</strong>
+# </a>
+#
+### class has unique - user-profile-link ###
+#
+# use specific way to do assertion
+profile_link = browser.find_element_by_class_name("user-profile-link")
+# output:profile_link: <selenium.webdriver.remote.webelement.WebElement (session="bcdd2279ca8d668079729a48fb0ac95c", element="f68c13d9-da3a-47db-989a-f5a003b95e45")>
+print("profile_link:", profile_link)
+link_label = profile_link.get_attribute(
+    "innerHTML")  # extract the Text inside <HTML Tag>
+# output:link_label Signed in as <strong class="css-truncate-target">PancoCheong</strong>
+print("link_label:", link_label)
+assert "PancoCheong" in link_label
+print("use specific way to assert the function")
+#
+# google search: Python Selenium
+# https://selenium-python.readthedocs.io/
+# recommended to read: Waits and Page Objects
+#
+# close the browser
+browser.quit()
+#
+#
+#
+### working with PDF ###
+# pipenv install pypdf2
+#
+# import PyPDF2
+with open("first.pdf", "rb") as file:   # read and binary mode
+    # pass in File stream (in binary mode)
+    reader = PyPDF2.PdfFileReader(file)
+    print(reader.numPages)              # output:1
+    page = reader.getPage(0)            # page index starts 0
+    # extract text (output text is a mess, not working)
+    print(page.extractText())
+    # below change is in memory
+    # page.rotateClockwise(90)              # rotate angle
+    # page.rotateCounterClockwise(90)     # rotate angle
+    # page.scale(1.5, 1.5)                # scale by x, y factor
+    # page.scaleBy(1.5)                   # scale by single factor
+    # page.scaleTo(100, 200)              # scale to width, height
+#
+    # add watermark to page
+    with open("watermark.pdf", "rb") as watermarkfile:
+        watermark = PyPDF2.PdfFileReader(watermarkfile)
+        page.mergePage(watermark.getPage(0))
+
+    #
+        writer = PyPDF2.PdfFileWriter()     #
+        writer.addPage(page)                # append to the end of file
+        # writer.insertBlankPage(0)           # index = 0 (1st page)
+        # writer.insertPage(page, 0)  # index = 0 (1st page)
+    #
+    #   write change to file
+        with open("approved.pdf", "wb") as output:   # write, binary
+            writer.write(output)
+
+### rotate all pages ###
+# for pagenum in range(pdfReader.numPages):
+#         page = pdfReader.getPage(pagenum)
+#         page.rotateClockwise(rotation)
+#         pdfWriter.addPage(page)
+#
+# alternative PDF package:
+# https://github.com/jalan/pdftotext
+#
+### merge 2 PDF files ###
+merger = PyPDF2.PdfFileMerger()
+files_names = ["first.pdf", "second.pdf"]
+for file_name in files_names:
+    merger.append(file_name)
+merger.write("combined.pdf")
+#
+#
+#
+### Working with Excel ###
+# pipenv install openpyxl
