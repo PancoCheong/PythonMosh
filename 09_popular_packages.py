@@ -31,6 +31,9 @@
 # https://www.yelp.com/developers/documentation/v3/business_search
 # GET https://api.yelp.com/v3/businesses/search
 
+import random
+import numpy as np
+import openpyxl
 import PyPDF2
 from selenium import webdriver
 from bs4 import BeautifulSoup
@@ -339,4 +342,188 @@ merger.write("combined.pdf")
 #
 #
 ### Working with Excel ###
+# https://openpyxl.readthedocs.io/en/stable/
+#
 # pipenv install openpyxl
+#
+#import openpyxl
+
+# either create an empty workbook
+# wb = openpyxl.Workbook()
+#
+# or load the existing workbook
+wb = openpyxl.load_workbook("transactions.xlsx")
+print(wb.sheetnames)        # output:['Sheet1']
+sheet = wb["Sheet1"]        # case sensitive
+#
+#
+sheetnames = wb.sheetnames
+ws = wb[sheetnames[0]]      # load first worksheet
+print(ws)                   # output:<Worksheet "Sheet1">
+ws = wb.active              # load active worksheet
+print(ws)                   # output:<Worksheet "Sheet1">
+
+# copy workbook
+source = wb.active
+target = wb.copy_worksheet(source)
+#
+# create new worksheet
+# index 0 - put it before existing worksheet
+ws1 = wb.create_sheet("MyNewSheet", 0)
+ws2 = wb.create_sheet("Sheet2")           # put it after existing worksheets
+ws3 = wb.create_sheet("Penultimate", -1)       # put it on 2nd last
+# remove worksheet
+# wb.remove_sheet("Sheet2")
+wb.remove(ws3)      # use object, not sheet name
+#
+# change sheet tab color (RRGGBB)
+ws1.sheet_properties.tabColor = "FFA500"
+#
+cell = sheet["a1"]
+print("value:", cell.value)         # output:value:transaction_id
+# change cell value
+# cell.value = "new value"
+#
+print("row:", cell.row)                  # output:row:1
+print("column:", cell.column)            # output:column:A
+print("coordinate:", cell.coordinate)    # output:coordinate:A1
+#
+# other way to access the cell - easier to iterate
+# cell = sheet.cell(1,1)                 # row and column numbers
+cell = sheet.cell(row=1, column=1)       # same as sheet["a1"]
+#
+print("max_row:", sheet.max_row)         # output:max_row:4
+print("max_column:", sheet.max_column)   # output:max_column:3
+#
+# range() - index start by 0 by default (if single parameter)
+# last index is excluded, add 1 to access it
+for row in range(1, sheet.max_row + 1):
+    for column in range(1, sheet.max_column + 1):
+        cell = sheet.cell(row, column)
+        # output:transaction_id product_id .... 1003 3 7.95
+        print(cell.value)
+#
+# or use iter_rows()
+for row in sheet.iter_rows(min_row=1, max_row=3,
+                           min_col=1, max_col=2):
+    for cell in row:
+        # output:<Cell 'Sheet1'.A1> <Cell 'Sheet1'.B1> ... <Cell 'Sheet1'.A3> <Cell 'Sheet1'.B3>
+        print(cell)
+
+# all the cell in a column (tuple)
+column_a = sheet["a"]       # tuple
+# output:(<Cell 'Sheet1'.A1>, <Cell 'Sheet1'.A2>, <Cell 'Sheet1'.A3>, <Cell 'Sheet1'.A4>)
+print(column_a)
+cells = sheet["a:c"]        # tuple of tuple, each tuple is 1 column
+# output:((<Cell 'Sheet1'.A1>, <Cell 'Sheet1'.A2>, <Cell 'Sheet1'.A3>, <Cell 'Sheet1'.A4>), (<Cell 'Sheet1'.B1>, <Cell 'Sheet1'.B2>, <Cell 'Sheet1'.B3>, <Cell 'Sheet1'.B4>), ( ....
+print(cells)
+cell_range = sheet["a1:c3"]  # tuple of tuple, each tuple is 1 column
+# output:((<Cell 'Sheet1'.A1>, <Cell 'Sheet1'.B1>, <Cell 'Sheet1'.C1>), (<Cell 'Sheet1'.A2>, <Cell 'Sheet1'.B2>, <Cell 'Sheet1'.C2>),
+print(cell_range)
+
+# all the cells in row 1
+sheet[1]
+# all the cells in 1st 3 rows
+sheet[1:3]
+
+# append a row at the end, parameter=list of values
+sheet.append([1, 2, 3])
+sheet.insert_rows(1)        # insert 1 row at 1st row
+sheet.insert_cols(2, 3)      # at 2 column, insert 4 columns
+sheet.delete_rows(4)        # delete row 4
+sheet.delete_cols(3, 1)      # at 3 column, delete 1 column
+#
+# print all title
+for sheet in wb:
+    # output:MyNewSheet Sheet1 Sheet1 Copy Sheet2
+    print(sheet.title, end=" ")
+print("")
+# save it as new file
+wb.save("transactions2.xlsx")
+#
+#
+### Command Query Separation Principle ###
+# query command should never update the state of object #
+#
+wb = openpyxl.load_workbook("transactions.xlsx")
+sheet = wb["Sheet1"]        # case sensitive
+for row in range(1, 10):
+    cell = sheet.cell(row, 1)
+    # output:transaction_id 1001 1002 1003 None None None None None
+    print(cell.value)
+sheet.append([1, 2, 3])
+wb.save("transactions3.xlsx")
+#
+# 5 empty rows are added before the appened rows - non-expected behavior
+#
+#
+### NumPy ###
+# just like generic type of list - store only single data type
+# process faster and use less memory
+# most frequent used package for data analytic
+#
+# pipenv install numpy
+#
+# import numpy as np
+# 1-D array
+array = np.array([1, 2, 3])
+print(array)
+print(type(array))
+# 2-D array - aka. matrix
+array_2d = np.array([[1, 2, 3], [4, 5, 6]])     # 2 rows and 3 columns
+print(array_2d)
+print(array_2d.shape)                           # output:(2, 3)
+
+# array with all zero value (floating number by default)
+array = np.zeros((3, 4))                # shape = 3 rows, 4 columns
+print(array)
+#
+array = np.zeros((3, 4), dtype=int)     # change data type
+print(array)
+#
+# array with all value of 1
+array = np.ones((3, 4))                 # shape = 3 rows, 4 columns
+print(array)
+
+#
+# array with all value of specified number 99
+array = np.full((3, 4), 99, dtype=int)   # shape = 3 rows, 4 columns
+print(array)
+#
+# import random
+#
+# array with random value between 0 and 1
+array = np.random.random((3, 4))
+print(array)
+#
+# access the matrix
+print(array[0, 0])
+#
+# conditional check on each item
+print(array > 0.4)      # output: bool
+#
+# filter the output (only > 0.4)
+print(array[array > 0.4])
+#
+# sum of all items
+print(np.sum(array))
+# math functions
+print(np.floor(array))
+print(np.ceil(array))
+print(np.round(array))
+#
+first = np.array([[1, 2, 3], [4, 5, 6]])
+second = np.array([[11, 12, 13], [14, 15, 16]])
+print(first + second)   # add position by position (ie. 1+11, 2+12)
+print(first * 3)        # multiple each item
+#
+# eg. convert inch to cm
+numbers_inch = np.array([1, 2, 3])
+numbers_cm = numbers_inch * 2.54
+print(numbers_cm)
+#
+# use standard Python list comprehension
+numbers_inch = [1, 2, 3]
+numbers_cm = [number * 2.54 for number in numbers_inch]
+print(numbers_cm)
+#
