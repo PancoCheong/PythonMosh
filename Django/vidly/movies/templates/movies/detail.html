@@ -1,0 +1,13 @@
+{% extends 'base.html' %} {% block content %}
+<!--Ctrl+Shift+P Change Language Mode to HTML, zen coding: dl>(dt+dd)*3-->
+<dl>
+  <dt>Title</dt>
+  <dd>{{ movie.title }}</dd>
+  <dt>Genre</dt>
+  <dd>{{ movie.genre }}</dd>
+  <dt>Stock</dt>
+  <dd>{{ movie.number_in_stock }}</dd>
+</dl>
+
+{% endblock %}
+<!-- input non-existed id, see error in HTML, Error type DoesNotExist-->

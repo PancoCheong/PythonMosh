@@ -16,6 +16,10 @@ selenium = "*"
 pypdf2 = "*"
 openpyxl = "*"
 numpy = "*"
+django = "==3.0.5"
+django-tastypie = "*"
+gunicorn = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.8"
