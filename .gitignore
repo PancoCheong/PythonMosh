@@ -1,2 +1,5 @@
 .mypy_cache
 config.py
+static/admin/*
+__pycache__
+*.pyc

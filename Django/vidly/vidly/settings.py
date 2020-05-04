@@ -25,7 +25,7 @@ SECRET_KEY = '&xv5y$^dh%r2va2&5oixzjosj1cmhp5njztp_gf!=5spme6qjc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['powerful-harbor-76075.herokuapp.com']
 
 
 # Application definition
