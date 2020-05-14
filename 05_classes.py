@@ -1,6 +1,7 @@
-### Class ###
+### 05_class.py ###
 from collections import namedtuple
 from abc import ABC, abstractmethod
+#
 numbers = [1, 2]
 numbers.append(3)
 print(type(numbers))            # output:<class 'list'>
@@ -17,8 +18,11 @@ print(type(numbers))            # output:<class 'list'>
 # Object: instance of a class.                  eg. John, Mary, Jack
 #
 # convention: use Pascal case, no underscoe. eg. MyPoint
-# all function in a class should have at least ONE parameter
+# all functions (aka. method) in a class should have at least ONE parameter
 # by convention, it calls self
+#
+# when run command below, it generates a module (aka. package) name __main__
+# python 05_class.py
 #
 
 
@@ -30,9 +34,9 @@ class MyPoint:
 #
 point = MyPoint()
 point.draw()                        # output:draw
-print(type(point))                  # output:<class '__main__.Point'>
+print(type(point))                  # output:<class '__main__.MyPoint'>
 #                                   # __main__ is the name of the module
-# check type
+# check type (aka. class)
 print(isinstance(point, MyPoint))   # output:True
 print(isinstance(point, int))       # output:False
 #
@@ -41,7 +45,7 @@ print(isinstance(point, int))       # output:False
 # when initialize a class, Python will internally create the object in memory,
 # and set itself reference to that object
 #
-# Python will submit the self parameter for you
+# Python will submit the 'self' parameter for you
 #
 
 
@@ -52,19 +56,21 @@ class Point:
         self.x = x
         self.y = y
 
-    # override __str__()
+    # by default, it prints is class type
+    # override __str__() to print your values
     def __str__(self):
         return f"Point ({self.x}, {self.y})"
 
-    # override __eq__()
+    # by default, it compares memory address of two objects
+    # override __eq__() to compare its values
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y
 
-    # override __gt__()
+    # override __gt__() to compare its values
     def __gt__(self, other):
         return self.x > other.x and self.y > other.y
 
-    # override __add__()
+    # override __add__() to calculate the value of two objects
     def __add__(self, other):
         return Point(self.x + other.x, self.y + other.y)
 
@@ -75,7 +81,7 @@ class Point:
     # by convention, use cls as 1st parameter
     @classmethod
     def zero(cls):
-        return cls(0, 0)       # call the constructor
+        return cls(0, 0)            # call the constructor
 
 
 #
@@ -92,7 +98,9 @@ Point.default_color = "yellow"
 #
 point2 = Point(3, 4)                # create one more object
 point2.draw()                       # output:Point (3, 4)
+# class
 print(Point.default_color)          # output:yellow
+# objects - note: point was created before change to yellow
 print(point.default_color)          # output:yellow
 print(point2.default_color)         # output:yellow
 #
@@ -112,38 +120,42 @@ point.draw()                        # output:Point (0, 0)
 ## magic methods ##
 # google search:python 3 magic methods
 # https://rszalski.github.io/magicmethods/
+#
 # section: Representing your Classes
-# print(point)      # output:<__main__.Point object at 0x000001EEC04C4100>
-# override point.__str__() magic method
-print(point)        # output:Point (0, 0)
+# print(point)                      # output:<__main__.Point object at 0x000001EEC04C4100>
+#
+# override point.__str__() magic method to print its values
+print(point)                        # output:Point (0, 0)
 #
 ### comparing object ###
 point1 = Point(1, 2)
 point2 = Point(1, 2)
-# no equal because reference to different memory address
-# print(point1 == point2)       # output:False
+#
+# not equal because reference to different memory address
+# print(point1 == point2)           # output:False
+#
 # equal because reference to same memory address
-# point3 = point2
-# print(point3 == point2)       # output:True
+point3 = point2
+# print(point3 == point2)           # output:True
 #
 # how to compare by value?
 # section: Comparison magic methods
 # override __eq__() magic method
 #
-print(point1 == point2)         # output:True
+print(point1 == point2)             # output:True
 point3 = Point(3, 4)
-print(point3 == point2)         # output:False
+print(point3 == point2)             # output:False
 #
-# how to implement: print(point3 > point2)
+# how to implement: print(point3 > point2) by comparing values
 # override __gt__()
-print(point3 > point2)          # output:True
+print(point3 > point2)              # output:True
 # __gt__ also work with less than, Python know how to handle it
-print(point3 < point2)          # output:False
+print(point3 < point2)              # output:False
 #
 ### arithmetic ###
 # section: Normal arithmetic operator
 # override __add__()
-print(point3 + point2)          # output:Point (4, 6)
+print(point3 + point2)              # output:Point (4, 6)
 #
 # Python common data structure: list, array, set
 # they commonly known as container types
@@ -157,31 +169,31 @@ print(point3 + point2)          # output:Point (4, 6)
 class TagCloud:
     def __init__(self):
         # super().__init__()
-        # self.tags = {}          # dict
+        # self.tags = {}          # dict (public member)
         # __ - private member
-        self.__tags = {}          # dict
+        self.__tags = {}          # dict (private member)
 
-    # override __str__()
+    # override __str__() to print the values of __tags
     def __str__(self):
         return str(self.__tags)
 
-    # override __getitem__(self, key)
+    # override __getitem__(self, key) to get value
     def __getitem__(self, tag):
         return self.__tags.get(tag.lower(), 0)
 
-    # override __setitem__(self, key, value)
+    # override __setitem__(self, key, value) to set value
     def __setitem__(self, tag, count):
         self.__tags[tag.lower()] = count
 
-    # override __len__(self)
+    # override __len__(self) to get the item count
     def __len__(self):
         return len(self.__tags)
 
-    # override __iter__()
+    # override __iter__() to return __tags dict
     def __iter__(self):
         return iter(self.__tags)
 
-    # make the dict be case insensitive
+    # make the dict be case in-sensitive eg. lower()
     def add(self, tag):
         self.__tags[tag.lower()] = self.__tags.get(tag.lower(), 0) + 1
 
@@ -201,7 +213,7 @@ cloud.add("python")
 # override __len__()
 # implement len(cloud)
 #
-# override __iter__()
+# override __iter__()           # cloud object will act like a dictionary object
 # for tag in cloud:
 #     print(tag)
 #
@@ -217,10 +229,10 @@ print("")
 #
 ### error - if access underlying class ###
 # output: KeyError: 'PYTHON'
-# because every key is in lower case
+# because every key is in lower case, implement tag.lower() to solve it
 # print(cloud.tags["PYTHON"])
 #
-# how to hide tags from outside - private members
+# how to hide tags from outside - private members, prefix by __
 # output: AttributeError: 'TagCloud' object has no attribute '__tags'
 # it just show error to warning user when access it
 # print(cloud.__tags["PYTHON"])
@@ -228,7 +240,7 @@ print("")
 # output:{'_TagCloud__tags': {'python': 3, 'javascript': 10}}
 # print(cloud)
 #
-### workaround to access it ###
+### workaround to access it (hacking, not recommended to use it) ###
 # get the prefix
 # __dict__ - holds all the attributes in class
 # output: {'_TagCloud__tags': {'python': 3, 'javascript': 10}}
@@ -240,7 +252,7 @@ print(cloud.__dict__)
 print(cloud._TagCloud__tags)
 #
 
-# no longer works
+# no longer works as private member now
 # print(cloud.tags)               # output:{'python': 3}
 #
 # fix it
@@ -303,7 +315,7 @@ product = Product(10)
 product.price = 99
 print(product.price)            # output: 99
 #
-# comment out the setter function -> readonly property
+### comment out the setter function -> readonly property ###
 # output: AttributeError: can't set attribute
 # product.price = 100
 #
@@ -366,7 +378,7 @@ print(m.age)                    # output:1
 print(isinstance(m, Mammal))    # output:True
 # parent of Mammal - Animal class
 # also True
-print(isinstance(m, Mammal))    # output:True
+print(isinstance(m, Animal))    # output:True
 #
 # Animal (or any class) inherits from object class (base of all class)
 # even we don't define it, just like
@@ -504,7 +516,7 @@ class InvalidOperationError(Exception):
     pass
 
 
-class Stream(ABC):
+class Stream(ABC):  # Python Abstract Base Class
     def __init__(self):
         self.opened = False
 
@@ -514,7 +526,7 @@ class Stream(ABC):
         self.opened = True
 
     def close(self):
-        if self.opened:
+        if not self.opened:
             raise InvalidOperationError("Stream is already closed")
         self.opened = False
 
@@ -537,7 +549,7 @@ class NetworkStream(Stream):
 #
 #
 ### Abstract Base Class ###
-# issue 1: Stream class is a abstract concept, no read()
+# issue 1: Stream class is a abstract concept, no read() implementation
 # we should use either FileStream or NetworkStream as it konws how to read data
 # stream = Stream()
 # stream.open()
@@ -556,7 +568,7 @@ class MemoryStream(Stream):
 # it is a half-baked class
 # 1. from abc import ABC, abstractmethod
 # 2. class Stream(ABC):
-# 3. define common interface method ie. read() and write() etc
+# 3. define common interface methods ie. read() and write() etc
 #    and @abstractmethod declorator to label them
 #
 # linter error:Abstract class 'Stream' with abstract methods instantiated
@@ -567,7 +579,9 @@ class MemoryStream(Stream):
 # stream = MemoryStream()
 #
 #
-### Polymorphism ###
+### Polymorphism - the ability to take various forms ###
+## define methods in the child class with the same name as defined in their parent class ##
+## the handling logic doesn't necessary to know what type of object it is working with, and it calls the same method to perform the task ##
 # from abc import ABC, abstractmethod
 class UIControl(ABC):
     @abstractmethod
@@ -585,6 +599,7 @@ class DropDownList(UIControl):
         print("DropDownList")
 
 
+## pass in the different objects and performs the same task ##
 # draw method
 def draw(control):
     control.draw()
@@ -603,6 +618,8 @@ print(isinstance(txt, UIControl))   # output:True
 
 draw(ddl)                           # output:DropDownList
 draw(txt)                           # output:TextBox
+#
+#
 # output:
 # DropDownList
 # TextBox
@@ -619,7 +636,6 @@ drawAll([ddl, txt])
 # we can be calling the draw() on TextBox, DropDownList or RadioButton...etc
 #
 ### duck typing ###
-# in Python
 #
 # in below example:
 # Polymorphism is still working without parent abstract class
@@ -650,7 +666,7 @@ drawAll([ddl, txt])
 #         control.draw()
 #
 #
-# Extending Built-in Types
+# Extending Built-in Types - inherit from str, list
 # extending string class
 class Text(str):
     def duplicate(self):
@@ -694,7 +710,7 @@ class Position:
 
 p1 = Position(1, 2)
 p2 = Position(1, 2)
-# compare objects - without __eq__
+# compare objects - without override __eq__(), it compares memory address
 print(p1 == p2)                 # output:False
 # print memory address
 print(id(p1))                   # output:2612139892016
