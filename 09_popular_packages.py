@@ -1,5 +1,12 @@
 # 09_popular_packages.py
 #
+#
+# wxPython - Graphic User Interface
+# SQLAlchemy - SQL Toolkit and Object Relational Mapper
+# SciPy - algorithms and mathematical tools for scientific calculations (contain numpy, pandas, matplotlib)
+# pyGame - create Game by Python
+# Matplotlib - plot the graph for data analysis
+#
 # Application Programming Interface API - endpoint of application for exchange data
 # REST - a bunch of conventionns of rules and conventions that we have to follow to build or consume API for exchange data.
 #
@@ -39,7 +46,7 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 from twilio.rest import Client
 import config
-import requests
+import requests     # HTTP requests
 url = "https://api.yelp.com/v3/businesses/search"
 # move to config.py
 # #api_key = "dsfasdddddasfsf-afdsfafasffa"
@@ -51,8 +58,12 @@ params = {
     "location": "NYC"
 }
 response = requests.get(url, headers=headers, params=params)
-print(response)         # http response code
-# print(response.text)    # http response payload body
+print(response)                     # http response code
+print(response.status_code)         # http response code
+print(response.headers)             # http headers
+print(response.headers["Date"])     # http Date attribute in headers
+# print(response.text)              # http response payload body
+# print(type(response.text))        # output:<class str>
 #
 # output:<Response [400]>           #Bad Request
 # output:<Response [401]>           #Bad Request
@@ -84,6 +95,8 @@ names = [business["name"]
 print(names)
 #
 #
+
+
 ### hiding API keys ###
 ## don't store API key in source code ##
 # put the key in separate file and exclude it from the git #
@@ -104,7 +117,7 @@ print(names)
 #
 # sign up account: https://www.twilio.com/try-twilio
 # hotmail
-# nism@sky1ine<CAR>
+# nism@sky1ine<CAR3chars>
 #
 # Phone Numbers --> Get Started --> Get your first Twilio phone number
 # +1 224 442 9684
@@ -526,4 +539,6 @@ print(numbers_cm)
 numbers_inch = [1, 2, 3]
 numbers_cm = [number * 2.54 for number in numbers_inch]
 print(numbers_cm)
+#
+#
 #

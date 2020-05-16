@@ -1,3 +1,11 @@
+### 11_machine_learning.py ###
+# all the code in here is executed in Anaconda Jupyter notebook
+#
+# scikit-learn - machine learning in Python
+#
+#
+#
+import matplotlib.pyplot as plt
 from sklearn import tree
 import joblib  # import directly
 from sklearn.metrics import accuracy_score
@@ -123,3 +131,6 @@ tree.export_graphviz(model, out_file='music-recommender.dot',
 # drap and drop the .dot file to Visual Studio Code
 # install VS Code extension
 # Graphviz (dot) language support for Visual Studio Code by Joao Pinto
+#
+#
+#

@@ -1,4 +1,4 @@
-# 01_basic.py
+# 02_basic.py
 # Python is case-sensitive
 # Python use bytecode to achieve cross platform
 # Python has serveral implmentation: offical python.org (cPython, written in C)
@@ -327,8 +327,8 @@ print(10 + 3)       # add,              output:13
 print(10 - 3)       # minus,            output:7
 print(10 * 3)       # multiply,         output:30
 print(10 ** 3)      # exponent, 10 to the power of 3, output:1000
-print(10 / 3)       # divide,           output:3.3333333333333335
-print(-10 / 3)      # divide,           output:-3.3333333333333335
+print(10 / 3)       # divide,     float output:3.3333333333333335
+print(-10 / 3)      # divide,     float output:-3.3333333333333335
 # floor division: round down to near integer, smaller in value
 print(10 // 3)      # floor division,   output:3
 print(-10 // 3)     # floor division,   output:-4
@@ -589,11 +589,33 @@ while guess_count <= guess_limit:
     if input_number == secert_number:
         print("You won!")
         break
+    elif input_number == 0:
+        continue
     else:
         print("Incorrect")
     guess_count += 1
 else:   # execute when while condition is false
     print("You lost!")
+
+### ------ Exercise - data validation ------ ###
+data_valid = False
+while data_valid == False:
+    number1 = input("Input a number (1 - 9):")
+
+    try:
+        number1 = int(number1)  # dynamic typing, change type
+    except:
+        print("Invalid input. Only numbers are accepted")
+        continue
+
+    if number1 < 1 or number1 > 9:
+        print("The number must be between 1 to 9")
+        continue
+    else:
+        data_valid = True
+
+print("number 1 =", number1)
+
 
 ### random ###
 #import random

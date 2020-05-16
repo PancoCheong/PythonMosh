@@ -306,7 +306,7 @@ movies = [
     {"id": 2, "title": "Terminator 2", "year": 1991}
 ]
 
-data = json.dumps(movies)
+data = json.dumps(movies)   # convert dictionary to str
 # output:[{"id": 1, "title": "Terminator", "year": 1984}, {"id": 2, "title": "Terminator 2", "year": 1991}]
 print(data)
 # write to file
@@ -379,7 +379,23 @@ with sqlite3.connect(db_file) as conn:
 ### Timestamps ###
 # import time         # time stamp
 # import datetime
-print(time.time())    # seconds from epic, output:1587191573.1247127
+print(time.time())          # seconds from epic, output:1587191573.1247127
+#
+# google search: python time module
+# https://docs.python.org/3/library/time.html
+# tm_wday - range [0, 6], Monday is 0
+#
+# weekday: sunday = 6, yday: year to day, isdst: is daylight saving time
+# output:time.struct_time(tm_year=2020, tm_mon=5, tm_mday=10, tm_hour=13, tm_min=54, tm_sec=14, tm_wday=6, tm_yday=131, tm_isdst=0)
+lt = time.localtime()
+print(lt)
+print(str(lt.tm_hour) + 'h' + str(lt.tm_min) + 'm')  # output:13h54m
+#
+time_now = time.time()
+delivery_time = time_now + (86400 * 7)               # 7 days = 86400 seconds
+# local delivery time
+# output:time.struct_time(tm_year=2020, tm_mon=5, tm_mday=17, tm_hour=13, tm_min=54, tm_sec=14, tm_wday=6, tm_yday=131, tm_isdst=0)
+print(time.localtime(delivery_time))
 
 
 def send_emails():

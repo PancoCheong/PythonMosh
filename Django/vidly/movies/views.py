@@ -1,4 +1,4 @@
-# movies/views.py
+## movies/views.py ##
 # http://127.0.0.1:8000/movies/
 #
 from django.http import HttpResponse, Http404

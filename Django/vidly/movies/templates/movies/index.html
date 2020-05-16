@@ -12,10 +12,14 @@
   <tbody>
     {% for movie in movies %}
     <tr>
-      <!-- not the best way to direct reference to URL, we may change in the future /old_system/movies
+      <!-- not the best way to direct reference to URL, 
+	       we may change in the future eg. /old_system/movies/id
       <td><a href="/movies/{{ movie.id }}">{{ movie.title }}</a></td>
        
-      url name parameter 
+      better to reference by url name parameter 
+      <td><a href="{% url 'movies_detail' movie.id %}">{{ movie.title }}</a></td>
+	  
+	  best way: use the app_name and url name eg. movies:detail
       -->
       <td><a href="{% url 'movies:detail' movie.id %}">{{ movie.title }}</a></td>
       <td>{{ movie.genre }}</td>
