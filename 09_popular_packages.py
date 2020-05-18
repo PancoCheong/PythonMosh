@@ -402,7 +402,7 @@ signin_link.click()
 username_box = browser.find_element_by_id("login_field")
 username_box.send_keys("pancocheong")
 password_box = browser.find_element_by_id("password")
-password_box.send_keys("skyl1neR")
+password_box.send_keys("Abcd1234")
 password_box.submit()
 #
 # validate if the page is correct
