@@ -64,22 +64,3 @@ plt.xlabel("Attempts")
 plt.title("Your typing evolution")
 plt.show()
 
-
-# {
-#     "response_code": 0,
-#     "results": [
-#         {
-#             "category": "Geography",
-#             "type": "multiple",
-#             "difficulty": "hard",
-#             "question": "Into which basin does the Jordan River flow into?",
-#             "correct_answer": "Dead Sea",
-#             "incorrect_answers": [
-#                 "Aral Sea",
-#                 "Caspian Sea",
-#                 "Salton Sea"
-#             ]
-#         }
-#     ]
-# }
-

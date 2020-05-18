@@ -46,10 +46,10 @@ df.plot.scatter(x='hp', y='mpg')
 
 music_data = pd.read_csv('music.csv')
 X = music_data.drop(columns=['genre'])
-Y = music_data['genre']
+y = music_data['genre']
 
 model = DecisionTreeClassifier()
-model.fit(X, Y)
+model.fit(X, y)
 # prediction what genre for age 21 male and age 22 female
 predictions = model.predict([[21, 1], [22, 0]])
 predictions         # output:array(['HipHop', 'Dance'], dtype=object)
@@ -62,18 +62,18 @@ predictions         # output:array(['HipHop', 'Dance'], dtype=object)
 # from sklearn.metrics import accuracy_score
 music_data = pd.read_csv('music.csv')
 X = music_data.drop(columns=['genre'])
-Y = music_data['genre']
+y = music_data['genre']
 # split training data and testing data (ie. 20% for testing)
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 # select the model
 model = DecisionTreeClassifier()
 # train the model - use 80% of dataset
-model.fit(X_train, Y_train)
+model.fit(X_train, y_train)
 # prediction what genre for age 21 male and age 22 female
 predictions = model.predict(X_test)
 
-score = accuracy_score(Y_test, predictions)
+score = accuracy_score(y_test, predictions)
 score
 # Ctrl+Enter to run multiple times
 # as the train_test_split is randomly pick the data
@@ -89,13 +89,13 @@ music_data = pd.read_csv('music.csv')
 
 # separate data and result columns
 X = music_data.drop(columns=['genre'])
-Y = music_data['genre']
+y = music_data['genre']
 
 # build the model
 model = DecisionTreeClassifier()
 
 # training it (use entire dataset)
-model.fit(X, Y)
+model.fit(X, y)
 
 # presisting model #
 joblib.dump(model, 'music-recommender.joblib')
@@ -110,9 +110,9 @@ joblib.dump(model, 'music-recommender.joblib')
 
 music_data = pd.read_csv('music.csv')
 X = music_data.drop(columns=['genre'])
-Y = music_data['genre']
+y = music_data['genre']
 model = DecisionTreeClassifier()
-model.fit(X, Y)
+model.fit(X, y)
 
 # DOT - graph descriptions language of the Graphviz graph
 # feature_names - the columns of dataset
@@ -123,7 +123,7 @@ model.fit(X, Y)
 
 tree.export_graphviz(model, out_file='music-recommender.dot',
                      feature_names=['age', 'gender'],
-                     class_names=sorted(Y.unique()),
+                     class_names=sorted(y.unique()),
                      label='all',
                      rounded=True,
                      filled=True)

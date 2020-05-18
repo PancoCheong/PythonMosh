@@ -1,4 +1,5 @@
 # 03_data_structure
+import os
 from timeit import timeit
 from pprint import pprint
 from collections import OrderedDict
@@ -654,6 +655,9 @@ char_frequency_sorted = sorted(
 print(char_frequency_sorted[0])                     # output: ('i', 5)
 #
 #
+#
+#
+#
 ### Exceptions ###
 numbers = [1, 2]
 # output:IndexError: list index out of range
@@ -708,7 +712,43 @@ else:
 # output:FileNotFoundError: [Errno 2] No such file or directory: 'non_exist_file.txt'
 # NameError: name 'my_file' is not defined
 #
-# 'r' - readonly, 'rw+' - read write
+# r for reading (default)
+# w for writing, create file if not exist; if exists, it truncates the file
+# x for creating the specified file, returns an error if the file exists
+# a+ opens for appending
+#
+# r+ opens for reading and writing (cannot truncate a file)
+# w+ for writing and reading (can truncate a file)
+# rw+ (removed in Python 3)
+#       Note: indeed r+, rw+ and w+ has no different in Linux
+#
+# rb+ reading or writing a binary file
+# wb+ writing a binary file
+#
+# read more: https://stackabuse.com/file-handling-in-python/
+# open(filename, mode='a', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)
+#
+# f = open("myfile.txt", "r+")
+# text = f.read()
+# f.truncate(0)
+# f.seek(0, 0)
+# print(f.read())
+# f.close()
+
+#import os
+### remove file ###
+if os.path.exists("demofile.txt"):
+    os.remove("demofile.txt")
+else:
+    print("The file does not exist")
+
+## remove folder ###
+if os.path.exists("myfolder"):
+    os.rmdir("myfolder")
+else:
+    print("The folder does not exist")
+#
+#
 file = open("app.py", 'r')
 try:
     # way 1: read whole file into single string, include \n
@@ -752,7 +792,7 @@ try:
 # Python will auto call exit method to release external resource
 
 except (FileNotFoundError):
-    print("file is not found.1")
+    print("file is not found.")
 else:
     print("No exceptions were thrown")
 #

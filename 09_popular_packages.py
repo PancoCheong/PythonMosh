@@ -38,6 +38,11 @@
 # https://www.yelp.com/developers/documentation/v3/business_search
 # GET https://api.yelp.com/v3/businesses/search
 
+import pandas as pd
+import html
+import pprint
+import json
+import requests
 import random
 import numpy as np
 import openpyxl
@@ -96,13 +101,152 @@ print(names)
 #
 #
 
+### Open Trivia Database - for API testing ###
+# API --> Number of Questions = 1 --> Category = Entertainment: Music, Difficulty = easy, type = Mutliple choice --> generate API URL
+# https://opentdb.com/api.php?amount=1&category=12&difficulty=easy&type=multiple
+#
+#import requests
+r = requests.get(
+    "https://opentdb.com/api.php?amount=1&category=12&difficulty=easy&type=multiple")
+print(r.status_code)    # output:200
+# output:{"response_code":0,"results":[{"category":"Entertainment: Music","type":"multiple","difficulty":"easy","question":"What Led Zeppelin album contains &quot;Stairway to Heaven&quot;?","correct_answer":"Led Zeppelin IV","incorrect_answers":["Houses of the Holy","Physical Graffiti","Led Zeppelin III"]}]}
+print(r.text)
+print(type(r.text))     # output:<class 'str'>
+#
+#
+#import json
+# convert json str to dict
+question = json.loads(r.text)
+# output:{'response_code': 0, 'results': [{'category': 'Entertainment: Music', 'type': 'multiple', 'difficulty': 'easy', 'question': 'What Led Zeppelin album contains &quot;Stairway to Heaven&quot;?', 'correct_answer': 'Led Zeppelin IV', 'incorrect_answers': ['Houses of the Holy', 'Physical Graffiti', 'Led Zeppelin III']}]}
+print(question)
+print(type(question))   # output:<class 'dict'>
+#
+# print json dict in human easy-to-read format
+#import pprint
+# output:
+# {'response_code': 0,
+# 'results': [{'category': 'Entertainment: Music',
+#              'correct_answer': 'Led Zeppelin IV',
+#              'difficulty': 'easy',
+#              'incorrect_answers': ['Houses of the Holy',
+#                                    'Physical Graffiti',
+#                                    'Led Zeppelin III'],
+#              'question': 'What Led Zeppelin album contains &quot;Stairway to '
+#                          'Heaven&quot;?',
+#              'type': 'multiple'}]}
+pprint.pprint(question)
+#
+# extrac information from json dict
+# output:Entertainment: Music
+print(question['results'][0]['category'])
+# output:['Doin&#039; It Right', 'Instant Crush', 'The Game of Love']
+# print value of the key=incorrect_answers which is a list of questions
+print(question['results'][0]['incorrect_answers'])
+#
+print(type(data['results']))                            # output:<class 'list'>
+print(type(data['results'][0]))                         # output:<class 'dict'>
+print(type(data['results'][0]['incorrect_answers']))    # output:<class 'list'>
+#
+person = {'Name': 'Panco', 'Height': 1.82}
+person_json = json.dumps(person)
+print(person_json)          # output:{"Name": "Panco", "Height": 1.82}
+print(type(person_json))    # output:<class 'str'>
+
+
+### Exercise - Create a quizzing game ###
+# Make an HTTP request to the Open Trivia API at each round of the game to get a new question
+# an present it to the user to answer.
+# show the answer if it is correct or not at each round
+# keep the user's score
+# At the end of each round ask the user if he wants to play again.
+# Keep playing forever until the user types "quit".
+
+#import requests
+#import json
+#import pprint
+#import random
+#import html
+#
+# keep the score
+score_correct = 0
+score_incorrect = 0
+
+url = "https://opentdb.com/api.php?amount=1"
+endGame = ""
+
+while endGame != "quit":
+    r = requests.get(url)
+    if (r.status_code != 200):
+        endGame = input(
+            "Sorry, there was a problem retrieving the question. Press enter to try again or type 'quit' to quit  the game.")
+    else:
+        valid_answer = False
+        answer_number = 1
+        data = json.loads(r.text)
+        question = data['results'][0]['question']
+        answers = data['results'][0]['incorrect_answers']
+        correct_answer = data['results'][0]['correct_answer']
+        print(type(answers))
+        # append the correct answer into list
+        answers.append(correct_answer)
+        random.shuffle(answers)             # shuffle the answers
+
+        print(html.unescape(question) + "\n")
+
+        # let user to input number instead of typing the answer in string
+        # convert special char to readable char ie. &#039; -> '   &quot; -> "
+        # https://dev.w3.org/html5/html-author/charref
+        # https://www.tutorialspoint.com/html/html_ascii_codes.htm
+        #
+        for answer in answers:
+            print(str(answer_number) + "- " + html.unescape(answer))
+            answer_number += 1
+
+        # input validation - input number and within the size of the list
+        while valid_answer == False:
+            user_answer = input("\nType the number of the correct answer: ")
+            try:
+                user_answer = int(user_answer)
+                if user_answer > len(answers) or user_answer <= 0:
+                    print("Invalid Answer")
+                else:
+                    valid_answer = True
+            except:
+                print("Invalid answer. Use only numbers.")
+
+        # list index start from zero
+        user_answer = answers[int(user_answer)-1]
+
+        # keep track of score
+        if user_answer == correct_answer:
+            print("\nCongratulations! You answered correctly! The correct answer was: " +
+                  html.unescape(correct_answer))
+            score_correct += 1
+        else:
+            print("Sorry, " + html.unescape(user_answer) +
+                  " is incorrect. The correct answer is: " + html.unescape(correct_answer))
+            score_incorrect += 1
+
+        # print the current result
+        print("\n##########################")
+        print("Your score is:")
+        print("Correct answers: " + str(score_correct))
+        print("Incorrect answers: " + str(score_incorrect))
+        print("##########################")
+
+        endGame = input(
+            "\nPress enter to play again or type 'quit' to quit the game.").lower()
+
+print("\nThanks for playing")
+
 
 ### hiding API keys ###
 ## don't store API key in source code ##
 # put the key in separate file and exclude it from the git #
 # ie. move api_key to config.py
 #
-#import config
+#
+# import config
 # reference the variable
 # config.api_key
 # put the name "config.py" in .gitignore file
@@ -542,3 +686,129 @@ print(numbers_cm)
 #
 #
 #
+### Pandas and xlrd ###
+# pip install pandas
+# for Excel
+# pip install xlrd
+#import pandas as pd
+file = pd.ExcelFile("sales.xlsx")
+print(file.sheet_names)                 # output:['sales', 'customers']
+sheet = file.parse('sales')
+#
+## print the worksheet ##
+# output:
+#         Date             Customer  Invoice  Amount
+# 0 2018-12-01  Steel Brothers Inc.       98    1340
+# 1 2018-12-10             MMC Inc.       99    1900
+# 2 2018-12-12             MMC Inc.      100    2900
+# 3 2018-12-18  Steel Brothers Inc.      101     977
+# 4 2018-12-21     Steel & Iron LLC      102    3400
+print(sheet)
+#
+print(type(sheet))  # output:<class 'pandas.core.frame.DataFrame'>
+#
+## print the Date column ##
+# output:
+# 0   2018-12-01
+# 1   2018-12-10
+# 2   2018-12-12
+# 3   2018-12-18
+# 4   2018-12-21
+# Name: Date, dtype: datetime64[ns]
+print(sheet.Date)
+#
+# calculate the SUM of Amount column
+print("Sum of Amount =", sheet.Amount.sum())   # output: Sum of Amount = 10517
+#
+## Get the 1st data row from Excel ##
+# output:
+# Date        2018-12-01 00:00:00
+# Customer    Steel Brothers Inc.
+# Invoice                      98
+# Amount                     1340
+# Name: 0, dtype: object
+print(sheet.loc[0])
+#
+# print the value of Amount in 1st data row
+print(sheet.loc[0, "Amount"])   # output:1340
+#
+#
+## search the sales made by a specified customer ##
+sheet.set_index("Customer", inplace=True)
+# instead of using index number to fetch the rows
+# use the value in Customer column to search
+# output:
+#               Date  Invoice  Amount
+# Customer
+# MMC Inc. 2018-12-10       99    1900
+# MMC Inc. 2018-12-12      100    2900
+print(sheet.loc["MMC Inc."])
+sheet = sheet.reset_index()
+#
+# print Invoice column
+# output:
+# 0     98
+# 1     99
+# 2    100
+# 3    101
+# 4    102
+# Name: Invoice, dtype: int64
+print(sheet["Invoice"])
+print(type(sheet["Invoice"]))   # output:<class 'pandas.core.series.Series'>
+#
+# search invoice number = 99
+# output:
+#   Customer       Date  Invoice  Amount
+# 1  MMC Inc. 2018-12-10       99    1900
+print(sheet.loc[sheet["Invoice"] == 99])
+#
+# search the rows that has amount > 2000
+# output:
+#           Customer       Date  Invoice  Amount
+# 2          MMC Inc. 2018-12-12      100    2900
+# 4  Steel & Iron LLC 2018-12-21      102    3400
+print(sheet.loc[sheet["Amount"] > 2000])
+#
+# search the row which has highest amount
+# output:
+# Customer       Steel & Iron LLC
+# Date        2018-12-21 00:00:00
+# Invoice                     102
+# Amount                     3400
+# Name: 4, dtype: object
+print(sheet.loc[sheet["Amount"].idxmax()])
+#
+# search the customer name which has highest amount
+print(sheet.loc[sheet["Amount"].idxmax()]
+      ["Customer"])  # output:Steel & Iron LLC
+#
+# search the rows which has amount > 1800
+# output:
+#           Customer       Date  Invoice  Amount
+# 1          MMC Inc. 2018-12-10       99    1900
+# 2          MMC Inc. 2018-12-12      100    2900
+# 4  Steel & Iron LLC 2018-12-21      102    3400
+print(sheet.loc[sheet["Amount"] > 1800])
+#
+# search the customer name who has amount > 1800
+# output:
+# 1            MMC Inc.
+# 2            MMC Inc.
+# 4    Steel & Iron LLC
+# Name: Customer, dtype: object
+print(sheet.loc[sheet["Amount"] > 1800]["Customer"])
+#
+# search the distinct customer name who has amount > 1800
+# output: ['MMC Inc.' 'Steel & Iron LLC']
+print(sheet.loc[sheet["Amount"] > 1800]["Customer"].unique())
+#
+# search the 1st distinct customer name who has amount > 1800
+# output:MMC Inc.
+print(sheet.loc[sheet["Amount"] > 1800]["Customer"].unique()[0])
+#
+# loop thru the customer name
+# output:
+# MMC Inc.
+# Steel & Iron LLC
+for customer in sheet.loc[sheet["Amount"] > 1800]["Customer"].unique():
+    print(customer)
