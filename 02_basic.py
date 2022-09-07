@@ -18,7 +18,7 @@ print('*-' * 5)         # repeat string 5 times,        output:*-*-*-*-*-
 print(2+3)              # output result of expression,  output:5
 print("a"+"b")          # concat 2 strings,             output:ab
 
-### primitive basic type ###
+###2.1 primitive basic type ###
 students_count = 50     # int
 rating = 4.95           # float
 is_published = False    # bool
@@ -28,41 +28,6 @@ course_outline = """
 Python support multiple lines string,
 1st char and last char is newline character
 """                     # str, 1st and last character are newline
-print(type(students_count))  # output:<class 'int'>
-print(type(rating))  # output:<class 'float'>
-print(type(is_published))  # output:<class 'bool'>
-print(type(course_name))  # output:<class 'str'>
-print(type(teacher_name))  # output:<class 'str'>
-print(type(course_outline))  # output:<class 'str'>
-# allow to change type in runtime (dynamic typing programming language like JavaScript and Ruby)
-students_count = True
-print(type(students_count))  # output:<class 'bool'>
-print("-----")
-# output: 1st line and last line is empty line (newline char)
-print(course_outline)
-print("-----")
-# output: ignore 1st and last characters (ie. no newline char)
-print(course_outline[1:-1])
-print("-----")
-
-# Python 3.6: type Annotation (linter: mypy can check this)
-age: int = 40
-age = True  # mypy linter at Python 3.8.2 is no longer check this incompatible types in assignment
-print(age)  # output: True
-
-
-my_list = [1, 2, 'a', True]         # allow different type
-my_tuple = (1, 2, 'a', False)       # allow different type
-my_dictionary = {'a': 1, 'b': 2}    # allow different type, key and value pair
-# mutable - same memory address, add to add new item, output:[1, 2, 'a', True]
-print(my_list)
-# read-only version of list                         , output:(1, 2, 'a', False)
-print(my_tuple)
-# dictionary, like a data record, key and value pair, output:{'a': 1, 'b': 2}
-print(my_dictionary)
-print(type(my_list))        # output:<class 'list'>
-print(type(my_tuple))       # output:<class 'tuple'>
-print(type(my_dictionary))  # output:<class 'dict'>
 
 # initialize  variable
 x = 1
@@ -76,6 +41,36 @@ print(f'x = {x}, y = {y}')  # output:x = 1, y = 2
 x = y = 1
 print(f'x = {x}, y = {y}')  # output:x = 1, y = 1
 
+###2.2 Dynamic Typing ###
+# C++, C#, Java - static type
+# int students_num = 50
+# students_num = True      #allow in Python
+
+print(type(students_count))  # output:<class 'int'>
+print(type(rating))  # output:<class 'float'>
+print(type(is_published))  # output:<class 'bool'>
+print(type(course_name))  # output:<class 'str'>
+print(type(teacher_name))  # output:<class 'str'>
+print(type(course_outline))  # output:<class 'str'>
+
+# allow to change type in runtime (dynamic typing programming language like JavaScript and Ruby)
+students_count = True
+print(type(students_count))  # output:<class 'bool'>
+print("-----")
+# output: 1st line and last line is empty line (newline char)
+print(course_outline)
+print("-----")
+# output: ignore 1st and last characters (ie. no newline char)
+print(course_outline[1:-1])
+print("-----")
+
+###2.3- Type Annotation###
+# Python 3.6: type Annotation (linter: mypy can check this)
+age: int = 40
+age = True  # mypy linter at Python 3.8.2 is no longer check this incompatible types in assignment
+print(age)  # output: True
+
+###2.4- Mutable and Immutable Types###
 # premitive basic data type is immutable, cannot change value
 print("----- mutable and immutable type -----")
 z = 1
@@ -86,30 +81,92 @@ z = 2
 print(id(z))
 # original memory address is subjected to garbage collection
 
-my_list = [1, 2, 3]     # list are mutable
+
+# list is mutable (same memory address) 
+my_list = [1, 2, 'a', True]         # allow different type
+my_tuple = (1, 2, 'a', False)       # allow different type
+my_dictionary = {'a': 1, 'b': 2}    # allow different type, key and value pair
+# mutable - same memory address, add to add new item, output:[1, 2, 'a', True]
 print(type(my_list))    # output:<class 'list'>
-print(id(my_list))      # memory address of my_list,        output:2162985430976
-my_list.append(4)
-print(id(my_list))      # memory address remain the same,   output:2162985430976
+print(my_list)      #[1, 2, 'a', True]
+print(id(my_list))  #2644501150016  memory address of my_list
+my_list.append(99)
+print(my_list)      #[1, 2, 'a', True, 99]
+print(id(my_list))  #2644501150016  memory address remain the same
+
+# read-only version of list                         , output:(1, 2, 'a', False)
+print(my_tuple)
+# dictionary, like a data record, key and value pair, output:{'a': 1, 'b': 2}
+print(my_dictionary)
+print(type(my_list))        # output:<class 'list'>
+print(type(my_tuple))       # output:<class 'tuple'>
+print(type(my_dictionary))  # output:<class 'dict'>
 
 
-### string ###
+
+###2.5 - string ###
 # len() - generic function to string or list
 my_course = "Python for Programmer"
 print(len(my_list))     # number of items, output:4
 print(len(my_course))   # number of chars, output:21
+print(my_list[0])       # 1st item, output:1
+print(my_course[0])     # 1st char, output:P
+print(my_course[-1])    # last 1 char, output:r
+print(my_course[0:3])    # 1st to 3rd chars(last index is excluded), output:Pyt
+print(id(my_course))     # memory address:1880536941152
+print(id(my_course[0]))  # new address:1880536941152
 
+###2.6- Escape Sequences###
+message = 'Python "Programming'   #output:Python "Programming
+print(message)
+message = "Python \"Programming"  #output:Python "Programming
+print(message)
+# \'	Single Quote '
+# \\	Backslash \
+# \n	New Line
+# \r	Carriage Return
+# \t	Tab
+# \b	Backspace
+# \f	Form Feed	
+# \ooo	Octal value	
+# \xhh	Hex value
+
+
+
+
+
+###2.7- Formatted Strings###
+print("----- format string -----")
+# without format string, use concat #
+nickname = 'Panco'
+familyname = 'Cheong'
+message = nickname + ',(' + familyname + ')' + ' is programmer'
+print(message)  # output:Panco,(Cheong) is programmer
+
+# format string - evaluate expression #
+message = f'{nickname},({familyname}) is programmer, lenght of {len(nickname)}, add = {4+5}'
+print(message)  # output:Panco,(Cheong) is programmer, lenght of 5, add = 9
+
+# format string #
+# %c - character and ASCII code, %s - string
+# %d - integer (in decimal format), %u - unsign integer
+# %f - float, %e or %E - scientific number, %g or %G - scientific number
+# %o - octal, %x - heximal, %X - heximal (upper case)
+# %p - variable memory address (in hex)
+
+
+
+###2.8- Useful String Methods###
 print("----- string -----")
 # string and print with format
 # "string", 'string', '''multi-lines string'''
-# string[0] - index (zero-base), -1 - index (backward from the end), string[m:n] - index range
+# string[0] - index (zero-base), -1 - index (backward from the end), string[m:n] - index range (exclude n index)
 # len(), upper(), lower(), find(), replace(), 'str' in my_string
 # format string:
 #  f'my_var = {my_var}'
 #   'my name is %s, I have % 9.3f' % (my_name, my_amount)
 #   '%%' - print %
 #  print(i, end=" ") - replace newline with space
-# \' - escape char, \\ - \, \n - newline
 # \' - escape char, \\ - \, \n - newline
 course = 'Python\' \\ \r\n "Tutorial"'
 # output:
@@ -118,6 +175,7 @@ course = 'Python\' \\ \r\n "Tutorial"'
 print(course)
 course = "Python\" %% 'Tutorial'"           # \" - escape char
 print(course)                               # output:Python" %% 'Tutorial'
+# use ''' for multiple lines content to avoid too many \n \n
 course = '''
 Python's Tutorial
 01.Introduction
@@ -128,20 +186,18 @@ print(course)                               # output: 1st line and last line is 
 print("----- string index -----")
 print(course[1])        # ''' - 1st char and last char are newline, output:P
 print(course[1:-1])     # exclude 1st char and last char,           output:no empty line at 1st and last
+# index:  01234567890123456789012
 course = "   Python TutoriAl     "
-#         01234567890123456789012
 print(course[3])        # first index is 0 zero, output:P
 print(course[-6])       # last char (from the back), output:l
-# substring, start index to end index (exclude end position), output:Pyt
-print(course[3:6])
+print(course[3:6])      # substring, start index to end index (exclude end position), output:Pyt
 print(course[4:])       # start index to the end, output:ython Tutorial
-# first character to end index (exclude end position), output:   Pyth
-print(course[:7])
+print(course[:7])       # first character to end index (exclude end position), output:   Pyth
 print(course[:])        # output:   Python TutoriAl
 ### string function ###
 print("----- string function -----")
 print(len(course))          # length of string, output:23
-# upper case,                       output:   PYTHON TUTORIAL
+# upper case,                           output:   PYTHON TUTORIAL
 print(course.upper())
 # lower case,                           output:   python tutorial
 print(course.lower())
@@ -167,23 +223,7 @@ print('Python' in course)
 # check if 'Python' in course string, output:False
 print('Python' not in course)
 
-print("----- format string -----")
-# without format string, use concat #
-nickname = 'Panco'
-familyname = 'Cheong'
-message = nickname + ',(' + familyname + ')' + ' is programmer'
-print(message)  # output:Panco,(Cheong) is programmer
 
-# format string - evaluate expression #
-message = f'{nickname},({familyname}) is programmer, lenght of {len(nickname)}, add = {4+5}'
-print(message)  # output:Panco,(Cheong) is programmer, lenght of 5, add = 9
-
-# format string #
-# %c - character and ASCII code, %s - string
-# %d - integer (in decimal format), %u - unsign integer
-# %f - float, %e or %E - scientific number, %g or %G - scientific number
-# %o - octal, %x - heximal, %X - heximal (upper case)
-# %p - variable memory address (in hex)
 amount = -123.1234567
 # 12 characters in total, 3 decimal places precision,   output:    -123.123
 print('%12.3f' % amount)
@@ -300,7 +340,7 @@ print(data)
 # output:Exchange rate@2020-04-11: $0.9145 is equivalent to ₠1.0
 print(template2.substitute(data))
 
-### numbers ###
+###2.9 numbers ###
 print("----- Numbers -----")
 d = 10              # decimal: 10
 b = 0b10            # binary: 10 --> dec: 2
@@ -320,6 +360,8 @@ y = 1 + 2J          # store in lower case
 print(y)            # complex number,               output:(1+2j)
 
 
+
+### 10- Arithmetic Operators ###
 print("----- arithmetic -----")
 # operators: + - * ** / // %
 
@@ -336,8 +378,7 @@ print(10 % 3)       # modulus,          output:1
 print(-10 % 3)      # modulus,          output:2
 
 ### assignment ###
-print('----- assignment -----')
-PI = 3.14159        # use upper case to name constant, Python has no const keyword
+print('----- assignment -----')  ## note: NO x++ or x--
 x = 10
 x = x + 3
 print(x)            # output:13
@@ -349,6 +390,7 @@ x *= 3              # augmented assignment
 print(x)            # output:39
 x /= 3              # augmented assignment
 print(x)            # output:13.0
+
 print('----- operator precedence -----')
 # 1. parenthesis
 # 2. exponentiation 10 ** 3
@@ -367,7 +409,10 @@ print(x)                # output:47
 # Python math module
 # https://docs.python.org/3/library/math.html
 
-### math ###
+
+### 2.11- Working with Numbers ###
+### import math as m ###
+PI = 3.14159        # use upper case to name constant, Python has no const keyword
 print('----- function in math module -----')
 x = 12.950000
 y = -12.950000
@@ -390,7 +435,7 @@ print(m.remainder(10, 3))    # remainder,       output:1.0
 print(m.remainder(-10, 3))   # remainder,       output:-1.0
 
 
-### type conversion ###
+###3.12 type conversion ###
 print('----- type conversion -----')
 # get input
 name = input('What is your name? ')
@@ -413,15 +458,22 @@ kg = float(lbs_string) * lbs_to_kg
 print(kg)  # output:90.945270185
 
 # Type conversion
-x = 1
+x = input("x: ")
+# y = x + 1
+# if input = 1
+# y could be "1" + "1"
+# y could be 1 + 1 = 2
+#
+# explicit conversion is needed
 print("value of 1:")
 print(int(x))           # integer,  output:1
 print(float(x))         # float,    output:1.0
-print(bool(x))          # boolean,  output:True
+print(bool(x))          # boolean,  output:True 
 print(str(x))           # string,   output:1
-# Falsy value: 0, "" - empty string, [] - empty list
+# Falsy value: 0, "" - empty string, [] - empty list, 
 # None - empty value (null in other language)
 # () - empty tuple, {} - empty dictionary
+#
 # value other than Falsy value is True
 print('--- test falsy value ---')
 print(bool(0))                  # zero,             output:False
@@ -436,6 +488,7 @@ print(bool(()))                 # empty tuple,      output:False
 print(bool({}))                 # empty dictionary, output:False
 
 
+###2.13- Conditional Statements ###
 print("----- conditional statement -----")
 # condition: if bool:    elif bool:    else:
 # intention is a code block, no {}
