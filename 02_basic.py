@@ -746,12 +746,10 @@ print(increment(2, 3))  # print, output:5
 
 # return multiple values thru tuple - read-only list
 
-
+# keyword argumnet - use name to specify parameter
 def add(num1=1, num2=2):  # set default value of parameter
     return (num1, num2, num1 + num2)
 
-
-# keyword argumnet - use name to specify parameter
 print(add(num2=4))        # print tuple, output:(1, 4, 5)
 
 
@@ -760,8 +758,6 @@ def minus(num1: int = 1, num2: int = 2) -> tuple:
     return (num1, num2, num1 - num2)
 
 # Open debugger: Ctrl + Shift + D
-
-
 def multiply(*list):  # pass in variable number of parameters, *var means tuple
     total = 1
     for number in list:
@@ -821,8 +817,8 @@ print(my_global_value)          # output:y
 # Fizz and Buzz
 # divisible by 3: Fizz
 # divisible by 5: Buzz
-# divisible by 3 and 5: FizzBuzz
-# others: display the input value
+# divisible by 3 and 5 (eg.15): FizzBuzz
+# others: display the input value itself
 
 # no need elif, return will only run one of the statement
 # no need else, as the last statement will only execute if no match

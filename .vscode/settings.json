@@ -2,5 +2,6 @@
   "python.linting.pylintEnabled": true,
   "python.linting.mypyEnabled": false,
   "python.linting.enabled": true,
-  "python.pythonPath": "C:\\Users\\panco.cheong\\.virtualenvs\\PythonMosh-OI8O7wJw\\Scripts\\python.exe"
+  "python.pythonPath": "C:\\Users\\panco.cheong\\.virtualenvs\\PythonMosh-OI8O7wJw\\Scripts\\python.exe",
+  "code-runner.runInTerminal": true
 }
