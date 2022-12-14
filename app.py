@@ -23,3 +23,4 @@ hello('Panco')
 #
 # load customized module
 calc_shipping()                 # output:calc_shipping
+calc_tax()                      # output:calc_tax

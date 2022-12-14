@@ -619,74 +619,134 @@ wb.save("transactions3.xlsx")
 # process faster and use less memory
 # most frequent used package for data analytic
 #
+# NumPy aims to provide an array object that is up to 50x faster than traditional Python lists. 
+# The array object in NumPy is called ndarray , it provides a lot of supporting functions that 
+# make working with ndarray very easy. Arrays are very frequently used in data science, where 
+# speed and resources are very important.
+#
+#
 # pipenv install numpy
 #
 # import numpy as np
 # 1-D array
 array = np.array([1, 2, 3])
-print(array)
-print(type(array))
+print(array)                                    # output:[1 2 3]
+print(type(array))                              # output:<class 'numpy.ndarray'>
+#
 # 2-D array - aka. matrix
 array_2d = np.array([[1, 2, 3], [4, 5, 6]])     # 2 rows and 3 columns
-print(array_2d)
+print(array_2d)                                 #output: [[1 2 3]
+                                                #         [4 5 6]]
 print(array_2d.shape)                           # output:(2, 3)
-
+#
 # array with all zero value (floating number by default)
 array = np.zeros((3, 4))                # shape = 3 rows, 4 columns
 print(array)
+#output:
+#[[0. 0. 0. 0.]
+# [0. 0. 0. 0.]
+# [0. 0. 0. 0.]]
 #
 array = np.zeros((3, 4), dtype=int)     # change data type
 print(array)
-#
+#output:
+#[[0 0 0 0]
+# [0 0 0 0]
+# [0 0 0 0]]
+# 
 # array with all value of 1
 array = np.ones((3, 4))                 # shape = 3 rows, 4 columns
 print(array)
-
+# output:
+# [[1. 1. 1. 1.]
+#  [1. 1. 1. 1.]
+#  [1. 1. 1. 1.]]
 #
 # array with all value of specified number 99
 array = np.full((3, 4), 99, dtype=int)   # shape = 3 rows, 4 columns
 print(array)
+# output:
+# [[99 99 99 99]
+#  [99 99 99 99]
+#  [99 99 99 99]]
 #
 # import random
 #
 # array with random value between 0 and 1
 array = np.random.random((3, 4))
 print(array)
+# output:
+# [[0.78100884 0.89945443 0.41537638 0.42808692]
+#  [0.12869062 0.89233904 0.73534699 0.04372994]
+#  [0.37242671 0.31830852 0.55710202 0.82906251]]
 #
 # access the matrix
-print(array[0, 0])
+print(array[0, 0])                      # output:0.7810088427303026
 #
 # conditional check on each item
 print(array > 0.4)      # output: bool
+# output:
+# [[ True  True  True  True]
+#  [False  True  True False]
+#  [False False  True  True]]
 #
 # filter the output (only > 0.4)
 print(array[array > 0.4])
+# output: 
+# [0.78100884 0.89945443 0.41537638 0.42808692 0.89233904 0.73534699
+#  0.55710202 0.82906251]
 #
 # sum of all items
-print(np.sum(array))
+print(np.sum(array))                #output:6.400932911564914
+#
 # math functions
 print(np.floor(array))
-print(np.ceil(array))
-print(np.round(array))
+#output:
+# [[0. 0. 0. 0.]
+#  [0. 0. 0. 0.]
+#  [0. 0. 0. 0.]]
 #
+print(np.ceil(array))
+#output:
+# [[1. 1. 1. 1.]
+#  [1. 1. 1. 1.]
+#  [1. 1. 1. 1.]]
+#
+print(np.round(array))
+#output:
+# [[1. 1. 0. 0.]
+#  [0. 1. 1. 0.]
+#  [0. 0. 1. 1.]]
+# 
 first = np.array([[1, 2, 3], [4, 5, 6]])
 second = np.array([[11, 12, 13], [14, 15, 16]])
 print(first + second)   # add position by position (ie. 1+11, 2+12)
+#output: 
+# [[12 14 16]
+#  [18 20 22]]
+#
 print(first * 3)        # multiple each item
+# output:
+# [[ 3  6  9]
+#  [12 15 18]]
 #
 # eg. convert inch to cm
 numbers_inch = np.array([1, 2, 3])
 numbers_cm = numbers_inch * 2.54
-print(numbers_cm)
+print(numbers_cm)       #output:[2.54 5.08 7.62]
 #
-# use standard Python list comprehension
+# use standard Python list comprehension - more complicated than Numpy above
 numbers_inch = [1, 2, 3]
 numbers_cm = [number * 2.54 for number in numbers_inch]
-print(numbers_cm)
+print(numbers_cm)       #output:[2.54, 5.08, 7.62]
 #
 #
 #
 ### Pandas and xlrd ###
+# Pandas allows us to analyze big data and make conclusions based on statistical theories. 
+# Pandas can clean messy data sets, and make them readable and relevant. 
+# Relevant data is very important in data science.
+#
 # pip install pandas
 # for Excel
 # pip install xlrd

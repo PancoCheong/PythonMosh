@@ -305,9 +305,9 @@ print(response)                 # output:<Response [200]>
 ### install 3 packages ###
 # pip install setuptools wheel twine
 #
-#from pancopackage import mymodule, myanothermodule
-
+from pancopackage import mymodule, myanothermodule
 myanothermodule.displaymessage()
+
 # display = mymodule.displaymessage()
 # mymodule.displaymessage()
 #

@@ -1,6 +1,7 @@
 """ Short Description of module by using Docstrings format
 
 	more detail information after a blank line
+
 """
 
 
@@ -16,6 +17,7 @@ class Display:
 
             Returns:
             str: The return value
+            
         """
         print(f"this message is from mymodule of mypackage, {guestname}")
         return "ok"

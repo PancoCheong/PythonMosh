@@ -21,13 +21,12 @@ import json
 import csv
 from zipfile import ZipFile
 import shutil
-from time import ctime
-from pathlib import Path
 
 ### Path ###
-# google search: https://docs.python.org/3/library/pathlib.html
+# google search: python 3 pathlib
+# https://docs.python.org/3/library/pathlib.html
 #
-# from pathlib import Path
+#from pathlib import Path
 #
 # Absolute Path
 #
@@ -48,6 +47,8 @@ Path(r"ecommerce\__init__.py")
 #
 # Combined the paths
 Path() / Path("ecommerce") / Path("__init__.py")
+# Combined the paths with string
+Path() / "ecommerce" / Path("__init__.py")
 #
 # Home folder for current user
 Path.home()
@@ -55,26 +56,28 @@ Path.home()
 # working with path
 path = Path(r"ecommerce\__init__.py")
 print(path.exists())    # is exist, output:True
-print(path.is_file())   # is file, output:True
+print(path.is_file())   # is file,  output:True
 print(path.is_dir())    # is directory, output:False
-print(path.name)        # filename, output:__init__.py
+print(path.name)        # filename,     output:__init__.py
 print(path.stem)        # filename without extension, output:__init__
 print(path.suffix)      # file extension, output:.py
-print(path.parent)      # parent folder, output:ecommerce
+print(path.parent)      # parent folder,  output:ecommerce
 # absolute path, output:C:\repos\Python\Programmer\ecommerce\__init__.py
 print(path.absolute())
 
 #
 path = path.with_name("newfile.txt")
-print(path)             # change file.ext, output:ecommerce\newfile.txt
+print(path)             # change file.ext name, output:ecommerce\newfile.txt
 path = path.with_suffix(".py")
-print(path)             # change .ext, output:ecommerce\newfile.py
+print(path)             # change .ext name, output:ecommerce\newfile.py
 #
 #
 ### directory ###
+from pathlib import Path
+
 path = Path("NewFolder")
 path_new = Path("NewFolderName")
-if not path.exists():
+if not path.exists():                           # check if exist
     path.mkdir()                                # create new folder
     # output:NewFolder is created
     print(path, "is created")
@@ -90,8 +93,8 @@ if path_new.exists():
     print(path_new, "is removed")
 #
 # iterate folder - generator object
-# output:<generator object Path.iterdir at 0x000001A2D214D740>
 # return a value on every time it iterate (not to store all data in memory)
+# output:<generator object Path.iterdir at 0x000001A2D214D740>
 print(path.iterdir())
 #
 # list of files and folders in path (non-recursive to sub-folder)
@@ -112,7 +115,8 @@ paths = [p for p in path.iterdir()]
 # output:[WindowsPath('ecommerce/customer'), WindowsPath('ecommerce/sales2.py'), WindowsPath('ecommerce/shopping'), WindowsPath('ecommerce/__init__.py'), WindowsPath('ecommerce/__pycache__')]
 # PosixPath in MacOS X and Linux, Posix is the filesystem standard use in Unix like OS
 print(paths)
-
+#
+# only print the folder, use filter
 folders = [p for p in path.iterdir() if p.is_dir()]
 # output:[WindowsPath('ecommerce/customer'), WindowsPath('ecommerce/sales2.py'), WindowsPath('ecommerce/shopping'), WindowsPath('ecommerce/__init__.py'), WindowsPath('ecommerce/__pycache__')]
 print(paths)
@@ -122,14 +126,14 @@ print(paths)
 # 1. cannot search by pattern
 # 2. doesn't search recursively
 #
-# use path.glob
-# path.glob("*.*") - for all files
+# use path.glob 
+# path.glob("**/*.py") - search file with patterns
 #
 py_files = [p for p in path.glob("*.py")]
 # output:py_files: [WindowsPath('ecommerce/sales2.py'), WindowsPath('ecommerce/__init__.py')]
 print('py_files:', py_files)
 #
-# recursive glob
+# recursive glob - similar to path.glob("**/*.py")
 py_files = [p for p in path.rglob("*.py")]
 # output:r_py_files: [WindowsPath('ecommerce/sales2.py'), WindowsPath('ecommerce/__init__.py'),
 # WindowsPath('ecommerce/customer/contact.py'), WindowsPath('ecommerce/customer/__init__.py'),
@@ -137,10 +141,16 @@ py_files = [p for p in path.rglob("*.py")]
 print('r_py_files:', py_files)
 #
 #
+#
 ### Files ###
 # from pathlib import Path
+from time import ctime
+#
 path = Path("ecommerce/__init__.py")
 print(path.exists())            # output:True
+path.rename("myfile.txt")       
+path.unlink()                   # delete the file
+#
 # output:
 # stat: os.stat_result(st_mode=33206, st_ino=3940649674295582,
 # st_dev=943563076, st_nlink=1, st_uid=0, st_gid=0, st_size=172,
@@ -154,17 +164,29 @@ print(path.exists())            # output:True
 # st_ctime: creation time
 print("stat:", path.stat())
 #
-# from time import ctime
+# from time import ctime - created time
 print(ctime(path.stat().st_ctime))      # output:Fri Apr 17 15:31:08 2020
-
-
+#
 # calculate the epic time
 # today minus the seconds values
 # from datetime import datetime, timedelta
 X = 1587135455
 result = datetime.now() - timedelta(seconds=X)
 print(result)                           # output:1970-01-01 20:06:07.846287
+#
 
+# read file content as binary data
+path.read_bytes()
+#
+# read file content as string
+path.read_text()
+#
+# open file - readonly mode
+file = open("myfile.txt", "r")
+#
+# open file (auto-close file) - readonly mode
+with open("myfile.txt", "r") as file:
+    pass
 #
 path = Path("file.txt")
 path_new = Path("newfile.txt")
@@ -192,11 +214,11 @@ print(type(content_str))              # output:<class 'str'>
 print(content_str)
 #
 
-### rename file ###
+## rename file ##
 if path.exists() and not path_new.exists():
     path.rename(path_new)
 
-### delete file - unlink() ###
+## delete file - unlink() ##
 # output:newfile.txt  file exist: True
 print(path_new, ' file exist:', path_new.exists())
 path_new.unlink()     # delete file
@@ -237,7 +259,7 @@ with ZipFile("files.zip", "w") as zip:
     # generator
     for path in Path("ecommerce").rglob("*.*"):
         zip.write(path)
-# zip.close()
+# zip.close()     # auto-close for with
 #
 # read from zip file
 # read mode by default
@@ -268,8 +290,9 @@ with open("data.csv", "w") as file:
     # add header for 1st row
     writer.writerow(["transaction_id", "product_id", "price"])
     # add data records
-    # Shift+Alt+down arrow  to duplicate the line
-    # Ctrl+Shift+K          to delete line
+    # VS code shortcut:
+    #     Shift+Alt+down arrow  to duplicate the lines
+    #     Ctrl+Shift+K          to delete line
     #
     writer.writerow([1001, 101, 199.99])
     writer.writerow([1002, 102, 299.99])
@@ -279,10 +302,10 @@ with open("data.csv", "w") as file:
 # output:[['transaction_id', 'product_id', 'price'], [], ['1001', '101', '199.99'], [], ['1002', '102', '299.99'], []]
 with open("data.csv") as file:
     reader = csv.reader(file)
-    # print(list(reader))
+    print(list(reader))
     #
     # can iterate,
-    # no output as the index has been pointed to the end by above statement
+    # no output from the loop below as the index has been pointed to the end by above statement
     # comment out: print(list(reader)) and retry
     # output:
     #     ['transaction_id', 'product_id', 'price']
@@ -299,13 +322,13 @@ with open("data.csv") as file:
 #
 # import json
 # from pathlib import Path
-
+#
 # list of dictionary
 movies = [
     {"id": 1, "title": "Terminator", "year": 1984},
     {"id": 2, "title": "Terminator 2", "year": 1991}
 ]
-
+#
 data = json.dumps(movies)   # convert dictionary to str
 # output:[{"id": 1, "title": "Terminator", "year": 1984}, {"id": 2, "title": "Terminator 2", "year": 1991}]
 print(data)
@@ -351,13 +374,13 @@ with sqlite3.connect(db_file) as conn:
         primary key(id)
     )'''
     conn.execute(ddl)
-
+#
     # insert data
     sql = "insert into " + table_name + " values(?, ?, ?)"
     for movie in movies:
         conn.execute(sql, tuple(movie.values()))
     conn.commit()
-
+#
     # read data
     sql = "select * from " + table_name
     cursor = conn.execute(sql)
@@ -482,18 +505,25 @@ print(dt1)      # output:2020-01-02 11:22:33
 # import random
 # random number between 0 and 1 (inclusive)
 print(random.random())                          # output:0.9087899712551202
+#
 # random integer number between 1 to 10 (inclusive)
 print(random.randint(1, 10))                    # output:10
+#
 # random pick an item from list
 print(random.choice([1, 2, 3, 4, 5]))           # output:2
+#
 # random pick number of items from list
 print(random.choices([1, 2, 3, 4, 5], k=2))     # output:[3, 1]
 #
+# random pick chars from the string
+print(random.choices("abcdefghi", k=4))         # output:['a', 'c', 'g', 'g']
+# 
 # generate random password
 
 # import secrets
 # import string
 alphabet = string.ascii_letters + string.digits
+print(alphabet)                                 # output:abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
 #
 # for 6-char password
 # use random.choices
@@ -575,12 +605,12 @@ with smtplib.SMTP(host="smtp.gmail.com", port=587) as smtp:
 # in here, just simple name it template.html
 # VS code snippet: !<Tab> --> generate HTML 5 basic content
 #
-# from string import Template
-# template = Template(Path("template.html").read_text())
+from string import Template
+template = Template(Path("template.html").read_text())
 #
 # can pass a dictionary that contains key value pairs
 # or pass keyword arguments
-# template.substitute()
+template.substitute()
 
 
 #
@@ -738,7 +768,8 @@ print("Run external Python Script")
 try:
     completed = subprocess.run(
         ["python", "app.py"], capture_output=True, text=True, check=True)
-    # false is only for MacOS X
+    #
+    # false is only for MacOS X - pretend the process is failed, return code = 1
     # completed = subprocess.run(
     #     ["false"], capture_output=True, text=True)
     # output:args: notepad.exe C:\repos\Python\Programmer\init.txt
