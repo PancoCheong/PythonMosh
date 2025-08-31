@@ -1,6 +1,6 @@
 # 02_basic.py
 # Python is case-sensitive
-# Python use bytecode to achieve cross platform
+# use interpreter to achieve cross platform
 # Python has serveral implmentation: offical python.org (cPython, written in C)
 # other implementation: Jython (Java, allow import Java code),
 # IronPython (C#, allow import C# code), Pypy (subset of Python)
@@ -19,6 +19,21 @@ print(2+3)              # output result of expression,  output:5
 print("a"+"b")          # concat 2 strings,             output:ab
 
 ###2.1 primitive basic type ###
+#Variable Naming Conventions (Identifiers):
+# 1. Composed of numbers, letters, and underscores, and cannot start with a number
+# 2. Cannot use keywords
+# 3. Case-sensitive
+# Recommendation: 
+#     1. If a variable name consists of multiple words,
+#        use underscore connection my_teacher or use camelCase myTeacher
+#     2. Variable names should be as meaningful as possible,
+#        generally use English or English word abbreviations or pinyin
+
+import keyword
+print("Python keyword:", keyword.kwlist)
+#output: Python keyword: ['False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
+
+
 students_count = 50     # int
 rating = 4.95           # float
 is_published = False    # bool
@@ -37,9 +52,43 @@ print(f'x = {x}, y = {y}')  # output:x = 1, y = 2
 # initialize multiple variables in a single line
 x, y = 1, 2
 print(f'x = {x}, y = {y}')  # output:x = 1, y = 2
+
+x, y = y, x                 # swap value of x and y
+print('swap: x =', x, ', y =', y)     # output:x = 2, y = 1
+
 # initialize multiple variables to same value
 x = y = 1
 print(f'x = {x}, y = {y}')  # output:x = 1, y = 1
+
+c, *d, e = 1, 2, 3, 4, 5
+print(c, d, e)          #output:c=1 d=[2, 3, 4] e=5
+
+# NoneType: empty value, None
+a = None
+print(a, type(a))    #output:None <class 'NoneType'>
+
+# set: Ordered collection of unique items
+a = {3, 2, 3, 1, 3, 2, 2, 1}
+print(a, type(a))  #output:{1, 2, 3} <class 'set'>
+
+# bytes:Sequence of bytes for binary data
+a = b'hello'
+print(a, type(a))  #output:b'hello' <class 'bytes'>
+
+
+# Delete variable, not recommended to use, Python has garbage collection mechanism
+del e
+print(e)  # Variable cannot be used after deletion NameError: name 'x' is not defined
+
+# these variable names work, but do not recommended
+地區 = "澳門"
+print(地區)             # output:澳門
+
+α = 3
+β = 4
+print(α, β)             # output:3 4   
+
+
 
 ###2.2 Dynamic Typing ###
 # C++, C#, Java - static type
@@ -140,12 +189,21 @@ print("----- format string -----")
 # without format string, use concat #
 nickname = 'Panco'
 familyname = 'Cheong'
+age = 99
+salary = 1234.5678
+bonus_percentage = 0.0125
+
 message = nickname + ',(' + familyname + ')' + ' is programmer'
 print(message)  # output:Panco,(Cheong) is programmer
 
 # format string - evaluate expression #
-message = f'{nickname},({familyname}) is programmer, lenght of {len(nickname)}, add = {4+5}'
-print(message)  # output:Panco,(Cheong) is programmer, lenght of 5, add = 9
+# output: x. I am Panco, 99 years old, my salary is 1234.57
+print(f'1. I am {nickname}, {age} years old, my salary is {salary:.2f}')
+print( '2. I am %s, %d years old, my salary is %.2f' % (nickname, age, salary))
+print( '3. I am {0}, {1} years old, my salary is {2:.2f}'.format(nickname, age, salary))
+print( '4. I am {}, {} years old, my salary is {:.2f}'.format(nickname, age, salary))
+print( '5. I am {a}, {b} years old, my salary is {c:.2f}'.format(c=salary, a=nickname, b=age))
+print('Bonus: {:.2f}%'.format(bonus_percentage))
 
 # format string #
 # %c - character and ASCII code, %s - string
@@ -153,6 +211,7 @@ print(message)  # output:Panco,(Cheong) is programmer, lenght of 5, add = 9
 # %f - float, %e or %E - scientific number, %g or %G - scientific number
 # %o - octal, %x - heximal, %X - heximal (upper case)
 # %p - variable memory address (in hex)
+
 
 
 
@@ -194,6 +253,14 @@ print(course[3:6])      # substring, start index to end index (exclude end posit
 print(course[4:])       # start index to the end, output:ython Tutorial
 print(course[:7])       # first character to end index (exclude end position), output:   Pyth
 print(course[:])        # output:   Python TutoriAl
+
+nums = [10, 20, 30, 40, 50]
+# del nums[0]
+del nums[:2]            # delete first two elements ie. index 0 and 1
+print(nums)
+
+
+
 ### string function ###
 print("----- string function -----")
 print(len(course))          # length of string, output:23
@@ -295,6 +362,15 @@ print('{:10.4f}\n{:<10.4f}\n{:^10.4f}\n{:>10.4f}'.format(
 # display ^ between - sign and number, output:-^^^^^5.43
 print("{0:^=10.2f}".format(-5.43))
 
+# international Currency sign, \uXXXX to input unicode character
+# https://www.fileformat.info/info/unicode/category/Sc/list.htm
+# U+0024	DOLLAR SIGN	            $
+# U+00A3	POUND SIGN	            £
+# U+00A5	YEN SIGN	            ¥
+# U+20A9	WON SIGN	            ₩
+# U+20A0	EURO-CURRENCY SIGN	    ₠
+
+
 ### Exercise - format string acts like a message template ###
 formatString = "Hello %s. Today is %s, Are there any activities today?"
 values1 = ("Panco", "Sunny day")    # tuple data type
@@ -304,6 +380,7 @@ print(formatString % values1)
 # output:Hello Amy. Today is Windy day, Are there any activities today?
 print(formatString % values2)
 
+
 # use Template in string module
 # from string import Template
 # $s and ${s} are the same, but ${s} is easier to read, $$ - escape for $
@@ -311,13 +388,6 @@ template = Template("$s,Python. ${s},Django. Get good $$")
 # output:Hello,Python. Hello,Django. Get good $
 print(template.substitute(s="Hello"))
 
-# international Currency sign, \uXXXX to input unicode character
-# https://www.fileformat.info/info/unicode/category/Sc/list.htm
-# U+0024	DOLLAR SIGN	            $
-# U+00A3	POUND SIGN	            £
-# U+00A5	YEN SIGN	            ¥
-# U+20A9	WON SIGN	            ₩
-# U+20A0	EURO-CURRENCY SIGN	    ₠
 template2 = Template(
     "Exchange rate@${date_string}: ${sign1}${currency1} is equivalent to ${sign2}${currency2}")
 data = {}       # use dictionary as a data record
@@ -364,6 +434,11 @@ print(y)            # complex number,               output:(1+2j)
 ### 10- Arithmetic Operators ###
 print("----- arithmetic -----")
 # operators: + - * ** / // %
+# Operator precedence
+#     () parentheses
+#     * / // %  **
+#     + - 
+
 
 print(10 + 3)       # add,              output:13
 print(10 - 3)       # minus,            output:7
@@ -403,6 +478,12 @@ print(x)                # output:22
 x = (2 + 3) * 10 - 3
 print(x)                # output:47
 
+
+# scientific notation
+a = 3.14 * 10**5
+b = 3.14e5
+print(a, b)    #output:314000.0 314000.0
+
 # Python 3 built in functions
 # https://docs.python.org/3/library/functions.html
 
@@ -412,8 +493,22 @@ print(x)                # output:47
 
 ### 2.11- Working with Numbers ###
 ### import math as m ###
-PI = 3.14159        # use upper case to name constant, Python has no const keyword
 print('----- function in math module -----')
+PI = 3.14159        # use upper case to name constant, Python has no const keyword
+print(m.e)              # 2.718281828459045
+print(m.pi)             # π  = 3.141592653589793
+print(m.inf)            # positive infinity
+print(-m.inf)           # negative infinity
+print(m.factorial(5))   # 5!=1*2*3*4*5 = 120
+print(m.log(m.e))       # Natural logarithm loge(e) = ln(e) = 1  When base and argument are the same, the logarithm value is 1
+print(m.log10(100))     # 2
+print(m.log2(2))        # 1
+print(pow(2, 3),  2 **3)
+
+# Trigonometric functions: sin, cos, tan
+print(m.sin(m.pi))      # output: 1.2246467991473532e-16 (essentially 0)
+
+
 x = 12.950000
 y = -12.950000
 print(round(x))         # round to integer,     output:13
@@ -433,6 +528,15 @@ print(m.isnan(x))       # is not a number,      output:False
 print(m.sqrt(x))        # square root,          output:3.598610843089316
 print(m.remainder(10, 3))    # remainder,       output:1.0
 print(m.remainder(-10, 3))   # remainder,       output:-1.0
+
+print(sum([1, 2, 3, 4]))
+print(sum(range(1, 101)))  # 5050
+
+print(max([1, 2, 6, 4]))
+# print(max(1, 2, 6, 4))
+
+print(min([1, 3, 7, -3, 4]))
+
 
 
 ###3.12 type conversion ###
@@ -488,32 +592,69 @@ print(bool(()))                 # empty tuple,      output:False
 print(bool({}))                 # empty dictionary, output:False
 
 
+print(True == 1)  # True
+print(False == 0)  # True
+
+#  ASCII：
+#  a~z : 97~122
+#  A~Z : 65~90
+#  0~9 : 48~57
+print('a' < 'b')  # True  97 < 98
+print('A' < 'a')  # True  65 < 97
+print('abcdg' > 'acb')  # False, compares 'a'vs'a', 'b'vs'c' and return result
+
+# membership operator
+#   in,  not in
+print(3 in [3, 4, 5])  # True
+print(3 not in [3, 4, 5])  # False
+
+# compare the memory address
+#   is,  is not
+a = 10
+b = 20
+print(id(a))
+print(id(b))
+print(a is b)  # False
+print(a is not b)  # True
+
+
+
+
 ###2.13- Conditional Statements ###
 print("----- conditional statement -----")
 # condition: if bool:    elif bool:    else:
 # intention is a code block, no {}
+
+# logical operator: > < >= <=  == !=
+# not, and, or keywords
+
 
 # Falsy value - " " space is not False
 name = " "
 if not name.strip():
     # trim space becomes empty -> False, output:Name is empty!
     print("Name is empty!")
+
 # condition
 age = 21
 if age >= 18 and age < 65:
     print("Go to work")         # output:Go to work
+
 # re-write above, easier to read
 if 18 <= age < 65:
     print("Go to work again")   # output:Go to work again
+
 # Ternary Operator
 if age >= 18:
     message = "Go to Work"
 else:
     message = "Enjoy life"
 print(message)                  # output:Go to Work
+
 # re-write above condition
 # in C# / Java
 # message = age >= 18 ? "Go to work": "Enjoy life"
+
 # in Python
 message = "Go to work again" if age >= 18 else "Enjoy life again"
 print(message)                  # output:Go to work again
@@ -537,19 +678,41 @@ print("Enjoy your day")
 
 
 # and, or, not
+
+# and:
+#  Evaluates each value from left to right, as soon as one is False (implicit boolean judgment), returns that value
+print(3 and 5)                # 5
+print(3 and 0 and 5)          # 0
+print(3 and 0 and print(50))  # 0 short-circuits at 0 (won't continue evaluating to the right)
+print(3 and print(50) and 6)  # prints 50, then outputs None
+
+# or:
+#  Evaluates each value from left to right, as soon as one is True (implicit boolean judgment), returns that value
+print(0 or 666)               # 666
+print(0 or print(80) or 888)  # first prints 80, then outputs 888
+print(0 or 999 or print(90))  # 999 (short-circuits at 999, won't continue evaluating to the right)
+
+
 has_high_income = False
 has_good_credit = True
 has_criminal_record = False
 # AND,  output:None
 if has_high_income and has_good_credit:
     print("Eligible for loan with lower down payment")
+
 # OR,   output:Eligible for loan with higher down payment
 if has_high_income or has_good_credit:
     print("Eligible for loan with higher down payment")
+
 # NOT,  output:Eligible for loan, no criminal record
 if has_good_credit and not has_criminal_record:
     print("Eligible for loan, no criminal record")
 # logical operator: > < <= >= == !=
+
+
+
+
+
 
 # output:It's a cold day
 temperature = 4
@@ -573,6 +736,28 @@ else:
     output = weight * kg_to_lbs
     print('%.2f pounds' % (output))
 
+
+
+
+print("----- match case statement -----")
+
+n = input('Please input the grade (A/B/C/D)：')
+match n:
+    case 'A':
+        print('>= 90')
+    case 'B':
+        print('70 ~ 90')
+    case 'C':
+        print('60 ~ 70')
+    case 'D':
+        print('< 60')
+    # others inputs
+    case _:
+        print('Invalid Input!')
+
+
+
+
 print("----- for loop -----")
 # for loop
 # output:
@@ -581,12 +766,15 @@ print("----- for loop -----")
 # C
 for x in "ABC":          # string
     print(x)
+
 # output: a b c
 for x in ['a', 'b', 'c']:
     print(x, end=" ")
+
 # output: 2 3 4
 for x in range(2, 5):       # print 2 to 5, range object
     print(x, end=" ")
+
 # output: 0 2 4 6 8
 for x in range(0, 10, 2):   # step=2, print even numbers, range object
     print(x, end=" ")
@@ -596,6 +784,49 @@ print(range(5))             # range is not a list, output:range(0, 5)
 print(type(range(5)))           # output:<class 'range'>
 print([1, 2, 3, 4, 5])          # a list, output:[1, 2, 3, 4, 5]
 print(type([1, 2, 3, 4, 5]))    # output:<class 'list'>
+
+
+print(list(range(6, 1, -1)))  # [6, 5, 4, 3, 2]
+
+
+
+# Loop through/iterate over a list
+nums = [11, 22, 33]
+for n in nums:
+    print(n)  # element
+
+# for i in range(3): # range(3) => [0,1,2]
+for i in range( len(nums) ):  # range(3) => [0,1,2]
+    print(i, nums[i])  # index, element
+
+# enumerate: enumeration, listing, will get index and element together
+for i,n in enumerate(nums):
+    print(i, n)  # index, element
+
+# Can also be used with for loops:
+#    range()
+#    list: [1,2,3]
+#    dict: {'name': 'ikun', 'age': 20}
+#    tuple: (1,2,3)
+#    set: {1,2,3}
+#    str: "hello"
+
+
+for i in range(6):  # 0,1,2,3,4,5
+    for j in range(i+1):
+        print('*', end='')
+    print()
+'''
+*
+**
+***
+****
+*****
+******
+'''
+
+
+
 
 ### for else code block ###
 # Python doesn't need to use is_found flag to control not found logic
@@ -608,7 +839,7 @@ for name in names:
 #        is_found = True
         break
 else:
-    print("Name start with 'A' is not found")
+    print("Name start with 'A' is not found")  #only execute only if no 'break' in the loop 
 # if not is_found:
 #    print("Name start with 'A' is not found")
 
@@ -672,20 +903,32 @@ print("number 1 =", number1)
 
 ### random ###
 #import random
+
 # generate random integer number between 1 to 10,   eg. output:4
 print(random.randint(1, 10))
+
 # generate random float number between 0 to 1,      eg. output:0.003671148062525331
-print(random.random())
+print(random.random())          # random float from [0.0 to 1.0), output:0.123456789
+print(1 + random.random() * 9)  # random float from [1.0 to 10.0), output:3.4245019179658347
+
+# Get a random number in the range [a, b) or [a, b] depending on rounding.
 # generate random float number between 1.1 to 5.4,  eg. output:3.4245019179658347
 print(random.uniform(1.1, 5.4))
+
 # random pick a character,                          eg. output:h
 print(random.choice('abcdefghijklmnopqrstuvwxyz!@#$%^&*()'))
+print(random.choice(['剪刀', '石头', '布']))  # unicode support, eg. output:布
+print(random.choice(range(1, 7)))  
+
 # random ODD number between 1 to 100 (step +2),     eg. output:81
 print(random.randrange(1, 100, 2))
+
 # random EVEN number between 1 to 100 (step +2),    eg. output:74
 print(random.randrange(0, 101, 2))
+
 # random pick 5 characters,                         eg. output:['f', 'b', 'p', 'q', 'c']
 print(random.sample('zyxwvutsrqponmlkjihgfedcba', 5))
+
 #import string
 # random pick 8 characters from letters and digits, eg. output:AZba3Isx
 # ''.join - combine the values in list into string
@@ -696,7 +939,6 @@ a = [1, 3, 5, 6, 7]
 random.shuffle(a)	    # shuffle the list,         eg. output:[6, 7, 5, 1, 3]
 print(a)
 
-print(random.choice(['剪刀', '石头', '布']))  # unicode support, eg. output:布
 
 
 ### exercise - game command ###
@@ -786,7 +1028,6 @@ print("----- Scope -----")
 my_value = "a"
 my_global_value = "x"
 
-
 def greet():
     # although my_value is global variable,
     # Python create a local variable with the same name inside function
@@ -812,6 +1053,8 @@ print(my_global_value)          # output:y
 # type any letter of the keyword: intelli-sense auto-complete is still able to pick it up
 # eg. type
 # mgv ----> my_global_value
+
+
 
 ### exercise ###
 # Fizz and Buzz

@@ -13,19 +13,23 @@ import string
 # can be multiple types in a single list
 letters = ['a', 'b', 'c']
 print(letters)          # output:['a', 'b', 'c']
+
 # matrix 2-dimension list
 matrix = [[1, 2], [3, 4]]
 print(matrix)           # output:[[1, 2], [3, 4]]
 print(matrix[1])        # output:[3, 4]
 print(matrix[1][1])     # output:4
+
 # create list with same initial values
 checklist = [False] * 5
 # output:[False, False, False, False, False]
 print(checklist)
+
 # combine 2 list
 combined = checklist + letters
 # output:[False, False, False, False, False, 'a', 'b', 'c']
 print(combined)
+
 # convert to list
 range_to_list = list(range(2, 6))
 print(range_to_list)        # output:[2, 3, 4, 5]
@@ -34,18 +38,24 @@ print(string_to_list)       # output:['P', 'a', 'n', 'c', 'o']
 # count of list
 print(len(string_to_list))  # output:5
 
+print(string_to_list[::-1])   #output:['o', 'c', 'n', 'a', 'P']
+
+
 ### assign item ###
 print(string_to_list[0])    # output:P
 print(string_to_list[-1])   # output:o
 print(string_to_list[1:3])  # output:['a', 'n']
 print(string_to_list[3:])   # output:['c', 'o']
 print(string_to_list[:3])   # output:['P', 'a', 'n']
+
 # step of 2
 print(string_to_list[::2])  # output:['P', 'n', 'o']
 numbers = list(range(10))
+
 # even numbers, odd numbers
 print(numbers[::2])  # even,  output:[0, 2, 4, 6, 8]
 print(numbers[1::2])  # odd,  output:[1, 3, 5, 7, 9]
+
 # in reverse order
 print(numbers[::-1])  # reverse, output:[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 
@@ -53,15 +63,33 @@ print(numbers[::-1])  # reverse, output:[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 string_to_list[-2] = 'K'
 print(string_to_list[3:])   # output:['K', 'o']
 #
+
+# append vs extend
+nums = [1, 2, 3]
+# nums.append([7, 8])  # [1, 2, 3, [7, 8]]
+nums.extend([7, 8])  # [1, 2, 3, 7, 8]
+# nums.extend('abc')  # [1, 2, 3, 7, 8, 'a', 'b', 'c']
+print(nums)
+
+
+nums = [2, 3, 3, 4, 5, 3, 5]
+# delete all 3 from the list
+while nums.count(3):
+    nums.remove(3)
+print(nums)  # [2, 4, 5, 5]
+
+
 ### unpacking list ###
 # traditional way
 numbers = [1, 2, 3]
 first = numbers[0]
 second = numbers[1]
 third = numbers[2]
+
 # in Python, number of variables must = numbers of items in list
 first, second, third = numbers
 print(second)               # output:2
+
 # pack the remaining items to separate list
 numbers = list(range(1, 9))
 first, second, *others = numbers
@@ -76,29 +104,39 @@ print(last)                 # output:8
 # way 1
 #import string
 letters1 = list(string.ascii_lowercase)
+
+# map(func, iterable) - applies a specified function to each item in an iterable (like a list, tuple, or string)
+# chr() - returns a string representing a character whose Unicode code point is the integer specified.
+# ord() - returns the Unicode code point (integer representation) of a single character. 
+
+
 # way 2 - ASCII code (A-Z:65-90, a-z:97-122)
 letters2 = list(map(chr, range(97, 123)))
 letters3 = list(map(chr, range(ord('a'), ord('z')+1)))
 print(letters1)
 print(letters2)
 print(letters3)
+
 # loop
 # print the content
 letters = list(map(chr, range(ord('a'), ord('g')+1)))
 for letter in letters:
     print(letter, end=" ")      # output:a b c d e f g
 print("")
+
 # print the content with index position - enumerate()
 # letter is tuple, like a readonly list, cannot add item
 for letter in enumerate(letters):
     # output:(0, 'a') (1, 'b') (2, 'c') (3, 'd') (4, 'e') (5, 'f') (6, 'g')
     print(letter, end=" ")
 print("")
+
 # access the index and value
 for letter in enumerate(letters):
     # output:0 a , 1 b , 2 c , 3 d , 4 e , 5 f , 6 g ,s
     print(letter[0], letter[1], ',', end=" ")
 print("")
+
 # better way to get index and value - use unpack
 # item = (0, 'a')
 # index, letter = item
@@ -107,33 +145,52 @@ for index, letter in enumerate(letters):
     print(index, letter, ',', end=" ")
 print("")
 
+
+# Remove duplicated items
+nums = [1, 2, 2, 2, 2, 3, 3, 3, 3, 1, 1, 5, 5, 4, 3, 3]
+nums2 = []
+for n in nums:
+    if n not in nums2:
+        nums2.append(n)  # add n to nums2 list
+print(nums2)  # [1, 2, 3, 5, 4]
+
+
+
 # add or remove item
 letters.append("A")
 print(letters)      # output:['a', 'b', 'c', 'd', 'e', 'f', 'g', 'A']
+
 # insert
 letters.insert(3, "b")
 print(letters)      # output:['a', 'b', 'c', 'b', 'd', 'e', 'f', 'g', 'A']
+
 # remove at the end of the list
 letters.pop()
 print(letters)      # output:['a', 'b', 'c', 'b', 'd', 'e', 'f', 'g']
+
 # remove at index
 letters.pop(5)
 print(letters)      # output:['a', 'b', 'c', 'b', 'd', 'f', 'g']
+
 # remove by value (1st match)
 letters.remove('b')
 print(letters)      # output:['a', 'c', 'b', 'd', 'f', 'g']
+
 # to remove all, use loop
 letters[1] = 'g'
 letters[3] = 'g'
 print(letters)      # output:['a', 'g', 'b', 'g', 'f', 'g']
+
 # keep every element that doesn't equal value
 # letters = (letter for letter in letters if letter != 'g') # this create a new list
 # letters[:] - this can mutate the existing list
 letters[:] = (letter for letter in letters if letter != 'g')
 print(letters)      # output:['a', 'b', 'f']
+
 # other way to remove item - del function
 del letters[0:2]
 print(letters)      # output:['f']
+
 # remove all
 letters.clear()
 print(letters)      # output:[]
@@ -146,6 +203,7 @@ print(letters.index('b'))       # output:1
 if 'Z' in letters:              # check if 'Z' is existed in list
     # otherwise, it prompts ValueError: 'Z' is not in list
     print(letters.index('Z'))
+
 # count number of item in list
 print(letters.count('b'))       # output:2
 print(letters.count('Z'))       # output:0
@@ -172,6 +230,16 @@ print(sorted(numbers))  # output:[15, 18, 19, 36, 41, 44, 51, 62, 77, 84]
 # output:[84, 77, 62, 51, 44, 41, 36, 19, 18, 15]
 print(sorted(numbers, reverse=True))
 
+
+nums = [2, 4, 7, 33, 99, 6, 8]
+nums.reverse()
+print(nums)                   # [8, 6, 99, 33, 7, 4, 2]
+# print(nums[::-1])           # original unchanged
+print(list(reversed(nums)))   # [2, 4, 7, 33, 99, 6, 8]
+
+nums2 = nums.copy()           # make a copy 
+
+
 ### sort tuple in list ###
 products = [
     ("Item A", 10.0),
@@ -197,6 +265,7 @@ def sort_product(product):
 # sort by price ascending
 products.sort(key=sort_product)
 print(products)  # output:[('Item C', 9.0), ('Item A', 10.0), ('Item B', 14.0)]
+
 # sort by price descending
 products.sort(key=sort_product, reverse=True)
 print(products)  # output:[('Item B', 14.0), ('Item A', 10.0), ('Item C', 9.0)]
@@ -291,6 +360,8 @@ if not queue:
     print("empty queue")
 
 
+
+
 # tuple ### tuple()
 # contain a sequence of objects
 # read-only list - use to prevent accidental modification
@@ -299,7 +370,7 @@ if not queue:
 # cannot add or remove object
 point1 = (1, 2)  # parenthesis can be omitted
 point2 = 1, 2
-point3 = 1,
+point3 = 1,      # must add , for 1-element tuple
 point4 = ()
 print(type(point1))     # output:<class 'tuple'>
 print(type(point2))     # output:<class 'tuple'>
@@ -309,24 +380,30 @@ print(point1)           # output:(1, 2)
 print(point2)           # output:(1, 2)
 print(point3)           # output:(1,)
 print(point4)           # output:()
+
 ## concat tuple ##
 point = (1, 2) + (3, 4)
 print(point)            # output:(1, 2, 3, 4)
+
 # repeat the content
 point = (1, 2) * 3
 print(point)            # output:(1, 2, 1, 2, 1, 2)
+
 # convert list to tuple
 point = tuple([1, 2])
 print(point)            # output:(1, 2)
 point = tuple("Panco")
 print(point)            # output:('P', 'a', 'n', 'c', 'o')
+
 ## access tuple ##
 point = (1, 2, 3)
 print(point[0])         # output:1
 print(point[0:2])       # output:(1, 2)
+
 # unpack the tuple
 x, y, z = point
 print(y)                # output:2
+
 # check exist
 if 3 in point:
     print("3 exists")   # output:3 exists
@@ -355,6 +432,22 @@ print(f"x={x}, y={y}")  # output:x=11, y=10
 # use the unpack syntax, that's why we can initialize multiple variable
 a, b, c = 1, 2, 3       # tuple () is omitted
 print(c)                # output:3
+
+# sorted
+t = (2, 3, 4, 1, 7, 9, 6)
+print(t.index(4))    # 2
+
+t2 = sorted(t)
+print(t2, type(t2))  # [1, 2, 3, 4, 6, 7, 9] <class 'list'>
+
+# to list
+nums = list(t)
+print(nums)          # [2, 3, 4, 1, 7, 9, 6]
+
+t = (2, 3, 4, 4, 7, 4, 9, 6)
+print(t.count(4))    # 3
+
+
 
 
 # Array ### array()  (note: more often, we use numpy array - contain a single data type)
@@ -424,27 +517,58 @@ print(num_list)
 #
 #
 
+
+
 # Set ### set()
 # collection with no duplicate - unique values in set
 # cannot access set by index, it stores data un-orderly.
+my_dict = {}     # create empty dictionary
+my_set = set()  # create empty set
+
 numbers = [1, 1, 2, 3, 4, 2, 4]
 first = set(numbers)
 print(first)          # output:{1, 2, 3, 4}
 print(type(first))    # output:<class 'set'>
+print(len(first))     # output:4
+# print(first[0])       # Error, set has no index
+
+# add or remove item 
 second = {1, 4}
 second.add(5)
 second.remove(4)
 print(second)           # output:{1, 5}
 print(len(second))      # output:2
+
 # union of two sets - return new set
 print(first | second)   # output:{1, 2, 3, 4, 5}
+
 # intersection of two sets - return new set
 print(first & second)   # output:{1}
+
 # difference of two sets - return new set
 # item in first, which doesn't exist in second
 print(first - second)   # output:{2, 3, 4}
+
 # item in second, which doesn't exist in first
 print(second - first)   # output:{5}
+
+print(first >= second)  # check if first contains all elements of second, output:False
+
+# Features (for understanding)
+#  add(): Add element
+#  pop(): Remove element
+#  clear(): Clear all
+#  remove(3)   # Remove element 3, will raise an error if element doesn't exist
+#  discard(3)  # Remove element 3, will not raise an error if element doesn't exist
+s = {1, 2, 3}
+s.add(4)        # Add element 4
+s.pop()         # Remove an arbitrary element
+s.clear()       # Remove all elements
+s.remove(3)     # Remove element 3  (raise error)
+s.discard(30)   # Remove element 30, will not raise an error if element doesn't exist
+print(s)
+
+
 # semantic difference of two sets - return new set
 # item either in first or second, but not both
 print(first ^ second)   # output:{2, 3, 4, 5}
@@ -458,22 +582,32 @@ if 1 in first:
 #
 #
 
+
+
+
+
+
+
 ### Dictionary ###
 # dict()
-# collection of key and value pair
+# unordered collection of key and value pair
 # eg. phone book: name --> contact_number
-# key must be immutable. ie. string or int
+# key must be unique value and immutable. ie. string or int (can't be list, dict, set)
 #
 # both are the same
 points = {'x': 1, 'y': 2}
 points = dict(x=1, y=2)
+
 # access thru key, cannot use index
 print(points['x'])          # ouput:1
+
 # update value
 points['x'] = 10
+
 # add new value
 points['z'] = 30
 print(points)               # output:{'x': 10, 'y': 2, 'z': 30}
+
 #
 # Error - access invalid key
 # output: KeyError: 'a'
@@ -484,17 +618,52 @@ if 'a' in points:
 
 # avoid error when invalid key
 print(points.get('a'))          # output:None
-# pass in default value. eg. 0
+
+# pass in default value. eg. 0 if key not found
 print(points.get('a', 0))       # output:0
+
 # remove item
 del points['y']
 print(points)                   # output:{'x': 10, 'z': 30}
+
+print(len(points))              # 2
+
+print(list(points.keys()))      # output:['x', 'y', 'z']
+print(list(points.values()))    # output:[10, 2, 30]
+print(list(points.items()))     # output:[('x', 10), ('y', 2), ('z', 30)]
+
+d1 = {'a': 100}
+d2 = {'b': 200}
+# print(d1 + d2)                # Error
+d1.update(d2)                   # combine d2 into d1
+print(d1)                       # {'a': 100, 'b': 200}
+print(d2)                       # {'b': 200}
+
+
+d = {'name': 'Labubu', 'age': 100, 'sex': 'Male'}
+d.pop('name')     # remove 'name'
+print(d)          # {'age': 100, 'sex': 'Male'}
+
+d.clear()
+print(d)  # {}
+
+d = {'a': 1, 'b': 2, 'c': 3}
+d.popitem()            # remove last item
+print(d)               # output: {'a': 1, 'b': 2}
+
 
 # loop
 # loop thru the key and get the value
 for key in points:
     print(key, points[key], ',', end=" ")   # output:x 10 , z 30 ,
 print("")
+
+for key in points.keys():
+     print(key)                             # output:x, y, z
+
+for val in points.values():
+     print(val)                             # output:10, 2, 30
+
 # get tuple and unpack (key, value)
 for key, value in points.items():
     print(key, value, ',', end=" ")         # output:x 10 , z 30 ,
@@ -506,18 +675,22 @@ values = []
 for x in range(5):
     values.append(x * 2)
 print(values)                               # output:[0, 2, 4, 6, 8]
+
 # comprehension syntax: [expression for item in items]
 values = [x * 2 for x in range(5)]
 print(values)                               # output:[0, 2, 4, 6, 8]
 #
+
 # for set
 values = {x * 2 for x in range(5)}
 print(values)                               # output:{0, 2, 4, 6, 8}
 #
+
 # for dictionary
 values = {x: x * 2 for x in range(5)}
 # output:{0: 0, 1: 2, 2: 4, 3: 6, 4: 8}
 print(values)
+
 # same as below
 values = {}
 for x in range(5):
@@ -525,12 +698,14 @@ for x in range(5):
 # output: {0: 0, 1: 2, 2: 4, 3: 6, 4: 8}
 print(values)
 #
+
 # for tuple
 values = (x * 2 for x in range(5))
 # output:<generator object <genexpr> at 0x00000258AE9EF0B0>
 print(values)
 #
 #
+
 ### Generator Expression ###
 values = [x * 2 for x in range(10)]
 for x in values:
@@ -546,6 +721,7 @@ print("")
 print(type(values))             # output:<class 'generator'>
 #
 #
+
 #from sys import getsizeof
 # list
 values = [x * 2 for x in range(10000000)]
@@ -560,31 +736,39 @@ print("generator size:", getsizeof(values))     # output:generator size: 112
 # print(len(values))
 #
 #
+
 ### unpacking operator ###
 numbers = [1, 2, 3]
 print(numbers)                                  # output:[1, 2, 3]
 # print individual int
 print(1, 2, 3)                                  # output:1, 2, 3
+
 # how to print the individual value in list
 # unpack operator - *  [just like spread operator (3 dots) ... in JavaScript]
 # can unpack any iterable
 print(*numbers)                                 # output:1, 2, 3
 #
+
 # normal way to create list
 values = list(range(5))
 print(values)                                   # output:[0, 1, 2, 3, 4]
+
 # use unpack operator, can also unpack string
 values = [*range(5), *"Panco"]
+
 # output:[0, 1, 2, 3, 4, 'P', 'a', 'n', 'c', 'o']
 print(values)
 #
+
 # combine the list
 first = [1, 2]
 second = [3]
 values = [*first, "a", *second, *"Pan"]
+
 # output:[1, 2, 'a', 3, 'P', 'a', 'n']
 print(values)
 #
+
 # unpack dictionary - **
 first = {'x': 1}
 second = {'x': 10, 'z': 2}
@@ -593,6 +777,7 @@ combined = {**first, **second, "y": 5}
 print(combined)
 #
 #
+
 ### Exercise ###
 # find the most repeatable character
 sentence = "This is a common interview question"
@@ -608,16 +793,19 @@ all_values = chars.values()
 max_value = max(all_values)
 print(max_value)                        # output: 5
 #
+
 # sort dictionary
 # output: [('i', 5), (' ', 5), ('s', 3), ('o', 3), ('n', 3), ('e', 3), ('t', 2), ('m', 2), ('w', 1), ('v', 1), ('u', 1), ('r', 1), ('q', 1), ('h', 1), ('c', 1), ('a', 1), ('T', 1)]
 print(sorted(chars.items(), key=lambda kv: (kv[1], kv[0]), reverse=True))
 #
+
 # Creates a sorted dictionary (sorted by key)
 #from collections import OrderedDict
 # output:OrderedDict([(' ', 5), ('T', 1), ('a', 1), ('c', 1), ('e', 3), ('h', 1), ('i', 5), ('m', 2), ('n', 3), ('o', 3), ('q', 1), ('r', 1), ('s', 3), ('t', 2), ('u', 1), ('v', 1), ('w', 1)])
 print(OrderedDict(sorted(chars.items())))
 #
 #
+
 ### solution from training video###
 #from pprint import pprint
 sentence = "This is a common interview question"
@@ -658,6 +846,38 @@ print(char_frequency_sorted[0])                     # output: ('i', 5)
 #
 #
 #
+
+
+
+# 深浅拷贝的可视化视图
+#  http://pythontutor.com/live.html#mode=edit
+
+########### copy: shallow copy/shallow copying  ###########
+a = [1, 2, 3]
+b = a.copy()
+b[0] = 666
+print(a)  # [1, 2, 3]
+print(b)  # [666, 2, 3]
+
+
+# deepcopy (for two-dimensional or multi-dimensional arrays)
+
+a = [1, 2, [3, 4]]
+b = a.copy()  # shallow copy
+b[-1][-1] = 888
+print(a)              # [1, 2, [3, 888]]
+print(b)              # [1, 2, [3, 888]]
+
+import copy
+a = [1, 2, [3, 4]]
+b = copy.deepcopy(a)  # deep copy
+b[-1][-1] = 888
+print(a)              # [1, 2, [3, 4]]
+print(b)              # [1, 2, [3, 888]]
+
+
+
+
 ### Exceptions ###
 numbers = [1, 2]
 # output:IndexError: list index out of range
