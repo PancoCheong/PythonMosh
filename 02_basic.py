@@ -1019,12 +1019,31 @@ def save_user(**user):  # **var means dictionary, like an object in Javascript
 
 save_user(id=1, name="Panco")
 
-print("----- Scope -----")
-# two types of variables in Python
-# 1. local variables with the function scope - only can access within function
-# 2. global variables with the file scope
-### Python doesn't have block level scope ###
 
+
+print("----- Scope: the range where variables take effect -----")
+# two types of variables in Python
+# 1. local variables with the function scope 
+#    - only can access within function, memory is released after function call
+# 2. global variables with the file scope
+
+### Python doesn't have block level scope ###
+# if statements, while, for loops: have no scope
+if True:
+    c = 100
+#
+print('c:', c)
+
+i = 1
+while i:
+    d = 100
+    i -= 1
+#
+print('d:', d)
+
+
+#
+#
 my_value = "a"
 my_global_value = "x"
 
@@ -1033,26 +1052,266 @@ def greet():
     # Python create a local variable with the same name inside function
     # to avoid changing the value in global scope by default
     my_value = "b"
+    
     # do not create local variable, directly refer to global variable
     # avoid to use global - may have side effect on other function that use the same variable
-    global my_global_value
+    global my_global_value      # refer to global variable
     my_global_value = "y"
+
+    # code block has no scope
+    # if statements, while, for loops: have no scope
     if True:
         my_message = "This is function scope variable"
+
     # can access outside above code block
     print(my_message)           # output:This is function scope variable
     print(my_value)             # output:b
     print(my_global_value)      # output:y
 
-
+#
 greet()
 # print(my_message)             # cannot access function variable
-print(my_value)                 # output:a
+print(my_value)                 # output:a, change inside function is omitted
 print(my_global_value)          # output:y
 
 # type any letter of the keyword: intelli-sense auto-complete is still able to pick it up
 # eg. type
 # mgv ----> my_global_value
+
+
+# Scope: the range where variables take effect
+#   Functions have scope
+
+# Global variables: global scope, memory won't be released
+gv = 10
+
+def fn():
+    # Local variables: local scope, memory occupied by variables will be automatically released when exiting the scope (function)
+    fv = 20
+    print('function fv:', fv)
+    print('global   gv:', gv)
+    print()
+#
+fn()
+# print(fv)     # Cannot use local variables defined inside functions
+gv = 30
+fn_var = fn     # function can be assigned to variable, that acts like pointer to original function
+fn_var()        # same result as calling fn()
+print("fn     name = ", fn.__name__)
+print("fn_var name = ", fn_var.__name__)
+
+#
+# if statements, while, for loops: have no scope
+if True:
+    if_v = 100
+#
+print('can access outside if    block, if_v:', if_v)
+
+i = 1
+while i:
+    wh_v = 100
+    i -= 1
+#
+print('can access outside while block, wh_v:', wh_v)
+
+
+# Function nesting
+# Built-in scope B: Built-in, can be used throughout the entire Python environment
+#    - built-in functions: print(), len(), int(), str(), min(), max(), sum() etc.
+#    - built-in exceptions: ValueError, TypeError, ZeroDivisionError etc.
+#    - built-in types: int, float, str, list, tuple, dict, set etc.
+#    - built-in constants: True, False, None
+# Global scope   G: Global
+# Function scope E: Enclosing
+# Local scope    L: Local
+
+#
+# Keywords: global, nonlocal
+print('\n--- use global keyword ---')
+# global scope
+gs = 10
+def f1():
+    global gs   # Declare that the global variable m is being used
+    gs += 4
+    print(' inside function f1, gs:', gs)    # output:14
+#
+f1()
+print('outside function f1, gs:', gs)        # output:14
+
+#
+print('\n--- use nonlocal keyword ---')
+# nonlocal: only used in function nesting
+#
+x = "gs"              # Global scope
+def f2():
+    x = "fs"          # Function scope
+
+    def f3():
+        # global / nonlocal must declare before any assignment
+        # 
+        # global x    # Declare that the variable x="gs" in   global scope is being used
+        nonlocal x    # Declare that the variable x="fs" in function scope is being used
+        print('x in inner function f3  i:', x)
+        #
+        x = "ls"      # Local scope
+        print('x in inner function f3 ii:', x)
+    #
+    f3()
+    print('x in outer function f2   :', x)
+#
+f2()
+print('x outside all function   :', x)
+
+''' output:
+--- use global keyword ---
+x in inner function f3  i: gs
+x in inner function f3 ii: ls
+x in outer function f2   : fs
+x outside all function   : ls      (global override gs)
+'''
+''' output:
+--- use nonlocal keyword ---
+x in inner function f3  i: fs
+x in inner function f3 ii: ls
+x in outer function f2   : ls      (nonlocal override fs)
+x outside all function   : gs
+'''
+''' output:
+--- use NO keyword ---
+x in inner function f3 ii: ls
+x in outer function f2   : fs
+x outside all function   : gs
+'''
+
+# Decorator:
+#     The purpose is to add functionality before or after other functions, 
+#     but without modifying the original function
+
+def swim():
+    print('I love swimming')
+#
+# this approach only works for the specific swim() function and isn't reusable.
+def swim2():                                   
+    print('Dance first')
+    swim()                      # hard-coded way to call swim()
+    print('Then sing a song')
+
+swim2()
+print("+" * 80)
+#
+# The above method has flaws: can only add functionality to swim
+#
+#
+def run():
+    print('I love running')
+#
+# improves flexibility by accepting any function as a parameter in run2(fn)
+def run2(fn):                   # pass-in function as parameter
+    print('Dance first')
+    fn()                        # allow to execute other function
+    print('Then sing a song')
+
+run2(run)                       # execute run() in run2
+print('-' * 80)
+run2(swim)                      # execute swin() in run2
+print('*' * 80)
+#
+# The above still has drawback: 
+#    - the calling method changes, must call run2(run) instead of just run()   
+#
+
+####### Standard Decorator Pattern ########
+#    adds behavior before and after calling the original function 
+#
+# Define decorator function - outer()
+def outer(fn):                    # fn=sleep
+
+    def inner():                  # inner wrapper() function that adds behavior before and after calling the original function
+        print('Dance first')
+        fn()                      # Actually calls sleep() 
+        print('Then sing a song')
+    return inner                  # return wrapper() function
+#
+#
+def sleep():
+    print('I love sleeping')
+#
+# assign the return value of outer(sleep() function) to variable sleep, 
+# if change variable name to s, it looks like this: s = outer(sleep)
+sleep = outer(sleep)                                       # The principle of decorators
+print("acutal function name of sleep :", sleep.__name__)    # sleep = inner function, sleep points to inner function
+sleep()                                                    # Equivalent to calling inner()
+print("=" * 80)
+#
+#
+@outer  # Decorator syntax, equivalent to assign sleep2 = outer(sleep2)
+def sleep2():
+    print('I love sleeping2')
+
+sleep2()
+print("acutal function name of sleep2:", sleep2.__name__)
+
+print("." * 80)
+
+
+# Exercise: Write a decorator to calculate function execution time
+# a practical use case for decorators in performance monitoring on execution time of function
+import datetime
+now = datetime.datetime.now()
+print("                Now:", now)
+print("yyyy-mm-dd HH:MM:SS:", now.strftime("%Y-%m-%d %H:%M:%S"))
+#
+import time
+print(time.time())  # Get current time in float represents seconds since epoch (1970-1-1 00:00:00 UTC)
+
+# Decorator
+def dec(fn):
+    def inner(*args, **kwargs):  # Universal decorator, universal parameters, can accept any arguments
+        start = time.time()
+        print("start time: ", start)  # Start time
+        fn(*args, **kwargs)
+        end = time.time()
+        print("duration: ", end - start)    # Time difference
+    return inner
+
+
+@dec
+def mysum(n):
+    s = 0
+    for i in range(n):
+        s += i
+    # print(s)
+
+mysum(10**8)            # from 0 to 99,999,999
+
+
+
+# Closure: function nesting, and returning the inner function will form a closure
+#          The variable x=10 in the function scope will not be released
+#
+#          Imagine saving a function and its state into a memory location
+#          i.e. the variable x=10 will be saved along with the function fn4
+
+def fn3():
+    x = 10
+
+    def fn4():
+        nonlocal x
+        x += 1
+
+        print('x inside fn4 function:', x)
+
+    return fn4  # return the inner function fn4
+
+f4 = fn3()  # assign the returned function fn4 to f4
+f4()        # fn4()  x=11
+f4()        # fn4()  x=12
+f4()        # fn4()  x=13
+
+
+
+
+
 
 
 
