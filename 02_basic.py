@@ -78,7 +78,7 @@ print(a, type(a))  #output:b'hello' <class 'bytes'>
 
 # Delete variable, not recommended to use, Python has garbage collection mechanism
 del e
-print(e)  # Variable cannot be used after deletion NameError: name 'x' is not defined
+#print(e)  # Variable cannot be used after deletion NameError: name 'x' is not defined
 
 # these variable names work, but do not recommended
 地區 = "澳門"
@@ -254,11 +254,6 @@ print(course[4:])       # start index to the end, output:ython Tutorial
 print(course[:7])       # first character to end index (exclude end position), output:   Pyth
 print(course[:])        # output:   Python TutoriAl
 
-nums = [10, 20, 30, 40, 50]
-# del nums[0]
-del nums[:2]            # delete first two elements ie. index 0 and 1
-print(nums)
-
 
 
 ### string function ###
@@ -270,16 +265,24 @@ print(course.upper())
 print(course.lower())
 # 1st char of each word in upper case,  output:   Python Tutorial
 print(course.title())
+print(course.swapcase())                # Swap case: uppercase to lowercase, lowercase to uppercase
 # 1st char is in upper case,            output:   python tutorial
 print(course.capitalize())
 # trim space, both begin and end,       output:Python TutoriAl
 print(course.strip())
+print(course.strip('-'))              # output:Python-TutoriAl
 # trim space, begin only,               output:Python TutoriAl
 print(course.lstrip())
 # trim space, end only,                 output:   Python TutoriAl
 print(course.rstrip())
-print(course.find('t'))     # index of 1st char 't',    output:5
-print(course.find('X'))     # return -1 if not found,   output:-1
+
+# Search
+#   find(): find the index of the first occurrence of the substring, return -1 if not found
+#  rfind(): from right to left, find the index of the first occurrence of the substring, return -1 if not found
+print(course.find('t'))        # index of 1st char 't',    output:5
+print(course.find('X'))        # return -1 if not found,   output:-1
+print(course.rfind('very'))    # 18
+
 # index of 1st char of 1st match word 'Tutor',          output:10
 print(course.find('Tutor'))
 # replace Python with Django, case sensitive,           output:   Django TutoriAl
@@ -289,6 +292,131 @@ print(course)  # output:   Python TutoriAl
 print('Python' in course)
 # check if 'Python' in course string, output:False
 print('Python' not in course)
+
+
+# String functions
+
+# count(): count, count how many times a substring appears
+s = "hello hello hello"
+print(s.count('l'))  # 6
+print(s.count('ll', 1, 10))       # 2  Count how many times "ll" appears in [1,10)
+
+# Case checking (grasp this)
+print('ABC'.isupper())            # Whether letters are uppercase
+print('abc'.islower())            # Whether letters are lowercase
+print('123'.isdigit())            # Whether it is a number
+print('abcABC'.isalpha())         # Whether it is letters only
+print('abcABC123'.isalnum())      # Whether it is letters or numbers
+print('   '.isspace())            # Whether it is a whitespace string
+print('Hello World'.istitle())    # Whether each word starts with uppercase and the rest are lowercase
+
+
+# Exercise:
+# 1. Given string: "this is a test of Python"
+s = 'this is a test of Python'
+
+# Extract substring "test", using slicing, not manual counting: use find(), len()
+print(s[ s.find('test') :  s.find('test') + len('test')])
+
+print(list(range(len(s)-1, -1, -1)))
+s2 = ''
+for i in range(len(s)-1, -1, -1):
+    # print(s[i], end='')
+    s2 += s[i]
+print(s2)
+
+
+
+# Split, join, replace
+# Split: divide
+#  split(): after splitting, get a list
+print(s.split())        # ['this', 'is', 'a', 'test', 'of', 'Python']
+print(s.split(' '))     # ['this', 'is', 'a', 'test', 'of', 'Python']
+print(s.split('ikun'))  # ['this is a test of Python']
+
+
+# splitlines(): split by lines
+s2 = '''床前明月光,
+疑是地上霜.
+举头望明月,
+低头思故乡.'''
+print(s2.splitlines())  # ['床前明月光,', '疑是地上霜.', '举头望明月,', '低头思故乡.']
+print(s2.split('\n'))  # ['床前明月光,', '疑是地上霜.', '举头望明月,', '低头思故乡.']
+print(s2.splitlines(keepends=True))  # ['床前明月光,\n', '疑是地上霜.\n', '举头望明月,\n', '低头思故乡.']
+
+# Join: join : will result in a string
+#   Join strings in a list
+n = ['床前明月光,', '疑是地上霜.', '举头望明月,', '低头思故乡.']
+print('\n'.join(n))
+print('\t'.join(n))
+print(''.join(n))
+
+
+# Replace: replace(): by default replaces all matches
+s1 = "ikun    is very very very handsome"
+s2 = s1.replace('very', 'not')
+print(s2)   # ikun    is not not not handsome
+
+
+# Exercise
+# 1. Given string: "this is a test of Python"
+# d. Replace "test" with "exam": replace()
+s = 'this is a test of Python'
+print(s.replace('test', 'exam'))
+
+
+# 2. Remove '@' from string 123@zh@qq.com
+# Hint: use replace() or split()+join()
+s = '123@zh@qq.com'
+print(s.replace('@', ''))       # 123zhqq.com
+print(''.join(s.split('@')))    # 123zhqq.com
+
+
+
+# Escape character \ : makes a character with special meaning lose its meaning (master this)
+# r'' : makes characters with special meaning lose their meaning inside a string (master this)
+# b'' : bytes
+# f'' : formatted string, can decode {var}
+
+#  \\  represents a single \
+s = 'C:\\Users\\EDY\\Desktop\\软件包'
+s = r'C:\Users\EDY\Desktop\软件包'
+print(s)
+
+
+# Encoding and Decoding
+#  Encoding: encode() converts string => binary
+#  Decoding: decode() converts binary => string
+s = 'hello 中国😊'
+b = s.encode()                             # utf-8   # b'hello \xe4\xb8\xad\xe5\x9b\xbd'
+# GB2312 covers simplified Chinese (basic set)
+# b = s.encode('gb2312', errors="ignore")      # b'hello \xd6\xd0\xb9\xfa', # drops emoji
+# GBK extends GB2312 (more characters, including some traditional)
+# b = s.encode('gbk', errors="replace")        # b'hello \xd6\xd0\xb9\xfa', # replaces emoji with '?' 
+# GB18030 is the most complete (covers all CJK characters, superset of GBK/GB2312, required by Chinese government standard)
+# b = s.encode('gb18030', errors="ignore")     # b'hello \xd6\xd0\xb9\xfa'
+
+# b = s.encode("big5", errors="replace")       # b'hello \xa4\x40\xa4\x4d\xa4\x40'
+print(b)
+
+s2 = b.decode()
+print(s2)  # hello 中国
+
+# ASCII code (for reference)
+print(ord('a'))  # 97
+print(chr(65))  # A
+
+# Alignment : for reference
+print('hello'.center(40))  # Center aligned
+print('hello'.ljust(40))   # Left aligned
+print('hello'.rjust(40))   # Right aligned
+print('hello'.zfill(40))   # Right aligned, padded with zeros
+
+# Prefix and Suffix
+print('helloworld'.startswith('hel'))  # True
+print('helloworld'.endswith('rld'))    # True
+
+
 
 
 amount = -123.1234567
@@ -562,7 +690,7 @@ kg = float(lbs_string) * lbs_to_kg
 print(kg)  # output:90.945270185
 
 # Type conversion
-x = input("x: ")
+x = input("input integer x: ")
 # y = x + 1
 # if input = 1
 # y could be "1" + "1"
@@ -953,9 +1081,10 @@ start - to start the game
 stop - to stop the game
 quit = to exit
 '''
+print("Type 'help' or '?' to get the list of commands")
 while command.lower() != "quit":
     command = input("command>").lower()
-    if command == 'help':
+    if command == 'help' or command == '?':
         print(help_content[1:-1])  # ignore 1st and last newline
     elif command == 'start':
         print("game is started... ready to play!")

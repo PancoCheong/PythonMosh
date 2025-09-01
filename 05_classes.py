@@ -1,4 +1,302 @@
 ### 05_class.py ###
+'''
+Python project hierarchical structure
+    - Project → Package (folder) → Module (file) → Class → Function → Code
+
+    
+Problem: 
+    - code repetition  
+    - High maintenance cost later  
+    - Low code readability  
+
+Solution: functions  
+    In a complete project, some features will be used repeatedly,  
+    so we extract the code corresponding to these features.  
+    When the functionality is needed, we just call it directly.  
+
+Essence: encapsulation of some specific functionality  
+
+Advantages:  
+    a. Simplifies code structure and improves efficiency  
+    b. Increases code reusability  
+    c. Improves readability and maintainability  
+
+Recommendation: whenever functionality is involved, try to implement it with functions
+    
+'''
+
+# function - a reusable block of code that only runs when invoked
+def my_fn(a, b, c=1, d=2):    # parameters c, d have default values
+    print('I am a function')
+
+my_fn(5, 10, d=99)  # Function must be called to execute, keep c with default values
+
+# universal function that can accept any number of parameters
+# Variable-Length Parameters:
+# *args parameter collects any number of positional parameters into a tuple 
+# **kwargs collects named parameters into a dictionary
+def my_fn2(*args, **kwargs):
+    print('args =',args)       # Tuple of positional parameters, output:args = (4, 5)
+    print('kwargs =', kwargs)  # Dictionary of named parameters, output:kwargs = {'c': 77, 'd': 88}
+    return args, kwargs
+
+my_fn2(4, 5, c=77, d=88)       # 1st two: positional, last two: named
+#
+'''
+Python strictly enforces Parameters Order 
+    - For function definition:
+        1. Positional parameters
+        2. *args 
+        3. Default parameters
+        4. **kwargs
+    - For function calls:
+        1. Positional parameters first
+        2. Named parameters second
+'''
+# function definition
+def my_func(a, b, *args, d=7, e=8, **kwargs):
+    # Implementation follows strict parameter ordering
+    pass
+    return a + b
+# function call
+result = my_func(2, 3, 4, 5, d=77, e=88, f=99, g=100)
+#
+# : int      Python 3.5 - type hints: input parameters is expected to be integer
+# -> int     Python 3.5 - type hints: this function is expected to return a Boolean value
+def add(a: int, b: int) -> int:
+    return a + b
+#
+add(5, 10)
+#
+#
+# Function nesting - function inside a function
+def make_multiplier(factor):
+    print(f'Creating a multiplier with factor {factor}')
+
+    def multiplier(number):
+        return number * factor  # inner function remembers "factor"
+
+    return multiplier           # return the inner function, with preset factor value
+#
+# Create a function that always multiplies by 3
+times_three = make_multiplier(3)       # return the inner function, output:Creating a multiplier with factor 3
+print(times_three(10))                 # output:30
+
+# Create a function that always multiplies by 5
+times_five = make_multiplier(5)        # return the inner function, output:Creating a multiplier with factor 5
+print(times_five(10))                  # output:50
+
+#
+#
+# Function name: it is both 
+#   1. call the function print_with_label() directly
+#   2. alias_function - variable (object) pointing to that function
+#      As long as a variable points to that function, it can be used to call the function
+def print_with_label(x):
+    print('print_with_label:', x)
+
+print_with_label(1)               # print_with_label: 1
+alias_function = print_with_label
+alias_function(2)                 # print_with_label: 2
+
+
+# Functions can be nested and call each other
+def start_process():
+    step_one()
+    print('after called step_one   in start_process:', 1)
+
+def step_one():
+    step_two()
+    print('after called step_two   in step_one:', 2)
+
+def step_two():
+    step_three()
+    print('after called step_three in step_two:', 3)
+
+def step_three():
+    print('print in step_three:', 'three')
+
+start_process()
+
+''' output:
+print in step_three: three
+after called step_three in step_two: 3
+after called step_two   in step_one: 2
+after called step_one   in start_process: 1
+'''
+
+
+
+##### Anonymous function: lambda #####
+#   Features:
+#       A function without a name
+#       Has an implicit return
+#       Used to represent simple functions with return values
+#
+# normal function definition
+def square(x):
+    return x**2
+#
+print(square(5))         # 25
+#
+# => Anonymous function
+f2 = lambda x: x**2
+print(f2(5))             # 25
+
+# with x, y parameters
+f3 = lambda x, y: x + y
+print(f3(3, 4))  # 7
+#
+
+# Higher-order functions 
+# map: mapping to a function and apply it to each item of an iterable (list, tuple, etc)
+n = map(lambda x: x**3, [1, 2, 3])
+print(list(n))      # apply x**3 to each item, output: [1, 8, 27]
+
+n = map(lambda x, y: x * y, [1, 2, 3], [4, 5, 6])
+print(list(n))      # apply x * y to each item from the two list 1*4, 2*5, 3*6, output: [4, 10, 18]
+
+# filter: filtering, used to find data that meets certain conditions
+n = filter(lambda x: x > 0, [1, -2, 3, -4, -5, 7, 6, -9])
+print(list(n))      # apply the x > 0 condition to each item, return item if condition is True. output: [1, 3, 7, 6]
+
+
+#
+#
+### Callback functions ###
+#   Passing a function as a parameter into another function
+
+def process_with_callback(factor, callback_func):  # callback_func=lambda x: x**2
+    print('factor:', factor)              # factor: 3
+
+    cb_func = callback_func(factor)       #   
+    print('cb_func:', cb_func)            # cb_func: 9
+#
+# pass function as parameter
+process_with_callback(3, lambda x: x**2)
+
+
+#
+def double(factor, callback_func):
+    print('factor:', factor)             # factor: 3
+
+    cb_func = callback_func(factor)      # callback, execute square_callback(3)
+    print('cb_func:', cb_func)           # cb_func: 9
+    return cb_func * 2                   # square_callback(3) * 2 
+
+# callback_func is the callback function
+def square_callback(x):
+    return x**2
+
+cb_result = double(3, square_callback)
+print("cb_result:", cb_result)           # cb_result: 18
+print()
+
+# Custom filter
+# filter: filtering, find data that meets certain conditions
+# n = filter(lambda x: x > 0, [1, -2, 3, -4, -5, 7, 6, -9])
+
+def custom_filter(callback_func, items):
+    filtered = []
+    for item in items:
+        if callback_func(item):      # callback, check x > 0
+            filtered.append(item)    # keep positive numbers
+    return filtered
+
+result = custom_filter(lambda x: x > 0, [1, -2, 3, -4, -5, 7, 6, -9])
+print(result)  # [1, 3, 7, 6]
+
+
+# sort(key=lambda)
+profiles = [
+    {'name': 'Zhang San', 'age': 18, 'score': 50, 'tel': 18866669999, 'sex': 'Unknown'},
+    {'name': 'Li Si', 'age': 16, 'score': 88, 'tel': 18866668998, 'sex': 'Male'},
+    {'name': 'Wang Wu', 'age': 17, 'score': 48, 'tel': 18866667995, 'sex': 'Female'},
+    {'name': 'Chen Yijun', 'age': 61, 'score': 59, 'tel': 18866669998, 'sex': 'Unknown'},
+    {'name': 'Chen Erjun', 'age': 49, 'score': 88, 'tel': 18866669396, 'sex': 'Male'},
+    {'name': 'Chen Sanjun', 'age': 49, 'score': 61, 'tel': 18866668994, 'sex': 'Female'}
+]
+
+# Requirement 1: Sort profiles by age (ascending)
+profiles.sort(key=lambda d: d['age'])               #dictionary 
+print(profiles)
+
+# Requirement 2: Sort profiles by score (descending)
+profiles.sort(key=lambda d: d['score'], reverse=True)
+print(profiles)
+
+
+# Sort numbers in ascending order
+persons = [
+    ('Zhang San', 18),
+    ('Li Si', 16),
+    ('Wang Wu', 17),
+    ('Chen Yijun', 61),
+    ('Chen Erjun', 49),
+    ('Chen Sanjun', 48)
+]
+
+persons.sort(key=lambda t: t[1])                    #tuple
+print(persons)
+
+
+
+### Function Exercise ###
+# 1. Check whether a year is a leap year
+#    Leap year conditions (OR):
+#        1. Divisible by 4 but not divisible by 100
+#        2. Divisible by 400
+#    If either condition 1 or condition 2 is met → leap year
+
+def is_leap_year(year: int) -> bool:
+    return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
+
+print(is_leap_year(2000))    # True,  can divide by 100, but it can also divide by 400
+print(is_leap_year(2027))    # False
+print(is_leap_year(2028))    # True  
+
+# 2. Get the number of days in a given month
+#    Note: In leap years and common years, February has a different number of days
+def get_days_in_month(year: int, month: int) -> int:
+    if month == 2:
+        return 29 if is_leap_year(year) else 28
+    elif month in [1, 3, 5, 7, 8, 10, 12]:
+        return 31
+    elif month in [4, 6, 9, 11]:
+        return 30
+    return False  # could also raise ValueError for invalid month
+
+# 3. Get the season of a given month
+#    March–May: Spring
+#    June–August: Summer
+#    September–November: Autumn
+#    December–February: Winter
+def get_season(month: int) -> str:
+    if month in [3, 4, 5]:
+        return "Spring"
+    if month in [6, 7, 8]:
+        return "Summer"
+    if month in [9, 10, 11]:
+        return "Autumn"
+    if month in [12, 1, 2]:
+        return "Winter"
+
+# 4. Check whether a number is prime
+#    A prime number is a natural number greater than 1 
+#    that has no factors other than 1 and itself.
+def is_prime(n: int) -> bool:
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+
+print(is_prime(23))
+
+
+
+### classes ###
+
+
 from collections import namedtuple
 from abc import ABC, abstractmethod
 #
