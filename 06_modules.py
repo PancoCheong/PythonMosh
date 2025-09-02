@@ -1,4 +1,143 @@
 # 06_modules.py
+
+# 1. Packages or modules provided by Python itself (official)
+# 2. Packages or modules we write ourselves (custom)
+# 3. Packages or modules written by others: third-party packages or modules
+
+# install to Global vs Virtual Environment
+# - Global installation: packages are installed system-wide and available to all projects (by default)
+#        pip install package_name
+# - Virtual environment (venv): creates isolated environments for each project, preventing conflicts between package versions
+#        1. cd path/to/your/project
+#        2. python -m venv myenv
+#        3. (Mac zsh/Linux bash): source myenv/bin/activate    # (Windows): myenv\Scripts\activate
+#        4. pip install package_name
+#        5. deactivate   (exit venv)
+#
+# Installing third-party packages
+#  1. Install via PyCharm settings
+#  2. Try importing the package; if you get an error, hover over the name and follow the installation prompt
+#  3. Install via command line (important, recommended):
+#       pip install numpy        # install a package
+#       pip uninstall numpy      # uninstall a package
+#       pip show numpy           # view package details
+#       pip list                 # view all packages
+#       pip freeze               # view only packages you installed (with version numbers)
+
+#       pip freeze > requirements.txt       # export current environment packages to requirements.txt
+#       pip install -r requirements.txt     # install packages listed in requirements.txt
+
+#    If installation is slow, try switching to a different mirror:
+#       pip install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+#   Set a permanent mirror:
+#       pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+
+import requests
+import numpy as np
+import pandas as pd
+
+'''
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt  # matplotlib
+
+import flask
+import tornado
+'''
+
+''' '''
+
+import math
+
+# Package: a folder that contains an __init__.py file
+# Module: a single Python file
+#
+# Encapsulation idea: Project => Package (folder) => Module (Python file) => Class => Function => Code
+#
+#Create a module file named module1.py in current folder
+myvar1 = "name variable in module 1"
+print('I am module1')
+
+def fn1(n=3):
+    print("function fn1 in module1", n**2)
+#
+# Create a package
+# Create a folder named "package1"
+# Inside "package1" folder: 
+#       - Create an empty file named __init__.py
+#
+#       - Create a module file named module2.py
+myvar2 = "name variable in module 2"
+print('I am module2')
+
+def fn2(n=3):
+    print("function fn2 in module2", n**2)
+
+#
+# Import modules
+#   import my_module
+#   from my_package import my_module
+
+# import time, math, random (official modules)
+import math
+import random
+#
+# Imports the entire time module. You must prefix functions with the module name.
+import time
+time.sleep(0.1)
+#
+# Imports only the sleep function from the time module. You can directly call sleep() without the module name.
+from time import sleep
+sleep(0.1)
+#
+# Wildcard import: Imports all public names (functions, classes, variables) from time into the current namespace.
+# Avoid from module import * except for quick tests or interactive sessions.
+# Risky: name clashes, less readable 
+from time import *
+print(time())
+print()
+#
+
+
+# Custom modules: modules are singleton (importing multiple times still uses the same instance)
+'''
+import module1
+import module1
+
+print(module1.myvar1)
+module1.fn1()
+'''
+
+# Import specific items from a module (ie. myvar1 variable and fn1 function)
+'''
+from module1 import myvar1, fn1
+print(myvar1)
+# print(module1.myvar1)  # Error
+fn1()
+'''
+
+
+# Module inside a package
+'''
+# from package1 import module2
+# print(module2.myvar2)
+
+from package1.module2 import myvar2
+print(myvar2)
+'''
+
+
+# Alias: after renaming with "as", you can only use the alias
+import module1 as m1
+print(m1.name)
+
+from package1 import module2 as m2
+print(m2.name)
+
+
+
+
 #
 # just like find a product in supermarket
 # if supermarket doesn't have isles, sections or departments for highly related products.
@@ -212,3 +351,6 @@ print(__name__, " module is initialized")
 if __name__ == "__main__":
     print("Sales started")
     calc_tax()
+
+
+

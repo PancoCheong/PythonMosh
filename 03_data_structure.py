@@ -79,6 +79,61 @@ while nums.count(3):
 print(nums)  # [2, 4, 5, 5]
 
 
+
+###### Iterator #####
+# Iterable
+from collections.abc import Iterator, Iterable
+
+# type(): check data type
+# isinstance(): check whether a variable is of a certain data type
+
+print(10, type(10))          # 10 <class 'int'>
+print(type(10) == int)       # True
+print(isinstance(10, int))   # True        # Check if 10 is of type int
+print(isinstance(10, (int, float, list)))  # True     # Check if 10 is int, float, or list
+print()
+
+# Iterator (for understanding)
+#   1. Can be traversed using a for loop
+#   2. Can be called using next()
+print(isinstance(3, Iterator))        # False
+print(isinstance(3.14, Iterator))     # False
+print(isinstance(None, Iterator))     # False
+print(isinstance(True, Iterator))     # False
+print(isinstance("hello", Iterator))  # False
+print(isinstance([1,2], Iterator))    # False
+print(isinstance((1,2), Iterator))    # False
+print(isinstance({1:2}, Iterator))    # False
+print(isinstance({1,2}, Iterator))    # False
+print(isinstance((i for i in range(3)), Iterator))  # True
+print()
+
+# Iterable
+#   1. Can be traversed using a for loop
+print(isinstance(3, Iterable))        # False
+print(isinstance(3.14, Iterable))     # False
+print(isinstance(None, Iterable))     # False
+print(isinstance(True, Iterable))     # False
+print(isinstance("hello", Iterable))  # True
+print(isinstance([1,2], Iterable))    # True
+print(isinstance((1,2), Iterable))    # True
+print(isinstance({1:2}, Iterable))    # True
+print(isinstance({1,2}, Iterable))    # True
+print(isinstance((i for i in range(3)), Iterable))  # True
+
+
+# iter(): convert an Iterable into an Iterator (for understanding)
+n = [1, 2, 3]
+n2 = iter(n)
+print(n2)  # list_iterator object
+print(next(n2))
+print(next(n2))
+
+# list(): convert into a list
+n3 = list(n2)
+print(n3)
+
+
 ### unpacking list ###
 # traditional way
 numbers = [1, 2, 3]
@@ -316,12 +371,46 @@ filtered = [product for product in products if product[1] >= 10]
 print(filtered)             # output:[('Item A', 10.0), ('Item B', 14.0)]
 
 
+#    Use a for loop in a single line to generate a list
+# Create a list
+print(list(range(1, 6)))    # output:[1, 2, 3, 4, 5]
+nums = [1, 2, 3, 4, 5]
+
+nums2 = []
+for i in range(1, 6):
+    nums2.append(i)
+print(nums2)                # output:[1, 2, 3, 4, 5]
+#
+# List comprehension: quickly generate a new list in one line of code
+# note: 0 = False (ignore value), non-zero = True (keep value)
+nums3 = [i   for i in range(1, 6)]; print(nums3)                           # output:[1, 2, 3, 4, 5]
+nums3 = [i*2 for i in range(1, 6)]; print(nums3)                           # output:[2, 4, 6, 8, 10]
+nums3 = [i   for i in range(1, 10) if i % 2]; print(nums3)                 # output:[1, 3, 5, 7, 9]
+nums3 = [i   for i in range(1, 10) if i % 2 and i % 3 == 0]; print(nums3)  # output:[3, 9]
+nums3 = [i   for i in range(1, 10) if i % 2  if i % 3 == 0]; print(nums3)  # output:[3, 9]
+
+nums3 = [i + j for i in "ABC" for j in "123"]  # Nested loops
+# ['A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3']
+print(nums3)
+
+
+# Dictionary comprehension (for understanding)
+d = {f'name{i}': i for i in range(1, 6)}
+print(d)  # {'name1': 1, 'name2': 2, 'name3': 3, 'name4': 4, 'name5': 5}
+
+
+# Set comprehension (for understanding)
+s = {i for i in range(1, 6)}
+print(s)  # {1, 2, 3, 4, 5}
+
+
 ### zip function ###
 list1 = ['A', 'B', 'C']
 list2 = ['11', 12, 13]
 # combine list of tuple
 # list() to convert <zip object at 0x0000017FD4C36480>
 print(list(zip(list1, list2)))  # output:[('A', '11'), ('B', 12), ('C', 13)]
+
 # output:[('x', 'A', '11'), ('y', 'B', 12), ('z', 'C', 13)]
 print(list(zip("xyz", list1, list2)))
 
@@ -708,7 +797,7 @@ print(values)
 #
 
 ### Generator Expression ###
-values = [x * 2 for x in range(10)]
+values = [x * 2 for x in range(10)]    # List comprehension
 for x in values:
     print(x, end=" ")           # output:0 2 4 6 8 10 12 14 16 18
 print("")
@@ -737,6 +826,90 @@ print("generator size:", getsizeof(values))     # output:generator size: 112
 # print(len(values))
 #
 #
+
+
+# Generator (important to master)
+#   Must be called using next() or a for loop
+
+# nums = [i for i in range(1, 6)]   # List comprehension
+
+g = (i for i in range(1, 4))   # Generator
+print(g)                       # output:<generator object <genexpr> at 0x000001AF774D7100>
+#print(list(g))                 # output:[1, 2, 3]
+
+# 1. Using next()
+print(next(g))  # 1
+print(next(g))  # 2
+print(next(g))  # 3
+# print(next(g))  # Error: StopIteration, no more data available
+
+# 2. Using for loop
+g = (i for i in range(1, 4))
+for i in g:
+    print('i =', i)
+print()
+
+# Generator function:
+#   1. Must contain yield inside the function
+#   2. Must be called with next()
+#   3. Each next() call pauses at yield
+#   4. yield pauses execution but can return a value
+
+def fn():
+    print('hello, I am fn, will I execute?')
+    yield 666          # Similar to return, it pause at here, but does not end the function
+    print('restart from where I pause')
+    yield 888
+
+g = fn()
+print(g)  # generator object
+print(next(g))  # 666
+print('I escaped')
+print(next(g))  # 888
+
+print()
+
+# Example:
+def gen():
+    g = (i for i in range(1, 10**100))
+
+    for i in g:
+        # Return values one by one, without exiting the function
+        yield i
+
+
+g = gen()
+print(next(g))
+print(next(g))
+print(next(g))
+print()
+
+
+# Exercise
+# 1. Write a generator function to get the first 20 Fibonacci numbers (Difficulty: *****)
+# The Fibonacci sequence is as follows: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55...
+#                    a  b
+#                       a  b
+#                          a  b
+#    Hint: Use while True, and call next() n times to get the first 20 numbers
+import time
+
+def fun():
+    a = 0  # First number
+    b = 1  # Second number
+    while True:
+        a, b = b, a+b
+        yield a
+
+g1 = fun()
+for i in g1:
+    print(i, end=' ')
+    time.sleep(0.1)  # Get the next Fibonacci number every 0.1 seconds
+
+
+ 
+
+
 
 ### unpacking operator ###
 numbers = [1, 2, 3]

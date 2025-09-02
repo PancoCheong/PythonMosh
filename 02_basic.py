@@ -1473,3 +1473,82 @@ print(fizz_buzz(15))    # output:FizzBuzz
 print(fizz_buzz(30))    # output:FizzBuzz
 print(fizz_buzz(7))     # output:7
 print(fizz_buzz(11))    # output:11
+
+
+
+# Function recursion: calling itself inside a function
+
+# Requirement: calculate 5 factorial (using function recursion)
+#
+# 5! = 5 * 4!
+# 5! = 5 * 4 * 3!
+# 5! = 5 * 4 * 3 * 2!
+# 5! = 5 * 4 * 3 * 2 * 1
+#
+# 1. Formula: n! = n * (n-1)!
+# 2. Base case (end condition of recursion): n = 1, factorial_recursive(1) = 1
+
+def factorial_recursive(n):
+    print(n, end=' ')
+    if n == 1:
+        return 1
+    return n * factorial_recursive(n-1)
+
+print('result =', factorial_recursive(5))  # 120
+# it stops substituting when n == 1
+# 1: 5 * f(4)
+# 2: 5 *   4 * f(3)
+# 3: 5 *   4 *   3 * f(2)
+# 4: 5 *   4 *   3 *   2 * f(1)
+# 5: 5 *   4 *   3 *   2 *   1
+
+#
+# Requirement: get the m-th Fibonacci number (1 1 2 3 5 8 13 21 ...) 
+#              ie. the next number is the sum of the previous two 
+#   Base case: the first and second numbers are both 1
+#              when m <= 2, fibonacci_recursive(m) = 1
+#   Formula: the m-th number = (m-1)-th number + (m-2)-th number
+#            fibonacci_recursive(m) = fibonacci_recursive(m-1) + fibonacci_recursive(m-2)
+
+def fibonacci_recursive(m):
+    print(m, end=' ')
+    if m <= 2:
+        return 1
+    return fibonacci_recursive(m-1) + fibonacci_recursive(m-2)
+
+print('result =', fibonacci_recursive(5))  # 5
+# it stops substituting when m <= 2
+# 1:   f(4)                 +  f(3)
+# 2: { f(3) + f(2)}         + [f(2) + f(1)]       
+# 3: {[f(2) + f(1)] + f(2)} + [f(2) + f(1)]  => {[1 + 1] + 1}+ [1 + 1] = 5 
+#
+#
+# Rabbit reproduction problem:
+# Suppose there is a pair of newborn rabbits. Starting from the 4th month,
+# they give birth to a new pair of rabbits at the beginning of every month.
+# The newborn rabbits, starting from their 4th month, also give birth to a
+# new pair of rabbits each month. According to this rule, and assuming no
+# rabbits die, how many pairs of rabbits are there by the end of the 20th month?
+#
+# Example growth (pairs of rabbits by age group):
+# Month 1:  1
+# Month 2:  1
+# Month 3:  1
+# Month 4:  2
+# Month 5:  3
+# Month 6:  4
+# Month 7:  6
+# Month 8:  9
+# Month 9:  13
+# Month 10: 19
+#
+# Formula:  rabbit_pairs(n) = rabbit_pairs(n-1) + rabbit_pairs(n-3)
+# Base case: when n <= 3, rabbit_pairs(n) = 1
+
+def rabbit_pairs(n):
+    if n <= 3:
+        return 1
+    return rabbit_pairs(n-1) + rabbit_pairs(n-3)
+
+print(rabbit_pairs(10))   # 19
+print(rabbit_pairs(20))   # 872
