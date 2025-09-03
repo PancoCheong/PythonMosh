@@ -1,12 +1,31 @@
+# VSCode: Shift+Enter to run selected code
+# Preferences -> Open Keyboard Shortcuts: python.execSelectionInTerminal
+# Settings: "python.dataScience.sendSelectionToInteractiveWindow": false
+#
+# Naming Conventions
+#     - snake_case (all lowercase, words separated by underscores)
+#     - UPPER_CASE (all uppercase, words separated by underscores)
+#     - PascalCase (capitalize first letter of each word, no separators)
+#
+# Element	                      Style	          Example
+# Variable	                    snake_case	    user_name
+# Function	                    snake_case	    get_user_id()
+# Constant	                    UPPER_CASE	    MAX_SIZE
+# Class	                        PascalCase	    UserProfile
+# Module/Package                snake_case	    math_utils
+# Private variable/functions    __prefix	    __my_name, __my_func()  (inside class)
+# Magic method	                __method__	    __init__
+# Exception	                    PascalCase	    ValueError (usually ends with Error)
+#
 # 02_basic.py
 # Python is case-sensitive
 # use interpreter to achieve cross platform
-# Python has serveral implmentation: offical python.org (cPython, written in C)
+# Python has several implementation: official python.org (cPython, written in C)
 # other implementation: Jython (Java, allow import Java code),
 # IronPython (C#, allow import C# code), Pypy (subset of Python)
 # Python is dynamic typing language (like JS and Ruby), data type is determined at runtime,
 # not at compile time like C#/Java/C++ that are static typing language
-
+#
 from string import Template
 import string
 import random

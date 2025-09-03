@@ -323,20 +323,28 @@ with open("data.csv") as file:
 # import json
 # from pathlib import Path
 #
+# json: a data representation format
+# Two forms of json:
+#    1. json string
+#    2. json object (Python dictionary)
+
+
 # list of dictionary
 movies = [
     {"id": 1, "title": "Terminator", "year": 1984},
     {"id": 2, "title": "Terminator 2", "year": 1991}
 ]
-#
-data = json.dumps(movies)   # convert dictionary to str
+# json serialization: 
+# convert dictionary to str
+data = json.dumps(movies)   
 # output:[{"id": 1, "title": "Terminator", "year": 1984}, {"id": 2, "title": "Terminator 2", "year": 1991}]
-print(data)
+print(data, type(data))
 # write to file
 Path("movies.json").write_text(data)
 #
 # read from file
 data = Path("movies.json").read_text()
+# json parsing (json deserialization)
 # convert string to list of dictionary
 movies = json.loads(data)
 print(type(movies))             # output:<class 'list'>
@@ -402,7 +410,7 @@ with sqlite3.connect(db_file) as conn:
 ### Timestamps ###
 # import time         # time stamp
 # import datetime
-print(time.time())          # seconds from epic, output:1587191573.1247127
+print(time.time())          # current time in seconds from epoch 1970-01-01 00:00:00 UTC/GMT, output:1587191573.1247127
 #
 # google search: python time module
 # https://docs.python.org/3/library/time.html
@@ -423,7 +431,7 @@ print(time.localtime(delivery_time))
 
 def send_emails():
     for i in range(3):
-        time.sleep(0.01)  # sleep 0.01 second
+        time.sleep(0.01)  # pause/sleep 0.01 second
 
 
 start = time.time()
@@ -435,17 +443,100 @@ print(duration)         # seconds, output:1.0125234127044678
 #
 #
 ### date time ###
-# import datetime
+# from datetime import datetime, timedelta
+#
+# datetime: date & time,
+#   A wrapper around time, more convenient than time
+#   date: represents year, month, day
+#   time: represents hour, minute, second
+#
+# 1. Create a datetime object
+# dt = datetime.now()  # get current time
+dt = datetime(year=2030, month=2, day=4, hour=10, minute=30, second=40)
+print("dt = ", dt)
+#
 # dt = datetime.datetime(2020,4,18)
 #
 # from datetime import datetime
 dt1 = datetime(2020, 4, 18)
-print(dt1)                       # output:2020-04-18 00:00:00
+print("dt1 =", dt1)                        # output:2020-04-18 00:00:00
 #
 #
-print(datetime.now())           # output:2020-04-18 16:55:02.478058
-print(datetime.today())         # output:2020-04-18 16:55:02.479060
-print(datetime.now().date())    # output:2020-04-18
+print("now   =", datetime.now())           # output:2020-04-18 16:55:02.478058
+print("today =", datetime.today())         # output:2020-04-18 16:55:02.479060
+print("date  =", datetime.now().date())    # output:2020-04-18
+
+
+# 2. Attributes of date
+print(dt.year, dt.month, dt.day)  # year, month, day
+print(dt.hour, dt.minute, dt.second)  # hour, minute, second
+print(dt.date())  # only the date part
+print(dt.time())  # only the time part
+
+# 3. Converting between date formats
+#   datetime object : datetime
+#   date string : "2030-02-01 12:30:20"
+#   timestamp : 1821025084.211286
+
+# datetime object <==> string
+# strftime: datetime object => string
+# strptime: string => datetime object
+print(dt.strftime('%Y-%m-%d %H-%M-%S'))  # '2030-02-04 10-30-40'
+print(dt.strftime('%Y-%m-%d'))           # '2030-02-04'
+print(dt.strftime('%x %X'))              # '02/04/30 10:30:40'
+
+s = '2030-02-04 10-30-40'
+dt2 = datetime.strptime(s, '%Y-%m-%d %H-%M-%S')
+print(dt2, type(dt2))
+
+'''
+Format codes:
+> # %y 2-digit year (00-99)
+> # %Y 4-digit year (0000-9999)
+> # %m Month (01-12)
+> # %d Day of the month (01-31)
+> # %H Hour (24-hour clock, 00-23)
+> # %I Hour (12-hour clock, 01-12)
+> # %M Minute (00-59)
+> # %S Second (00-59)
+
+> # %a Abbreviated weekday name (local)
+> # %A Full weekday name (local)
+> # %b Abbreviated month name (local)
+> # %B Full month name (local)
+> # %c Local date and time representation
+> # %j Day of the year (001-366)
+> # %p AM or PM (local)
+> # %U Week number of the year (00-53), Sunday is the first day
+> # %w Weekday (0-6), Sunday is 0
+> # %W Week number of the year (00-53), Monday is the first day
+> # %x Local date representation
+> # %X Local time representation
+> # %% Literal '%' character
+'''
+
+# datetime object <==> timestamp (reference)
+# print(dt.timestamp())  # 1896402640.0
+# print(datetime.datetime.fromtimestamp(1896402640.0))
+
+
+# Time difference: timedelta
+# Exercise 1: find the date 7 days later
+d1 = datetime(year=2030, month=2, day=4)
+delta = timedelta(days=7)
+print(d1 + delta)  # 2030-02-11
+# print(d1 - delta)
+
+# Find the number of days difference between two dates
+d2 = datetime(2030, 10, 10)
+d3 = datetime(2020, 3, 3)
+d = d2 - d3
+print(d, type(d))     # 3873 days, 0:00:00 <class 'datetime.timedelta'>
+print(d.days)         # 3873 days
+print(d.days // 365)  # 10 years
+
+
+
 
 #
 # google search: python 3 strptime
@@ -500,6 +591,14 @@ dt1 = datetime(2020, 1, 1) + timedelta(days=1,
 
 print(dt1)      # output:2020-01-02 11:22:33
 #
+
+
+
+
+
+
+
+
 #
 #### random ###
 # import random
