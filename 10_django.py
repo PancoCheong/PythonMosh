@@ -1,4 +1,4 @@
-t  # 10_django.py ###
+# 10_django.py ###
 # https://www.djangoproject.com/
 #
 # google search: popular site by django

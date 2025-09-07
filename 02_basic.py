@@ -14,6 +14,7 @@
 # Class	                        PascalCase	    UserProfile
 # Module/Package                snake_case	    math_utils
 # Private variable/functions    __prefix	    __my_name, __my_func()  (inside class)
+# Protected variable/functions  _prefix	        _my_name, _my_func()    (inside class)
 # Magic method	                __method__	    __init__
 # Exception	                    PascalCase	    ValueError (usually ends with Error)
 #
@@ -50,7 +51,10 @@ print("a"+"b")          # concat 2 strings,             output:ab
 
 import keyword
 print("Python keyword:", keyword.kwlist)
-#output: Python keyword: ['False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
+#output: Python keyword: ['False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await', 
+# 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 
+# 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 
+# 'raise', 'return', 'try', 'while', 'with', 'yield']
 
 
 students_count = 50     # int
@@ -61,12 +65,18 @@ teacher_name = 'Panco'  # str
 course_outline = """
 Python support multiple lines string,
 1st char and last char is newline character
-"""                     # str, 1st and last character are newline
+"""                     # str, 1st and last character are newline, can use ''' or """
+'''
+if a string doesn't assign to a variable, it is ignored by interpreter
+so this string block can be used for multiple lines comments and docstring
+'''
+
 
 # initialize  variable
 x = 1
 y = 2
 print(f'x = {x}, y = {y}')  # output:x = 1, y = 2
+
 # same as above 2 lines
 # initialize multiple variables in a single line
 x, y = 1, 2
@@ -81,18 +91,6 @@ print(f'x = {x}, y = {y}')  # output:x = 1, y = 1
 
 c, *d, e = 1, 2, 3, 4, 5
 print(c, d, e)          #output:c=1 d=[2, 3, 4] e=5
-
-# NoneType: empty value, None
-a = None
-print(a, type(a))    #output:None <class 'NoneType'>
-
-# set: Ordered collection of unique items
-a = {3, 2, 3, 1, 3, 2, 2, 1}
-print(a, type(a))  #output:{1, 2, 3} <class 'set'>
-
-# bytes:Sequence of bytes for binary data
-a = b'hello'
-print(a, type(a))  #output:b'hello' <class 'bytes'>
 
 
 # Delete variable, not recommended to use, Python has garbage collection mechanism
@@ -111,23 +109,36 @@ print(α, β)             # output:3 4
 
 ###2.2 Dynamic Typing ###
 # C++, C#, Java - static type
+# JavaScript, Ruby, Python - dynamic type (allow change type at runtime)
+#
 # int students_num = 50
 # students_num = True      #allow in Python
 
 print(type(students_count))  # output:<class 'int'>
-print(type(rating))  # output:<class 'float'>
-print(type(is_published))  # output:<class 'bool'>
-print(type(course_name))  # output:<class 'str'>
-print(type(teacher_name))  # output:<class 'str'>
+print(type(rating))          # output:<class 'float'>
+print(type(is_published))    # output:<class 'bool'>
+print(type(course_name))     # output:<class 'str'>
+print(type(teacher_name))    # output:<class 'str'>
 print(type(course_outline))  # output:<class 'str'>
+
+# NoneType: empty value, None
+a = None
+print(a, type(a))    #output:None <class 'NoneType'>
+
+# bytes:Sequence of bytes for binary data
+a = b'hello'
+print(a, type(a))  #output:b'hello' <class 'bytes'>
+
 
 # allow to change type in runtime (dynamic typing programming language like JavaScript and Ruby)
 students_count = True
 print(type(students_count))  # output:<class 'bool'>
 print("-----")
+
 # output: 1st line and last line is empty line (newline char)
 print(course_outline)
 print("-----")
+
 # output: ignore 1st and last characters (ie. no newline char)
 print(course_outline[1:-1])
 print("-----")
@@ -171,6 +182,11 @@ print(type(my_tuple))       # output:<class 'tuple'>
 print(type(my_dictionary))  # output:<class 'dict'>
 
 
+# set: Ordered collection of unique items
+a = {3, 2, 3, 1, 3, 2, 2, 1}
+print(a, type(a))  #output:{1, 2, 3} <class 'set'>
+
+
 
 ###2.5 - string ###
 # len() - generic function to string or list
@@ -189,16 +205,15 @@ message = 'Python "Programming'   #output:Python "Programming
 print(message)
 message = "Python \"Programming"  #output:Python "Programming
 print(message)
-# \'	Single Quote '
-# \\	Backslash \
-# \n	New Line
-# \r	Carriage Return
-# \t	Tab
-# \b	Backspace
-# \f	Form Feed	
-# \ooo	Octal value	
-# \xhh	Hex value
-
+# \'	Single Quote '   'It\'s Python'          # It's Python 
+# \\	Backslash \      "C:\\Users\\Alice"      # C:\Users\Alice
+# \n	New Line         "Hello\nWorld"          # Hello (new line) World
+# \r	Carriage Return  "Hello\rWorld"          # World (overwrites "Hello")
+# \t	Tab              "Python\tProgramming"   # Python (tab) Programming
+# \b	Backspace        "Helloo\b"              # Hello (removes extra 'o')
+# \f	Form Feed	     "Hello\fWorld"          # HelloWorld (may vary in PC)
+# \000	Octal value	     "\110\145\154\154\157"  # 'Hello' in octal
+# \xFF	Hex value        "\x48\x65\x6c\x6c\x6f"  # 'Hello' in hex
 
 
 
@@ -216,13 +231,13 @@ message = nickname + ',(' + familyname + ')' + ' is programmer'
 print(message)  # output:Panco,(Cheong) is programmer
 
 # format string - evaluate expression #
-# output: x. I am Panco, 99 years old, my salary is 1234.57
-print(f'1. I am {nickname}, {age} years old, my salary is {salary:.2f}')
-print( '2. I am %s, %d years old, my salary is %.2f' % (nickname, age, salary))
-print( '3. I am {0}, {1} years old, my salary is {2:.2f}'.format(nickname, age, salary))
-print( '4. I am {}, {} years old, my salary is {:.2f}'.format(nickname, age, salary))
-print( '5. I am {a}, {b} years old, my salary is {c:.2f}'.format(c=salary, a=nickname, b=age))
-print('Bonus: {:.2f}%'.format(bonus_percentage))
+# output: x. I am Panco, 99 years old, my salary is   1234.57
+print(f'1. I am {nickname}, {age} years old, my salary is {salary:9.2f}')
+print( '2. I am %s, %d years old, my salary is %9.2f' % (nickname, age, salary))
+print( '3. I am {0}, {1} years old, my salary is {2:9.2f}'.format(nickname, age, salary))
+print( '4. I am {}, {} years old, my salary is {:9.2f}'.format(nickname, age, salary))
+print( '5. I am {a}, {b} years old, my salary is {c:9.2f}'.format(c=salary, a=nickname, b=age))
+print('Bonus: {:9.2f}%'.format(bonus_percentage))
 
 # format string #
 # %c - character and ASCII code, %s - string
@@ -278,20 +293,27 @@ print(course[:])        # output:   Python TutoriAl
 ### string function ###
 print("----- string function -----")
 print(len(course))          # length of string, output:23
+
 # upper case,                           output:   PYTHON TUTORIAL
 print(course.upper())
+
 # lower case,                           output:   python tutorial
 print(course.lower())
+
 # 1st char of each word in upper case,  output:   Python Tutorial
 print(course.title())
 print(course.swapcase())                # Swap case: uppercase to lowercase, lowercase to uppercase
+
 # 1st char is in upper case,            output:   python tutorial
 print(course.capitalize())
+
 # trim space, both begin and end,       output:Python TutoriAl
 print(course.strip())
-print(course.strip('-'))              # output:Python-TutoriAl
+print(course.strip('-'))                # output:Python-TutoriAl
+
 # trim space, begin only,               output:Python TutoriAl
 print(course.lstrip())
+
 # trim space, end only,                 output:   Python TutoriAl
 print(course.rstrip())
 
@@ -304,9 +326,11 @@ print(course.rfind('very'))    # 18
 
 # index of 1st char of 1st match word 'Tutor',          output:10
 print(course.find('Tutor'))
+
 # replace Python with Django, case sensitive,           output:   Django TutoriAl
 print(course.replace('Python', 'Django'))  # original string doesn't change
 print(course)  # output:   Python TutoriAl
+
 # check if 'Python' in course string, output:True
 print('Python' in course)
 # check if 'Python' in course string, output:False
@@ -351,7 +375,7 @@ print(s2)
 #  split(): after splitting, get a list
 print(s.split())        # ['this', 'is', 'a', 'test', 'of', 'Python']
 print(s.split(' '))     # ['this', 'is', 'a', 'test', 'of', 'Python']
-print(s.split('ikun'))  # ['this is a test of Python']
+print(s.split('xyz'))   # ['this is a test of Python']    # delimiter xyz not found → returns entire string in a list
 
 
 # splitlines(): split by lines
@@ -360,7 +384,7 @@ s2 = '''床前明月光,
 举头望明月,
 低头思故乡.'''
 print(s2.splitlines())  # ['床前明月光,', '疑是地上霜.', '举头望明月,', '低头思故乡.']
-print(s2.split('\n'))  # ['床前明月光,', '疑是地上霜.', '举头望明月,', '低头思故乡.']
+print(s2.split('\n'))   # ['床前明月光,', '疑是地上霜.', '举头望明月,', '低头思故乡.']
 print(s2.splitlines(keepends=True))  # ['床前明月光,\n', '疑是地上霜.\n', '举头望明月,\n', '低头思故乡.']
 
 # Join: join : will result in a string
@@ -372,9 +396,9 @@ print(''.join(n))
 
 
 # Replace: replace(): by default replaces all matches
-s1 = "ikun    is very very very handsome"
+s1 = "Bob    is very very very handsome"
 s2 = s1.replace('very', 'not')
-print(s2)   # ikun    is not not not handsome
+print(s2)   # Bob    is not not not handsome
 
 
 # Exercise
@@ -392,8 +416,8 @@ print(''.join(s.split('@')))    # 123zhqq.com
 
 
 
-# Escape character \ : makes a character with special meaning lose its meaning (master this)
-# r'' : makes characters with special meaning lose their meaning inside a string (master this)
+# Escape character \ : makes a character with special meaning lose its meaning inside a string
+# r'' : makes characters with special meaning lose their meaning inside a string (raw string)
 # b'' : bytes
 # f'' : formatted string, can decode {var}
 
@@ -407,15 +431,15 @@ print(s)
 #  Encoding: encode() converts string => binary
 #  Decoding: decode() converts binary => string
 s = 'hello 中国😊'
-b = s.encode()                             # utf-8   # b'hello \xe4\xb8\xad\xe5\x9b\xbd'
+b = s.encode()                                   # utf-8   # b'hello \xe4\xb8\xad\xe5\x9b\xbd'
 # GB2312 covers simplified Chinese (basic set)
-# b = s.encode('gb2312', errors="ignore")      # b'hello \xd6\xd0\xb9\xfa', # drops emoji
+# b = s.encode('gb2312', errors="ignore")        # b'hello \xd6\xd0\xb9\xfa', # drops emoji
 # GBK extends GB2312 (more characters, including some traditional)
-# b = s.encode('gbk', errors="replace")        # b'hello \xd6\xd0\xb9\xfa', # replaces emoji with '?' 
+# b = s.encode('gbk', errors="replace")          # b'hello \xd6\xd0\xb9\xfa', # replaces emoji with '?' 
 # GB18030 is the most complete (covers all CJK characters, superset of GBK/GB2312, required by Chinese government standard)
-# b = s.encode('gb18030', errors="ignore")     # b'hello \xd6\xd0\xb9\xfa'
+# b = s.encode('gb18030', errors="ignore")       # b'hello \xd6\xd0\xb9\xfa'
 
-# b = s.encode("big5", errors="replace")       # b'hello \xa4\x40\xa4\x4d\xa4\x40'
+# b = s.encode("big5", errors="replace")         # b'hello \xa4\x40\xa4\x4d\xa4\x40'
 print(b)
 
 s2 = b.decode()
@@ -423,7 +447,7 @@ print(s2)  # hello 中国
 
 # ASCII code (for reference)
 print(ord('a'))  # 97
-print(chr(65))  # A
+print(chr(65))   # A
 
 # Alignment : for reference
 print('hello'.center(40))  # Center aligned
@@ -466,10 +490,12 @@ print("%%x nHex = %x,%%d nDec = %d, %%o nOct = %o" %
 for i in range(0, 3):
     print(i)
 print("<-- newline by default")
+
 # output:0 1 2
 for i in range(0, 3):
     print(i, end=" ")
 print("<-- use single space instead of newline")
+
 # output:012
 for i in range(0, 3):
     print(i, end="")
@@ -479,21 +505,34 @@ print("<-- use empty space instead of newline")
 # https://www.cnblogs.com/nokiaguy/p/12100846.html
 # use {} as place holder (subsitude in sequence)
 print("a={}, b={}, c={}".format(1, 2, 3))  # output:a=1, b=2, c=3
+
 # use {x} as named place holder
 print("a={a}, b={b}, c={c}".format(c=3, a=1, b=2))  # output:a=1, b=2, c=3
+
 # advance format
 # output:original:中, use repr function:'中', Unicode'\u4e2d'.
+# conversion flags
+#   !s → calls str()   - prints the human‑readable string
+#   !r → calls repr()  - shows the string with quotes, and escapes special characters for debug representation
+#   !a → calls ascii() - Like repr(), print pure ASCII, but escapes non‑ASCII characters into \uXXXX or \x.. format
 print("original:{x!s}, use repr function:{x!r}, Unicode{x!a}.".format(x="中"))
-# output:original:21.951234  float:21.951
-print("original:{num}  float:{num:4.3f}".format(num=21.951234))
+
 # output:decimal:56  binary:111000  octal:70  heximal:38
 print("decimal:{n}  binary:{n:b}  octal:{n:o}  heximal:{n:x}".format(n=56))
+
+
+# output:original:21.951234  float:21.951
+print("original:{num}  float:{num:4.3f}".format(num=21.951234))
+
 # output:scientific number:5.330000e+02
 print("scientific number:{num:e}".format(num=533))
+
 # 3 integer, 2 decimal places, output:percentage:56.12%
 print("percentage:{num:3.2%}".format(num=0.561234))
+
 # prefix 0, output:chapter-04
 print("chapter-{chapter:02.0f}".format(chapter=4))
+
 # prefix 0, output:chapter-11
 print("chapter-{chapter:02.0f}".format(chapter=11))
 
@@ -511,11 +550,12 @@ print("{0:^=10.2f}".format(-5.43))
 
 # international Currency sign, \uXXXX to input unicode character
 # https://www.fileformat.info/info/unicode/category/Sc/list.htm
-# U+0024	DOLLAR SIGN	            $
+# U+0024	DOLLAR SIGN	            $   (Hong Kong, US, Canada, Australia)
 # U+00A3	POUND SIGN	            £
-# U+00A5	YEN SIGN	            ¥
+# U+00A5	YEN SIGN	            ¥   (China)
 # U+20A9	WON SIGN	            ₩
 # U+20A0	EURO-CURRENCY SIGN	    ₠
+# No CURRENCY SIGN in Unicode for Macau pataca (MOP$)
 
 
 ### Exercise - format string acts like a message template ###
@@ -547,6 +587,8 @@ data['currency2'] = 1.00
 print(data)
 # output:Exchange rate@2020-04-11: $1.24 is equivalent to £1.0
 print(template2.substitute(data))
+
+
 data['date_string'] = '2020-04-11'
 data['sign1'] = '\u0024'
 data['currency1'] = 0.9145
@@ -556,6 +598,7 @@ data['currency2'] = 1.00
 print(data)
 # output:Exchange rate@2020-04-11: $0.9145 is equivalent to ₠1.0
 print(template2.substitute(data))
+
 
 ###2.9 numbers ###
 print("----- Numbers -----")
@@ -586,7 +629,10 @@ print("----- arithmetic -----")
 #     * / // %  **
 #     + - 
 
-
+# floor - Round down to near integer, smaller in value (rounds down toward -∞)
+# ceil  - Round up to near integer, larger in value (rounds up toward +∞)
+# trunc - Remove the decimal part, towards zero
+#
 print(10 + 3)       # add,              output:13
 print(10 - 3)       # minus,            output:7
 print(10 * 3)       # multiply,         output:30
@@ -594,10 +640,20 @@ print(10 ** 3)      # exponent, 10 to the power of 3, output:1000
 print(10 / 3)       # divide,     float output:3.3333333333333335
 print(-10 / 3)      # divide,     float output:-3.3333333333333335
 # floor division: round down to near integer, smaller in value
-print(10 // 3)      # floor division,   output:3
-print(-10 // 3)     # floor division,   output:-4
-print(10 % 3)       # modulus,          output:1
-print(-10 % 3)      # modulus,          output:2
+print(10 // 3)      # floor division,    output:3
+print(-10 // 3)     # floor division,    output:-4
+print(10 % 3)       # modulus            output:1
+print(-10 % 3)      # modulus            output:2
+print(m.remainder(10, 3)) # remainder    output:1.0    
+print(m.remainder(-10, 3)) # remainder   output:-1.0  (note: math.remainder() is different from % operator)
+# % (modulus, floor division rule): remainder has same sign as divisor.
+#    Python’s % always returns a result with the same sign as the divisor (3 here, positive).
+#    -10 / 3 = -3.333          # quotient is -4 (round down, smaller in value)
+#    -10 = (-4 * 3) + 2        # So remainder is 2 (positive, same sign as divisor)
+# math.remainder (IEEE remainder):  remainder is symmetric around 0, minimizes absolute value.
+#    Returns the IEEE 754-style remainder, which is the closest to zero
+#    -10 / 3 = -3.333          # quotient is -3 (round up, larger in value)
+#    -10 = (-3 * 3) + (-1)     # So remainder is -1 (negative, minimizes absolute value)
 
 ### assignment ###
 print('----- assignment -----')  ## note: NO x++ or x--
@@ -650,7 +706,7 @@ print(m.factorial(5))   # 5!=1*2*3*4*5 = 120
 print(m.log(m.e))       # Natural logarithm loge(e) = ln(e) = 1  When base and argument are the same, the logarithm value is 1
 print(m.log10(100))     # 2
 print(m.log2(2))        # 1
-print(pow(2, 3),  2 **3)
+print(pow(2, 3),  2 **3) # 8 8
 
 # Trigonometric functions: sin, cos, tan
 print(m.sin(m.pi))      # output: 1.2246467991473532e-16 (essentially 0)
@@ -673,16 +729,16 @@ print(m.floor(y))       # floor,                output:-13
 print(m.trunc(x))       # truncate,             output:12
 print(m.isnan(x))       # is not a number,      output:False
 print(m.sqrt(x))        # square root,          output:3.598610843089316
-print(m.remainder(10, 3))    # remainder,       output:1.0
-print(m.remainder(-10, 3))   # remainder,       output:-1.0
+print(m.remainder(10, 3))    # remainder,       output:1.0        10%3 = 1 ( 10 =  3*3 + 1, remainder 1 has same sign as divisor)
+print(m.remainder(-10, 3))   # remainder,       output:-1.0      -10%3 = 2 (-10 = -4*3 + 2, remainder 2 has same sign as divisor)
 
 print(sum([1, 2, 3, 4]))
 print(sum(range(1, 101)))  # 5050
 
-print(max([1, 2, 6, 4]))
+print(max([1, 2, 6, 4]))   # 6
 # print(max(1, 2, 6, 4))
 
-print(min([1, 3, 7, -3, 4]))
+print(min([1, 3, 7, -3, 4])) # -3
 
 
 
@@ -721,6 +777,8 @@ print(int(x))           # integer,  output:1
 print(float(x))         # float,    output:1.0
 print(bool(x))          # boolean,  output:True 
 print(str(x))           # string,   output:1
+
+
 # Falsy value: 0, "" - empty string, [] - empty list, 
 # None - empty value (null in other language)
 # () - empty tuple, {} - empty dictionary
@@ -737,6 +795,17 @@ print(bool([1, 2, "a", "b"]))   # non-empty list,   output:True
 print(bool(None))               # null value,       output:False
 print(bool(()))                 # empty tuple,      output:False
 print(bool({}))                 # empty dictionary, output:False
+
+
+# default Falsy value when no parameter is given
+print(int())        # default 0
+print(float())      # default 0.0
+print(bool())       # default False
+print(str())        # default empty string
+print(list())       # default empty list
+print(tuple())      # default empty tuple
+print(dict())       # default empty dictionary
+print(set())        # default empty set
 
 
 print(True == 1)  # True
@@ -761,7 +830,7 @@ a = 10
 b = 20
 print(id(a))
 print(id(b))
-print(a is b)  # False
+print(a is b)      # False
 print(a is not b)  # True
 
 
@@ -831,7 +900,7 @@ print("Enjoy your day")
 print(3 and 5)                # 5
 print(3 and 0 and 5)          # 0
 print(3 and 0 and print(50))  # 0 short-circuits at 0 (won't continue evaluating to the right)
-print(3 and print(50) and 6)  # prints 50, then outputs None
+print(3 and print(50) and 6)  # prints 50, then outputs None   # bool(print(50))  output: 50\nFalse
 
 # or:
 #  Evaluates each value from left to right, as soon as one is True (implicit boolean judgment), returns that value
@@ -931,10 +1000,10 @@ print(range(5))             # range is not a list, output:range(0, 5)
 print(type(range(5)))           # output:<class 'range'>
 print([1, 2, 3, 4, 5])          # a list, output:[1, 2, 3, 4, 5]
 print(type([1, 2, 3, 4, 5]))    # output:<class 'list'>
-
-
+ 
+# convert range object to list
 print(list(range(6, 1, -1)))  # [6, 5, 4, 3, 2]
-
+    
 
 
 # Loop through/iterate over a list
@@ -953,7 +1022,7 @@ for i,n in enumerate(nums):
 # Can also be used with for loops:
 #    range()
 #    list: [1,2,3]
-#    dict: {'name': 'ikun', 'age': 20}
+#    dict: {'name': 'Bob', 'age': 20}
 #    tuple: (1,2,3)
 #    set: {1,2,3}
 #    str: "hello"
@@ -1203,9 +1272,9 @@ def greet():
     
     # do not create local variable, directly refer to global variable
     # avoid to use global - may have side effect on other function that use the same variable
-    global my_global_value      # refer to global variable
+    global my_global_value      # refer to global variable, update global variable directly
     my_global_value = "y"
-
+  
     # code block has no scope
     # if statements, while, for loops: have no scope
     if True:
@@ -1296,10 +1365,13 @@ def f2():
 
     def f3():
         # global / nonlocal must declare before any assignment
-        # 
+        #
+        # comment out one of the two or both keywords below to test the effect
+        #
         # global x    # Declare that the variable x="gs" in   global scope is being used
         nonlocal x    # Declare that the variable x="fs" in function scope is being used
-        print('x in inner function f3  i:', x)
+        #
+        print('x in inner function f3  i:', locals().get('x', None)) # output:None if no local variable x
         #
         x = "ls"      # Local scope
         print('x in inner function f3 ii:', x)
@@ -1326,10 +1398,39 @@ x outside all function   : gs
 '''
 ''' output:
 --- use NO keyword ---
+x in inner function f3  i: None
 x in inner function f3 ii: ls
 x in outer function f2   : fs
 x outside all function   : gs
 '''
+
+
+# Closure: function nesting, and returning the inner function will form a closure
+#          The variable x=10 in the function scope will not be released
+#
+#          Imagine saving a function and its state into a memory location
+#          i.e. the variable x=10 will be saved along with the function fn4
+
+def fn3():
+    x = 10
+
+    def fn4():
+        nonlocal x
+        x += 1
+
+        print('x inside fn4 function:', x)
+
+    return fn4  # return the inner function fn4
+
+f4 = fn3()  # assign the returned function fn4 to f4
+f4()        # fn4()  x=11
+f4()        # fn4()  x=12
+f4()        # fn4()  x=13
+
+
+### Decorators ###
+print("\n----- Decorators -----")
+
 
 # Decorator:
 #     The purpose is to add functionality before or after other functions, 
@@ -1354,6 +1455,7 @@ def run():
     print('I love running')
 #
 # improves flexibility by accepting any function as a parameter in run2(fn)
+#
 def run2(fn):                   # pass-in function as parameter
     print('Dance first')
     fn()                        # allow to execute other function
@@ -1387,18 +1489,18 @@ def sleep():
 # assign the return value of outer(sleep() function) to variable sleep, 
 # if change variable name to s, it looks like this: s = outer(sleep)
 sleep = outer(sleep)                                       # The principle of decorators
-print("acutal function name of sleep :", sleep.__name__)    # sleep = inner function, sleep points to inner function
+print("acutal function name of sleep :", sleep.__name__)   # output: acutal function name of sleep : inner
 sleep()                                                    # Equivalent to calling inner()
 print("=" * 80)
 #
+# same as above, but using decorator syntax
 #
 @outer  # Decorator syntax, equivalent to assign sleep2 = outer(sleep2)
 def sleep2():
     print('I love sleeping2')
 
-sleep2()
 print("acutal function name of sleep2:", sleep2.__name__)
-
+sleep2()
 print("." * 80)
 
 
@@ -1410,10 +1512,11 @@ print("                Now:", now)
 print("yyyy-mm-dd HH:MM:SS:", now.strftime("%Y-%m-%d %H:%M:%S"))
 #
 import time
-print(time.time())  # Get current time in float represents seconds since epoch (1970-1-1 00:00:00 UTC)
+# Get current time in float represents seconds since epoch (1970-1-1 00:00:00 UTC)
+print("Current Timestamp  :", time.time())  
 
 # Decorator
-def dec(fn):
+def my_timer(fn):
     def inner(*args, **kwargs):  # Universal decorator, universal parameters, can accept any arguments
         start = time.time()
         print("start time: ", start)  # Start time
@@ -1423,7 +1526,7 @@ def dec(fn):
     return inner
 
 
-@dec
+@my_timer
 def mysum(n):
     s = 0
     for i in range(n):
@@ -1431,30 +1534,13 @@ def mysum(n):
     # print(s)
 
 mysum(10**8)            # from 0 to 99,999,999
-
-
-
-# Closure: function nesting, and returning the inner function will form a closure
-#          The variable x=10 in the function scope will not be released
-#
-#          Imagine saving a function and its state into a memory location
-#          i.e. the variable x=10 will be saved along with the function fn4
-
-def fn3():
-    x = 10
-
-    def fn4():
-        nonlocal x
-        x += 1
-
-        print('x inside fn4 function:', x)
-
-    return fn4  # return the inner function fn4
-
-f4 = fn3()  # assign the returned function fn4 to f4
-f4()        # fn4()  x=11
-f4()        # fn4()  x=12
-f4()        # fn4()  x=13
+'''output:
+                Now: 2025-09-07 18:58:55.051370
+yyyy-mm-dd HH:MM:SS: 2025-09-07 18:58:55
+Current Timestamp  : 1757242735.0520492
+start time:  1757242735.0525668
+duration:  5.693349361419678
+'''
 
 
 

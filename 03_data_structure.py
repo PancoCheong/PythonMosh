@@ -38,6 +38,7 @@ print(string_to_list)       # output:['P', 'a', 'n', 'c', 'o']
 # count of list
 print(len(string_to_list))  # output:5
 
+#reverse the list
 print(string_to_list[::-1])   #output:['o', 'c', 'n', 'a', 'P']
 
 
@@ -93,19 +94,19 @@ print(isinstance(10, int))   # True        # Check if 10 is of type int
 print(isinstance(10, (int, float, list)))  # True     # Check if 10 is int, float, or list
 print()
 
-# Iterator (for understanding)
+# Iterator 
 #   1. Can be traversed using a for loop
 #   2. Can be called using next()
-print(isinstance(3, Iterator))        # False
-print(isinstance(3.14, Iterator))     # False
-print(isinstance(None, Iterator))     # False
-print(isinstance(True, Iterator))     # False
-print(isinstance("hello", Iterator))  # False
-print(isinstance([1,2], Iterator))    # False
-print(isinstance((1,2), Iterator))    # False
-print(isinstance({1:2}, Iterator))    # False
-print(isinstance({1,2}, Iterator))    # False
-print(isinstance((i for i in range(3)), Iterator))  # True
+print(isinstance(3, Iterator))        # False  int
+print(isinstance(3.14, Iterator))     # False  float
+print(isinstance(None, Iterator))     # False  NoneType
+print(isinstance(True, Iterator))     # False  bool
+print(isinstance("hello", Iterator))  # False  str
+print(isinstance([1,2], Iterator))    # False  list
+print(isinstance((1,2), Iterator))    # False  tuple
+print(isinstance({1:2}, Iterator))    # False  dict
+print(isinstance({1,2}, Iterator))    # False  set
+print(isinstance((i for i in range(3)), Iterator))  # True  <class 'generator'>
 print()
 
 # Iterable
@@ -122,16 +123,16 @@ print(isinstance({1,2}, Iterable))    # True
 print(isinstance((i for i in range(3)), Iterable))  # True
 
 
-# iter(): convert an Iterable into an Iterator (for understanding)
+# iter(): convert an Iterable into an Iterator
 n = [1, 2, 3]
 n2 = iter(n)
-print(n2)  # list_iterator object
-print(next(n2))
-print(next(n2))
+print(n2)           # list_iterator object
+print(next(n2))     # output:1   
+print(next(n2))     # output:2   
 
 # list(): convert into a list
-n3 = list(n2)
-print(n3)
+n3 = list(n2)       # remaining items in n2
+print(n3)           # output:[3]
 
 
 ### unpacking list ###
@@ -208,9 +209,11 @@ for n in nums:
     if n not in nums2:
         nums2.append(n)  # add n to nums2 list
 print(nums2)  # [1, 2, 3, 5, 4]
-
-
-
+#
+# better way - use set
+num3=list(set(nums))
+#
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g']
 # add or remove item
 letters.append("A")
 print(letters)      # output:['a', 'b', 'c', 'd', 'e', 'f', 'g', 'A']
@@ -238,9 +241,12 @@ print(letters)      # output:['a', 'g', 'b', 'g', 'f', 'g']
 
 # keep every element that doesn't equal value
 # letters = (letter for letter in letters if letter != 'g') # this create a new list
-# letters[:] - this can mutate the existing list
+# letters[:] - this can update the existing list in place
 letters[:] = (letter for letter in letters if letter != 'g')
 print(letters)      # output:['a', 'b', 'f']
+# key difference:
+# letters = []    → rebinds the name letters to a new empty list.
+# letters[:] = [] → mutates the existing list object, so anyone else holding a reference sees it emptied.
 
 # other way to remove item - del function
 del letters[0:2]
@@ -264,6 +270,11 @@ if 'Z' in letters:              # check if 'Z' is existed in list
 print(letters.count('b'))       # output:2
 print(letters.count('Z'))       # output:0
 
+# elementwise sum in two list
+l1 = list(range(1,10,2))                        # [1, 3,  5,  7,  9]                                                   
+l2 = list(range(2,11,2))                        # [2, 4,  6,  8, 10]
+l_sum = [sum(pair) for pair in zip(l1, l2)]     # [3, 7, 11, 15, 19]
+
 
 ### sort list ###
 #import random
@@ -275,25 +286,31 @@ random_numbers = [random.randrange(-10, 10) for _ in range(10)]
 # output:[44, 77, 36, 15, 51, 84, 18, 19, 62, 41]
 print(random_numbers)
 numbers = [44, 77, 36, 15, 51, 84, 18, 19, 62, 41]
+
 # sort in ascending order
 numbers.sort()
 print(numbers)          # output:[15, 18, 19, 36, 41, 44, 51, 62, 77, 84]
+
 # sort in descending order
 numbers.sort(reverse=True)
 print(numbers)          # output:[84, 77, 62, 51, 44, 41, 36, 19, 18, 15]
+
 # built-in sort function - create a new list, original unchanged
 print(sorted(numbers))  # output:[15, 18, 19, 36, 41, 44, 51, 62, 77, 84]
+
 # output:[84, 77, 62, 51, 44, 41, 36, 19, 18, 15]
 print(sorted(numbers, reverse=True))
-
+#
 
 nums = [2, 4, 7, 33, 99, 6, 8]
 nums.reverse()
 print(nums)                   # [8, 6, 99, 33, 7, 4, 2]
 # print(nums[::-1])           # original unchanged
-print(list(reversed(nums)))   # [2, 4, 7, 33, 99, 6, 8]
+print(list(reversed(nums)))   # [2, 4, 7, 33, 99, 6, 8]  return a new list with reversed order
 
 nums2 = nums.copy()           # make a copy 
+
+
 
 
 ### sort tuple in list ###
@@ -305,15 +322,16 @@ products = [
 # output:[('Item A', 10.0), ('Item C', 9.0), ('Item B', 14.0)]
 print(products)
 products.sort()
+
 # output:[('Item A', 10.0), ('Item B', 14.0), ('Item C', 9.0)]
 print(products)
+
+
+
 # define a sort function
 # pass-in the function name
-
-
 def sort_product(product):
     return product[1]   # sort by price
-
 
 # TypeError: sort() takes no positional arguments
 # products.sort(sort_product)
@@ -331,6 +349,22 @@ print(products)  # output:[('Item B', 14.0), ('Item A', 10.0), ('Item C', 9.0)]
 # lambda parameter:return_expression
 products.sort(key=lambda product: product[1])
 print(products)  # output:[('Item C', 9.0), ('Item A', 10.0), ('Item B', 14.0)]
+
+
+# sort list of tuple by 2nd item, then by 1st item
+students = [
+    ("Alice", 90),
+    ("Eve", 75),
+    ("David", 60),
+    ("Bob", 75),
+    ("Charlie", 90)
+]
+sorted_by_second = sorted(students, key=lambda el: el[1])
+print(sorted_by_second)  # [('David', 60), ('Eve', 75), ('Bob', 75), ('Alice', 90), ('Charlie', 90)]
+sorted_by_both = sorted(students, key=lambda el: (el[1], el[0]))
+print(sorted_by_both)    # [('David', 60), ('Bob', 75), ('Eve', 75), ('Alice', 90), ('Charlie', 90)]
+
+
 
 
 ### map function ###
@@ -394,12 +428,12 @@ nums3 = [i + j for i in "ABC" for j in "123"]  # Nested loops
 print(nums3)
 
 
-# Dictionary comprehension (for understanding)
+# Dictionary comprehension 
 d = {f'name{i}': i for i in range(1, 6)}
 print(d)  # {'name1': 1, 'name2': 2, 'name3': 3, 'name4': 4, 'name5': 5}
 
 
-# Set comprehension (for understanding)
+# Set comprehension 
 s = {i for i in range(1, 6)}
 print(s)  # {1, 2, 3, 4, 5}
 
@@ -413,6 +447,17 @@ print(list(zip(list1, list2)))  # output:[('A', '11'), ('B', 12), ('C', 13)]
 
 # output:[('x', 'A', '11'), ('y', 'B', 12), ('z', 'C', 13)]
 print(list(zip("xyz", list1, list2)))
+
+#  flatter a nested list    
+nested = [
+    [1, 2, 3],
+    [4, 5],
+    [6, 7, 8, 9]
+]
+import itertools
+flatter_list = list(itertools.chain.from_iterable(nested))
+print(flatter_list)  # output:[1, 2, 3, 4, 5, 6, 7, 8, 9]
+
 
 ### stacks ###
 # stack of items, eg. stack of book on table
@@ -438,17 +483,21 @@ else:
 # Queue in the real world
 # Frist in, Frist Out (FIFO)
 # [1, 2, 3, 4] ==> [2, 3, 4] # all item shift 1 position forward
-# more efficient to use dequeue
-#from collections import deque
+# more efficient to use dequeue (double-ended queue) - allows fast appends and pops from both ends.
+from collections import deque 
 queue = deque([])
 queue.append(1)
 queue.append(2)
 queue.append(3)
-queue.popleft()
+print(queue)        # output:deque([1, 2, 3])
+queue.popleft()     # removes and returns the element from the left end of the deque
 print(queue)        # output:deque([2, 3])
 if not queue:
     print("empty queue")
 
+# removes and returns the element from the left end of the deque
+queue.pop()         # removes and returns the element from the right end of the deque
+print(queue)        # output:deque([2])
 
 
 
@@ -546,7 +595,7 @@ print(t.count(4))    # 3
 # process data faster
 # better for large data set (eg. 10,000 or more records)
 # module name array, class name array as well
-#from array import array
+from array import array
 # google search: python 3 typecode
 # https://docs.python.org/3/library/array.html
 # 'i'		signed int		int					2 bytes
@@ -644,7 +693,7 @@ print(second - first)   # output:{5}
 
 print(first >= second)  # check if first contains all elements of second, output:False
 
-# Features (for understanding)
+# Features 
 #  add(): Add element
 #  pop(): Remove element
 #  clear(): Clear all
@@ -827,15 +876,18 @@ print("generator size:", getsizeof(values))     # output:generator size: 112
 #
 #
 
+from collections.abc import Iterable, Iterator
 
 # Generator (important to master)
 #   Must be called using next() or a for loop
 
 # nums = [i for i in range(1, 6)]   # List comprehension
 
-g = (i for i in range(1, 4))   # Generator
-print(g)                       # output:<generator object <genexpr> at 0x000001AF774D7100>
+g = (i for i in range(1, 4))    # Generator
+print(g)                        # output:<generator object <genexpr> at 0x000001AF774D7100>
 #print(list(g))                 # output:[1, 2, 3]
+print(isinstance(g, Iterator))  # output:True
+print(isinstance(g, Iterable))  # output:True
 
 # 1. Using next()
 print(next(g))  # 1
@@ -974,14 +1026,14 @@ print(sorted(chars.items(), key=lambda kv: (kv[1], kv[0]), reverse=True))
 #
 
 # Creates a sorted dictionary (sorted by key)
-#from collections import OrderedDict
+from collections import OrderedDict
 # output:OrderedDict([(' ', 5), ('T', 1), ('a', 1), ('c', 1), ('e', 3), ('h', 1), ('i', 5), ('m', 2), ('n', 3), ('o', 3), ('q', 1), ('r', 1), ('s', 3), ('t', 2), ('u', 1), ('v', 1), ('w', 1)])
 print(OrderedDict(sorted(chars.items())))
 #
 #
 
 ### solution from training video###
-#from pprint import pprint
+from pprint import pprint
 sentence = "This is a common interview question"
 
 char_frequency = {}
@@ -1037,14 +1089,14 @@ print(b)  # [666, 2, 3]
 # deepcopy (for two-dimensional or multi-dimensional arrays)
 
 a = [1, 2, [3, 4]]
-b = a.copy()  # shallow copy
+b = a.copy()  # shallow copy, nested list is still reference
 b[-1][-1] = 888
 print(a)              # [1, 2, [3, 888]]
 print(b)              # [1, 2, [3, 888]]
 
 import copy
 a = [1, 2, [3, 4]]
-b = copy.deepcopy(a)  # deep copy
+b = copy.deepcopy(a)  # deep copy, nested list is copied
 b[-1][-1] = 888
 print(a)              # [1, 2, [3, 4]]
 print(b)              # [1, 2, [3, 888]]
